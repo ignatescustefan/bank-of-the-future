@@ -121,7 +121,7 @@ Header
 }
 @media only screen and (min-width: 768px) {
   .cd-logo {
-    margin: 5px 0 0 30px;
+    margin: 5px 0 0 20px;
   }
 }
 
@@ -606,7 +606,8 @@ Sidebar
   }
   .cd-top-nav .has-children {
     position: relative;
-    background-color: #2c3136;
+    /*background-color: #2c3136;*/
+    background-color: #fa7307;
   }
   .cd-top-nav .has-children > a {
     height: 100%;
