@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 09, 2019 la 09:36 AM
+-- Timp de generare: mart. 09, 2019 la 10:04 AM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -29,8 +29,6 @@ USE `ripbank`;
 --
 -- Structură tabel pentru tabel `angajat`
 --
--- Creare: mart. 08, 2019 la 01:43 PM
---
 
 DROP TABLE IF EXISTS `angajat`;
 CREATE TABLE `angajat` (
@@ -45,13 +43,11 @@ CREATE TABLE `angajat` (
 --
 -- Structură tabel pentru tabel `conturi`
 --
--- Creare: mart. 09, 2019 la 08:12 AM
---
 
 DROP TABLE IF EXISTS `conturi`;
 CREATE TABLE `conturi` (
   `IBAN` varchar(30) NOT NULL,
-  `proprietar_cnp` int(14) UNSIGNED NOT NULL,
+  `proprietar_cnp` varchar(14) NOT NULL,
   `tipCont` enum('depozit','economii','altele') NOT NULL,
   `PIN` int(4) UNSIGNED NOT NULL,
   `sold` double(10,2) UNSIGNED DEFAULT '0.00'
@@ -61,8 +57,6 @@ CREATE TABLE `conturi` (
 
 --
 -- Structură tabel pentru tabel `tranzactii`
---
--- Creare: mart. 09, 2019 la 08:36 AM
 --
 
 DROP TABLE IF EXISTS `tranzactii`;
@@ -81,8 +75,6 @@ CREATE TABLE `tranzactii` (
 --
 -- Structură tabel pentru tabel `utilizatori`
 --
--- Creare: mart. 08, 2019 la 01:49 PM
---
 
 DROP TABLE IF EXISTS `utilizatori`;
 CREATE TABLE `utilizatori` (
@@ -90,8 +82,8 @@ CREATE TABLE `utilizatori` (
   `prenume` varchar(30) NOT NULL,
   `email` varchar(40) NOT NULL,
   `parola` varchar(30) NOT NULL,
-  `cnp` int(14) UNSIGNED NOT NULL,
-  `telefon` int(14) UNSIGNED NOT NULL
+  `cnp` varchar(14) NOT NULL,
+  `telefon` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
