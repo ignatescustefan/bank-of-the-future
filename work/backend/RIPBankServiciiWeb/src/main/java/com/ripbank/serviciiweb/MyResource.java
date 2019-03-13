@@ -22,4 +22,10 @@ public class MyResource {
     public String getIt() {
         return "Got it!";
     }
+    
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getFromToken() {
+        return "Got from token!";
+    }
 }
