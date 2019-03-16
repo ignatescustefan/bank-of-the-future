@@ -8,5 +8,6 @@
   <name>RIPBank</name>
   <modules>
     <module>RIPBankServiciiWeb</module>
+    <module>RIPBankCore</module>
   </modules>
 </project>
