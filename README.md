@@ -28,14 +28,14 @@
 ## Tipuri de utilizatori
 
 * **Client al băncii**
-* 	* poate să-și vadă soldul
+	* poate să-și vadă soldul
 	* generează extras de cont/informații despre cont
 	* istoric tranzacții (generare PDF)
 	* schimbare informații cont/PIN
 	* închidere/deschidere depozit
 
 * **Operator bancar**
-* 	* search(după CNP, nume)
+	* search(după CNP, nume)
 	* administrare conturi, detalii user + acțiuni privilegiate
     * generare extras cont
     * poate face încasări/depuneri/alte operațiuni
