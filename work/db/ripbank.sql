@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 09, 2019 la 10:04 AM
+-- Timp de generare: mart. 16, 2019 la 01:32 PM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -41,11 +41,11 @@ CREATE TABLE `angajat` (
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `conturi`
+-- Structură tabel pentru tabel `cont`
 --
 
-DROP TABLE IF EXISTS `conturi`;
-CREATE TABLE `conturi` (
+DROP TABLE IF EXISTS `cont`;
+CREATE TABLE `cont` (
   `IBAN` varchar(30) NOT NULL,
   `proprietar_cnp` varchar(14) NOT NULL,
   `tipCont` enum('depozit','economii','altele') NOT NULL,
@@ -56,11 +56,11 @@ CREATE TABLE `conturi` (
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `tranzactii`
+-- Structură tabel pentru tabel `tranzactie`
 --
 
-DROP TABLE IF EXISTS `tranzactii`;
-CREATE TABLE `tranzactii` (
+DROP TABLE IF EXISTS `tranzactie`;
+CREATE TABLE `tranzactie` (
   `idTTranzactie` int(10) UNSIGNED NOT NULL,
   `tipTranzactie` enum('depunere','retragere') NOT NULL,
   `IBAN_sursa` varchar(30) NOT NULL,
@@ -73,11 +73,11 @@ CREATE TABLE `tranzactii` (
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `utilizatori`
+-- Structură tabel pentru tabel `utilizator`
 --
 
-DROP TABLE IF EXISTS `utilizatori`;
-CREATE TABLE `utilizatori` (
+DROP TABLE IF EXISTS `utilizator`;
+CREATE TABLE `utilizator` (
   `nume` varchar(30) NOT NULL,
   `prenume` varchar(30) NOT NULL,
   `email` varchar(40) NOT NULL,
@@ -94,26 +94,26 @@ CREATE TABLE `utilizatori` (
 -- Indexuri pentru tabele `angajat`
 --
 ALTER TABLE `angajat`
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`email`);
 
 --
--- Indexuri pentru tabele `conturi`
+-- Indexuri pentru tabele `cont`
 --
-ALTER TABLE `conturi`
+ALTER TABLE `cont`
   ADD PRIMARY KEY (`IBAN`),
   ADD KEY `proprietar_cnp` (`proprietar_cnp`);
 
 --
--- Indexuri pentru tabele `tranzactii`
+-- Indexuri pentru tabele `tranzactie`
 --
-ALTER TABLE `tranzactii`
+ALTER TABLE `tranzactie`
   ADD PRIMARY KEY (`idTTranzactie`),
   ADD KEY `IBAN_sursa` (`IBAN_sursa`);
 
 --
--- Indexuri pentru tabele `utilizatori`
+-- Indexuri pentru tabele `utilizator`
 --
-ALTER TABLE `utilizatori`
+ALTER TABLE `utilizator`
   ADD PRIMARY KEY (`cnp`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `cnp` (`cnp`),
@@ -124,9 +124,9 @@ ALTER TABLE `utilizatori`
 --
 
 --
--- AUTO_INCREMENT pentru tabele `tranzactii`
+-- AUTO_INCREMENT pentru tabele `tranzactie`
 --
-ALTER TABLE `tranzactii`
+ALTER TABLE `tranzactie`
   MODIFY `idTTranzactie` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -134,16 +134,16 @@ ALTER TABLE `tranzactii`
 --
 
 --
--- Constrângeri pentru tabele `conturi`
+-- Constrângeri pentru tabele `cont`
 --
-ALTER TABLE `conturi`
-  ADD CONSTRAINT `conturi_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizatori` (`cnp`);
+ALTER TABLE `cont`
+  ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`);
 
 --
--- Constrângeri pentru tabele `tranzactii`
+-- Constrângeri pentru tabele `tranzactie`
 --
-ALTER TABLE `tranzactii`
-  ADD CONSTRAINT `tranzactii_ibfk_1` FOREIGN KEY (`IBAN_sursa`) REFERENCES `conturi` (`IBAN`);
+ALTER TABLE `tranzactie`
+  ADD CONSTRAINT `tranzactie_ibfk_1` FOREIGN KEY (`IBAN_sursa`) REFERENCES `cont` (`IBAN`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
