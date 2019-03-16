@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 16, 2019 la 01:32 PM
+-- Timp de generare: mart. 16, 2019 la 02:26 PM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -48,8 +48,8 @@ DROP TABLE IF EXISTS `cont`;
 CREATE TABLE `cont` (
   `IBAN` varchar(30) NOT NULL,
   `proprietar_cnp` varchar(14) NOT NULL,
-  `tipCont` enum('depozit','economii','altele') NOT NULL,
-  `PIN` int(4) UNSIGNED NOT NULL,
+  `tip_cont` enum('depozit','economii','altele') NOT NULL,
+  `PIN` varchar(4) NOT NULL,
   `sold` double(10,2) UNSIGNED DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -134,10 +134,17 @@ ALTER TABLE `tranzactie`
 --
 
 --
+-- Constrângeri pentru tabele `angajat`
+--
+ALTER TABLE `angajat`
+  ADD CONSTRAINT `angajat_ibfk_1` FOREIGN KEY (`email`) REFERENCES `cont` (`IBAN`);
+
+--
 -- Constrângeri pentru tabele `cont`
 --
 ALTER TABLE `cont`
-  ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`);
+  ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`),
+  ADD CONSTRAINT `cont_ibfk_2` FOREIGN KEY (`IBAN`) REFERENCES `angajat` (`email`);
 
 --
 -- Constrângeri pentru tabele `tranzactie`
