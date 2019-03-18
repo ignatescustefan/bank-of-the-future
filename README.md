@@ -8,6 +8,7 @@
     * **embedded** - token pentru autentificarea în doi pași
 	* **db** - scripturi sql/db
     * **frontend**
+	
 ---
 
 
