@@ -1,18 +1,13 @@
 ## Structura de directoare și fișiere
 
-* **db** - script-uri sql de creare/populare a bazei de date
+* **Servers** - generat de Eclipse
 * **docs** - documente
 * **sandbox** - loc unde se pot testa diverse componente
 * **work** - codul aplicației
-* * **backend** - servere, aplicație desktop
+	* **backend** - servere, aplicație desktop
     * **embedded** - token pentru autentificarea în doi pași
+	* **db** - scripturi sql/db
     * **frontend**
-	* * **css** - fișierele de stil
-	* * **img** - imagini
-	* * **include** - fișiere php care sunt incluse în alte fișiere
-	* * **js** - fișiere javascript
-	* * fișierele **jsp** ale apicației
-
 ---
 
 
