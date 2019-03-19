@@ -33,7 +33,7 @@
 
 					<ul>
 
-						<li><a href="#0">Contul meu</a></li>
+						<li><a href="#0">Setări cont</a></li>
 						<li><a href="#0">Logout</a></li>
 					</ul>
 				</li>
@@ -45,7 +45,7 @@
 		<nav class="cd-side-nav">
 			<ul>
 				<li class="has-children overview">
-					<a href="#0">Portofoliu</a>
+					<a href="#0">Contul meu</a>
 				</li>
 				
 				<li class="has-children comments">
@@ -67,10 +67,6 @@
 				</li>
 			</ul>
 
-			<ul>
-				<li class="cd-label">Action</li>
-				<li class="action-btn"><a href="#0">+ Button</a></li>
-			</ul>
 		</nav>
 
 		<div class="content-wrapper">

@@ -15,7 +15,7 @@ body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
   color: #3e454c;
-  background-color: #ffffff;
+  background-color: #f0f0f0;
 }
 body::after {
   clear: both;
@@ -45,6 +45,7 @@ input[type="search"]::-webkit-search-results-decoration {
 Main Page Content
 
 -------------------------------- */
+
 .cd-main-content .content-wrapper {
   padding: 45px 5% 3em;
 }
@@ -93,8 +94,8 @@ Header
   left: 0;
   height: 45px;
   width: 100%;
-  /*background: #3e454c;*/
-  background: #fb8d02;
+  /*background: #fb8d02;*/
+  background: #0b4352;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -297,8 +298,8 @@ Sidebar
   top: 0;
   width: 100%;
   padding: 45px 0 0;
-  /*background-color: #2c3136;*/
-  background-color: #0b4352;
+  /*background-color: #fa7307;*/
+  background-color: #156272;
   visibility: hidden;
   opacity: 0;
   max-height: 100vh;
@@ -321,7 +322,7 @@ Sidebar
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 .cd-side-nav > ul {
-  padding: 0.6em 0;
+  padding: 0;
 }
 .cd-side-nav > ul:last-of-type {
   padding-bottom: 0;
@@ -439,7 +440,7 @@ Sidebar
   }
   .cd-side-nav > ul {
     /* reset style */
-    padding: 0;
+    padding: 0.6em 0;
   }
   .cd-side-nav .cd-label {
     /* remove labels on minified version of the sidebar */
@@ -492,10 +493,11 @@ Sidebar
     width: 200px;
   }
   .cd-side-nav > ul {
-    padding: 0.6em 0;
+    padding: 0;
   }
   .cd-side-nav > ul > li:not(.action-btn):hover > a {
-    background-color: #33383e;
+    /*background-color: #33383e;*/
+    background-color: #fa7307;
   }
   .cd-side-nav > ul > li > a {
     padding: 1em 1em 1em 42px;
@@ -606,7 +608,7 @@ Sidebar
   }
   .cd-top-nav .has-children {
     position: relative;
-    /*background-color: #2c3136;*/
+    /*background-color: #57b846;*/
     background-color: #fa7307;
   }
   .cd-top-nav .has-children > a {
