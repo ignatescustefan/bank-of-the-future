@@ -43,16 +43,12 @@
 					</span>
 				</div>
 
-				<form class="login100-form validate-form" action="index.jsp">
-					<div class="wrap-input100 validate-input m-b-26" data-validate="Token code is required">
-						<span class="label-input100">Token code</span>
-						<input class="input100" type="text" name="username" placeholder="Enter token code">
-						<span class="focus-input100"></span>
-					</div>
-
+				<form class="login100-form validate-form second-step" action="index.jsp">
+					Folosiți token-ul pentru a finaliza conectarea, iar apoi confirmați apasând butonul de mai jos! 
+					<br/><br/>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Login
+							Finalizare
 						</button>
 					</div>
 				</form>
