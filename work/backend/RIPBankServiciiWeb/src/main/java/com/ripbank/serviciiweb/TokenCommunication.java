@@ -28,7 +28,7 @@ public class TokenCommunication {
 	@GET
 	@Path("{cnp}")
 	@Produces(MediaType.TEXT_PLAIN)
-	static protected boolean tokenCodeIsValid(@PathParam("cnp") String cnp) {
+	static public boolean tokenCodeIsValid(@PathParam("cnp") String cnp) {
 		//connect to db, decrypt, see if it's time-valid
 		return false;
 	}

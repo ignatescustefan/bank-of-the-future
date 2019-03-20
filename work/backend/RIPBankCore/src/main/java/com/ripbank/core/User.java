@@ -3,7 +3,7 @@ package com.ripbank.core;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Utilizator {
+public class User {
 	
 	private String nume;
 	private String prenume;
@@ -12,11 +12,11 @@ public class Utilizator {
 	private String cnp;
 	private String telefon;
 	
-	public Utilizator() {
+	public User() {
 		
 	}
 
-	public Utilizator(String nume, String prenume, String email, String parola, String cnp, String telefon) {
+	public User(String nume, String prenume, String email, String parola, String cnp, String telefon) {
 		super();
 		this.nume = nume;
 		this.prenume = prenume;
