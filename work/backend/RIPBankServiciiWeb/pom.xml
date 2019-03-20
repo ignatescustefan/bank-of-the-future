@@ -63,8 +63,8 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
-			</dependency>
-
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>RIPBankServiciiWeb</finalName>

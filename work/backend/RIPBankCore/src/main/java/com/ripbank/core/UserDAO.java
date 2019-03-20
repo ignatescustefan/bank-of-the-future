@@ -1,7 +1,11 @@
 package com.ripbank.core;
 
+import java.util.List;
+
 public interface UserDAO {
-	public boolean findUserByEmail(String email);
+	public List<User> findUserByEmail(String email);
 	
-	public boolean findUserByCNP(String cnp);
+	public List<User> findUserByEmailAndPassword(String email, String password);
+	
+	public List<User> findUserByCNP(String cnp);
 }
