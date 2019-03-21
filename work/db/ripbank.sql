@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 16, 2019 la 02:26 PM
+-- Timp de generare: mart. 21, 2019 la 05:04 PM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -56,13 +56,27 @@ CREATE TABLE `cont` (
 -- --------------------------------------------------------
 
 --
+-- Structură tabel pentru tabel `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+CREATE TABLE `token` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `token_cnp` varchar(14) NOT NULL,
+  `token_key` varchar(32) NOT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structură tabel pentru tabel `tranzactie`
 --
 
 DROP TABLE IF EXISTS `tranzactie`;
 CREATE TABLE `tranzactie` (
-  `idTTranzactie` int(10) UNSIGNED NOT NULL,
-  `tipTranzactie` enum('depunere','retragere') NOT NULL,
+  `id_Tranzactie` int(10) UNSIGNED NOT NULL,
+  `tip_Tranzactie` enum('depunere','retragere') NOT NULL,
   `IBAN_sursa` varchar(30) NOT NULL,
   `IBAN_destinatie` varchar(30) NOT NULL,
   `operator_tranzactie` varchar(60) NOT NULL,
@@ -104,10 +118,17 @@ ALTER TABLE `cont`
   ADD KEY `proprietar_cnp` (`proprietar_cnp`);
 
 --
+-- Indexuri pentru tabele `token`
+--
+ALTER TABLE `token`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `token_cnp` (`token_cnp`);
+
+--
 -- Indexuri pentru tabele `tranzactie`
 --
 ALTER TABLE `tranzactie`
-  ADD PRIMARY KEY (`idTTranzactie`),
+  ADD PRIMARY KEY (`id_Tranzactie`),
   ADD KEY `IBAN_sursa` (`IBAN_sursa`);
 
 --
@@ -127,24 +148,23 @@ ALTER TABLE `utilizator`
 -- AUTO_INCREMENT pentru tabele `tranzactie`
 --
 ALTER TABLE `tranzactie`
-  MODIFY `idTTranzactie` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Tranzactie` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constrângeri pentru tabele eliminate
 --
 
 --
--- Constrângeri pentru tabele `angajat`
---
-ALTER TABLE `angajat`
-  ADD CONSTRAINT `angajat_ibfk_1` FOREIGN KEY (`email`) REFERENCES `cont` (`IBAN`);
-
---
 -- Constrângeri pentru tabele `cont`
 --
 ALTER TABLE `cont`
-  ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`),
-  ADD CONSTRAINT `cont_ibfk_2` FOREIGN KEY (`IBAN`) REFERENCES `angajat` (`email`);
+  ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`);
+
+--
+-- Constrângeri pentru tabele `token`
+--
+ALTER TABLE `token`
+  ADD CONSTRAINT `token_ibfk_1` FOREIGN KEY (`token_cnp`) REFERENCES `utilizator` (`cnp`);
 
 --
 -- Constrângeri pentru tabele `tranzactie`
