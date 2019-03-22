@@ -1,6 +1,5 @@
 package com.ripbank.serviciiweb;
 
-import javax.websocket.server.PathParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,7 +27,7 @@ public class TokenCommunication {
 	@GET
 	@Path("{cnp}")
 	@Produces(MediaType.TEXT_PLAIN)
-	static public boolean tokenCodeIsValid(@PathParam("cnp") String cnp) {
+	static public boolean tokenCodeIsValid(@javax.ws.rs.PathParam("cnp") String cnp) {
 		//connect to db, decrypt, see if it's time-valid
 		return false;
 	}

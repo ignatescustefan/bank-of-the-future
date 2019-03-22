@@ -1,6 +1,8 @@
 package proiect;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,22 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String u=request.getParameter("user");
 		String p=request.getParameter("pass");
+		
+		//aici redirectare la /api/login cu username=user & pass=pass
+		//response.sendRedirect("/RIPBankServiciiWeb/api"+"/login");
+		
+		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("RIPBankServiciiWeb/api"+"/login");
+		dispatcher.forward(request, response);
+		
+		//dispatcher.forward(request, response);
+		
+		//System.out.println("/RIPBankServiciiWeb/api"+"/login");
+		
+		//primesc un json 
+		//deserializare json
+		//setare atribute sesiune
+		
+		/*
 		if(UserDAO.instance().verifica(u, p)) {
 			HttpSession s=request.getSession(true);
 			s.setAttribute("username",u);
@@ -39,6 +57,7 @@ public class Login extends HttpServlet {
 		else {
 			response.sendRedirect(request.getContextPath()+"/second_step.jsp");
 		}
+		*/
 	}
 
 }
