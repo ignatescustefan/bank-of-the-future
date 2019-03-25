@@ -1,5 +1,6 @@
 package com.ripbank.serviciiweb;
 
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,10 +36,13 @@ public class Login {
 	}
 
 	@POST
-	@Consumes("application/x-www-form-urlencoded")
+	//@Consumes("application/x-www-form-urlencoded")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response getAuthorizedUser(@FormParam("username") String email, @FormParam("password") String password) {
+	public Response getAuthorizedUser(Utilizator user) {
 		JSONObject jsonObject=new JSONObject();
+		String email=user.getEmail();
+		String password=user.getPassword();
+		
 		if (userAndPasswordExists(email, password)) {
 			System.out.println("S-a ajuns aici");
 			jsonObject.append("LoginOk", 1);
@@ -53,6 +57,7 @@ public class Login {
 		}
 		else {
 			//TODO: log this, not console printing
+			System.out.println("else");
 			jsonObject.append("LoginOk", 0);
 			return Response
 					.status(200)

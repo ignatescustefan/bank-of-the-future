@@ -59,7 +59,7 @@ public class DBManager implements UserDAO{
 	public List<User> findUserByEmailAndPassword(String email, String password) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
 			List<User> userList=new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE email="+email+ " AND parola="+password);
+			st.execute("SELECT * FROM utilizator WHERE email="+"\""+email+"\"" +" AND parola="+"\""+password+"\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
 				User user=new User(rs.getString("nume"), rs.getString("prenume"),

@@ -1,14 +1,18 @@
 package proiect;
 
-import java.io.IOException;
+import proiect.Utilizator;
+import proiect.Manager;
 
-import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+import javax.ws.rs.core.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class login
@@ -16,16 +20,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public Login() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -33,21 +37,35 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		String u=request.getParameter("user");
 		String p=request.getParameter("pass");
-		
-		//aici redirectare la /api/login cu username=user & pass=pass
+
+		//redirectare la /api/login cu username=user & pass=pass -> gresit
 		//response.sendRedirect("/RIPBankServiciiWeb/api"+"/login");
-		
-		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("RIPBankServiciiWeb/api"+"/login");
-		dispatcher.forward(request, response);
-		
-		//dispatcher.forward(request, response);
-		
 		//System.out.println("/RIPBankServiciiWeb/api"+"/login");
 		
-		//primesc un json 
+		System.out.println("Mesaj 1");
+		log("your debug message");
+		
+		Utilizator user=new Utilizator();
+		user.setEmail(u);
+		user.setPassword(p);
+		
+		/*
+	    Client client = ClientBuilder.newClient();
+	    WebTarget webTarget = client.target("http://localhost:8080/RIPBankServiciiWeb/api/login");
+	    Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+	    Response myResponse = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+	     */    
+	    
+		
+		Manager m=new Manager();
+		Response myResponse = m.createJsonUtilizator(user);
+		
+		System.out.println("Mesaj 2");
+		System.out.println(myResponse);
+        //primesc un json			
 		//deserializare json
 		//setare atribute sesiune
-		
+
 		/*
 		if(UserDAO.instance().verifica(u, p)) {
 			HttpSession s=request.getSession(true);
@@ -57,7 +75,8 @@ public class Login extends HttpServlet {
 		else {
 			response.sendRedirect(request.getContextPath()+"/second_step.jsp");
 		}
-		*/
+		 */
 	}
+
 
 }

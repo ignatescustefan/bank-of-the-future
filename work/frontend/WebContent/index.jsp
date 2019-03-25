@@ -15,16 +15,17 @@
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+	<script src="js/scripts.js"></script>
   	
 </head>
-<body>
+<body onload="load('pages/contul_meu.jsp');">
 	<header class="cd-main-header">
 		<a href="#0" class="cd-logo"><img src="img/logo2.png" alt="Logo"> </a>
 		<a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
-				<li><a href="#0">Contact</a></li>
+				<li><a href="#" onclick="load('pages/contact.jsp')">Contact</a></li>
 				<li class="has-children account">
 					<a href="#0">
 						<img src="img/cd-avatar.png" alt="avatar">
@@ -45,7 +46,7 @@
 		<nav class="cd-side-nav">
 			<ul>
 				<li class="has-children overview">
-					<a href="#0">Contul meu</a>
+					<a href="#" onclick="load('pages/contul_meu.jsp')">Contul meu</a>
 				</li>
 				
 				<li class="has-children comments">
@@ -70,7 +71,8 @@
 		</nav>
 
 		<div class="content-wrapper">
-			<h1>Continut site</h1>
+			<section id=continut>
+			</section>
 		</div> <!-- .content-wrapper -->
 	</main> <!-- .cd-main-content -->
 	
