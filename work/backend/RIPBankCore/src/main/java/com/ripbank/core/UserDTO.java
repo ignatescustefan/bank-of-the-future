@@ -1,6 +1,6 @@
-package com.ripbank.serviciiweb;
+package com.ripbank.core;
 
-public class Utilizator {
+public class UserDTO {
 	private String email;
     private String password;
     

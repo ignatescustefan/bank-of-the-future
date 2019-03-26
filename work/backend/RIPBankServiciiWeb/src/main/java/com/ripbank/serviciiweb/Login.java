@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
 import com.ripbank.core.User;
+import com.ripbank.core.UserDTO;
 import com.ripbank.db.DBManager;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class Login {
 	@POST
 	//@Consumes("application/x-www-form-urlencoded")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response getAuthorizedUser(Utilizator user) {
+	public Response getAuthorizedUser(UserDTO user) {
 		JSONObject jsonObject=new JSONObject();
 		String email=user.getEmail();
 		String password=user.getPassword();
