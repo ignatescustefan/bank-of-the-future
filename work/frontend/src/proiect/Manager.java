@@ -1,6 +1,6 @@
 package proiect;
 
-import proiect.Utilizator;
+import proiect.UserDTO;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -14,7 +14,7 @@ public class Manager {
 
 	private Client client = ClientBuilder.newClient();
 	
-	public Response createJsonUtilizator(Utilizator user) {
+	public Response createJsonUtilizator(UserDTO user) {
 	    return client
 	      .target(REST_URI)
 	      .request(MediaType.APPLICATION_JSON)

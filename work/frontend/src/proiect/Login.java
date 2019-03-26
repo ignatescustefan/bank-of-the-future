@@ -1,6 +1,6 @@
 package proiect;
 
-import proiect.Utilizator;
+import proiect.UserDTO;
 import proiect.Manager;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
 		System.out.println("Mesaj 1");
 		log("your debug message");
 		
-		Utilizator user=new Utilizator();
+		UserDTO user=new UserDTO();
 		user.setEmail(u);
 		user.setPassword(p);
 		

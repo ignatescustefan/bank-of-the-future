@@ -3,17 +3,17 @@ package com.ripbank.core;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Angajat {
+public class Employee {
 	private String nume;
 	private String prenume;
 	private String email;
 	private String parola;
 	
-	public Angajat() {
+	public Employee() {
 		
 	}
 
-	public Angajat(String nume, String prenume, String email, String parola) {
+	public Employee(String nume, String prenume, String email, String parola) {
 		super();
 		this.nume = nume;
 		this.prenume = prenume;
