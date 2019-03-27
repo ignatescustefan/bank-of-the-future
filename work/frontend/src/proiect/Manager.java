@@ -1,12 +1,12 @@
 package proiect;
 
-import proiect.UserDTO;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import DTO.UserDTO;
 
 public class Manager {
 	

@@ -7,26 +7,22 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import com.ripbank.core.User;
+import com.ripbank.core.DTO.UserDTO;
 import com.ripbank.db.DBManager;
+import com.ripbank.logging.Log;
 
 import java.util.List;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import com.ripbank.core.UserDTO;
-
-/**
- * Root resource (exposed at "login" path)
- */
 
 @Path("login")
 public class Login {
 	
-	//TODO: change to USERDTO
-	private JSONObject verifyEmailPasswordCombination(String email, String password) {
+	private JSONObject verifyEmailPasswordCombination(UserDTO user) {
 		//TODO: need to log this
-		List<User> usersList=DBManager.getInstance().findUserByEmailAndPassword(email, password);
+		List<User> usersList=DBManager.getInstance().findUserByEmailAndPassword(user.getEmail(), user.getPassword());
 		if (null == usersList || 1 != usersList.size()) {
 			//not successful 
 			return new JSONObject()
@@ -42,10 +38,9 @@ public class Login {
 	}
 
 	@POST
-	//@Consumes("application/x-www-form-urlencoded")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAuthorizedUser(UserDTO user) {
-		JSONObject jsonObject=verifyEmailPasswordCombination(user.getEmail(), user.getPassword());
+		JSONObject jsonObject=verifyEmailPasswordCombination(user);
 		System.out.println("S-a ajuns aici");
 		//TODO: log this, not console printing
 		SimpleLogging.apel();
@@ -55,7 +50,6 @@ public class Login {
 				.entity(jsonObject.toString())
 				.build();
 	}
-
 	private static class SimpleLogging {
 		/* Get actual class name to be printed on*/
 		static Logger log=Logger.getLogger(SimpleLogging.class.getName());
@@ -64,4 +58,5 @@ public class Login {
 			log.info("Hello this is an info message");
 		}
 	}
+	
 }

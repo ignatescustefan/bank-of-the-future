@@ -1,10 +1,11 @@
 package proiect;
 
-import proiect.UserDTO;
 import proiect.Manager;
 
 import java.io.IOException;
 import javax.ws.rs.core.*;
+
+import DTO.UserDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

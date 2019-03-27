@@ -1,4 +1,4 @@
-package proiect;
+package com.ripbank.core.DTO;
 
 public class UserDTO {
 	private String email;
