@@ -48,6 +48,7 @@ public class Login {
 				.entity(jsonObject.toString())
 				.build();
 	}
+	
 	private static class SimpleLogging {
 		/* Get actual class name to be printed on*/
 		static Logger log=Logger.getLogger(SimpleLogging.class.getName());

@@ -30,7 +30,7 @@ public class TokenCommunication {
 		if (null == usersList || 1 != usersList.size()) {
 			return null;
 		} else {
-			// TODO: fÄƒ asociere cu contul curent È™i dÄƒ pinul
+			// TODO: fa asociere cu contul curent @ da pinul
 			return usersList.get(0).getCnp();
 		}
 	}

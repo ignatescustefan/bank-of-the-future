@@ -1,6 +1,8 @@
-package com.ripbank.core;
+package com.ripbank.core.DAO;
 
 import java.util.List;
+
+import com.ripbank.core.User;
 
 public interface UserDAO {
 	public List<User> findUserByEmail(String email);

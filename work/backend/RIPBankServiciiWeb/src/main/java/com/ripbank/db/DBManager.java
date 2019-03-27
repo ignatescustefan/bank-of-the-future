@@ -6,11 +6,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ripbank.core.ContDAO;
+import com.ripbank.core.Account;
 import com.ripbank.core.User;
-import com.ripbank.core.UserDAO;
+import com.ripbank.core.DAO.AccountDAO;
+import com.ripbank.core.DAO.UserDAO;
+import com.ripbank.core.TipCont;
 
-public class DBManager implements UserDAO, ContDAO{
+public class DBManager implements UserDAO, AccountDAO{
 	private static final DBManager instance = new DBManager();
 	
 	public static DBManager getInstance() {
@@ -85,6 +87,24 @@ public class DBManager implements UserDAO, ContDAO{
 				money.add(currentBalance);
 			}
 			return money;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List <Account> getClientAccounts(String cnp){
+		try (Statement st = DBConnection.getInstance().conn.createStatement()){
+			st.execute("SELECT * FROM cont WHERE cnp="+ "\""+cnp+"\"");
+			List<Account> accounts=new ArrayList<>();
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				Account cont =new Account(TipCont.values()[Integer.parseInt(rs.getString("tip_cont"))], rs.getString("iban"), 
+						rs.getString("proprietar_cnp"), rs.getString("pin"), 
+						Double.parseDouble(rs.getString("sold")));
+				accounts.add(cont);
+			}
+			return accounts;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
