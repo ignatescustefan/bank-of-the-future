@@ -45,7 +45,7 @@
 
 				<form method="post" class="login100-form validate-form" action="Login">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
-						<span class="label-input100">Username</span>
+						<span class="label-input100">Email</span>
 						<input class="input100" type="text" name="user" placeholder="Enter username">
 						<span class="focus-input100"></span>
 					</div>
@@ -87,7 +87,7 @@
 	<script src="login/vendor/daterangepicker/moment.min.js"></script>
 	<script src="login/vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<script src="login/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="login/js/main.js"></script>
 </body>

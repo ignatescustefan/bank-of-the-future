@@ -69,7 +69,7 @@
 	<script src="login/vendor/daterangepicker/moment.min.js"></script>
 	<script src="login/vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<script src="login/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="login/js/main.js"></script>
 </body>
