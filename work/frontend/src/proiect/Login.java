@@ -6,9 +6,6 @@ import java.io.IOException;
 import javax.ws.rs.core.*;
 
 import org.json.JSONObject;
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
-
 import DTO.UserDTO;
 
 import javax.servlet.ServletException;
@@ -16,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //import org.json.JSONObject;
 
@@ -40,6 +38,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		String u=request.getParameter("user");
 		String p=request.getParameter("pass");
 
@@ -49,37 +48,33 @@ public class Login extends HttpServlet {
 		user.setEmail(u);
 		user.setPassword(p);
 		
+		//send request
 		Manager m=new Manager();
+		//get answer
 		Response myResponse = m.createJsonUtilizator(user);
 		
 		System.out.println("Mesaj test 2");
 		System.out.println(myResponse);
         
-		//primesc un json			
-		//deserializare json
-		
-		//String jsonString = EntityUtils.toString(myResponse.getEntity());
+		//create json
 		String responseAsString = myResponse.readEntity(String.class);
 		JSONObject jsonObject = new JSONObject(responseAsString);
 		
 		System.out.println(responseAsString);
 		
-		String loginOk=(String) jsonObject.get("LoginOk");
+		int loginOk=(int) jsonObject.get("LoginOk");
 		System.out.println(loginOk);
 		
-		//setare atribute sesiune
-
-		/*
-		if(UserDAO.instance().verifica(u, p)) {
+		if(loginOk==1) {
+			String username=(String) jsonObject.get("Prenume");
 			HttpSession s=request.getSession(true);
-			s.setAttribute("username",u);
-			response.sendRedirect(request.getContextPath()+"/index.jsp");
+			s.setAttribute("username",username);
+			response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
 		}
 		else {
-			response.sendRedirect(request.getContextPath()+"/second_step.jsp");
+			response.sendRedirect(request.getContextPath()+"/login/try_again.jsp");			
 		}
-		 */
+				
 	}
-
 
 }
