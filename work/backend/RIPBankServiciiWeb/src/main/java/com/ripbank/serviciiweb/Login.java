@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import com.ripbank.core.User;
 import com.ripbank.core.DTO.UserDTO;
 import com.ripbank.db.DBManager;
-import com.ripbank.logging.Log;
-
 import java.util.List;
 
 import javax.ws.rs.POST;
