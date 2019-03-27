@@ -24,15 +24,15 @@ public class Login {
 		if (null == usersList || 1 != usersList.size()) {
 			//not successful 
 			return new JSONObject()
-					.append("LoginOk", 0);
+					.put("LoginOk", 0);
 		}
 		return new JSONObject()
-				.append("LoginOk", 1)
-				.append("CNP", usersList.get(0).getCnp())
-				.append("Email", usersList.get(0).getEmail())
-				.append("Nume", usersList.get(0).getNume())
-				.append("Prenume", usersList.get(0).getPrenume())
-				.append("Telefon", usersList.get(0).getTelefon());
+				.put("LoginOk", 1)
+				.put("CNP", usersList.get(0).getCnp())
+				.put("Email", usersList.get(0).getEmail())
+				.put("Nume", usersList.get(0).getNume())
+				.put("Prenume", usersList.get(0).getPrenume())
+				.put("Telefon", usersList.get(0).getTelefon());
 	}
 
 	@POST
