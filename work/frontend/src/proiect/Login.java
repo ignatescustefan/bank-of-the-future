@@ -65,9 +65,19 @@ public class Login extends HttpServlet {
 		System.out.println(loginOk);
 		
 		if(loginOk==1) {
-			String username=(String) jsonObject.get("Prenume");
+			String nume=(String) jsonObject.get("Nume");
+			String prenume=(String) jsonObject.get("Prenume");
+			String cnp=(String) jsonObject.get("CNP");
+			String email=(String) jsonObject.get("Email");
+			String telefon=(String) jsonObject.get("Telefon");
+			
 			HttpSession s=request.getSession(true);
-			s.setAttribute("username",username);
+			s.setAttribute("nume",nume);
+			s.setAttribute("prenume",prenume);
+			s.setAttribute("cnp",cnp);
+			s.setAttribute("email",email);
+			s.setAttribute("telefon",telefon);
+			
 			response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
 		}
 		else {

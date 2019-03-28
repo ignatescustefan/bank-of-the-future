@@ -32,12 +32,12 @@
 				<li class="has-children account">
 					<a href="#">
 						<img src="img/cd-avatar.png" alt="avatar">
-						<%=session.getAttribute("username")%>
+						<%=session.getAttribute("prenume")%>
 					</a>
 
 					<ul>
 
-						<li><a href="#">Setări cont</a></li>
+						<li><a href="#" onclick="load('pages/setari_cont.jsp')">Setări cont</a></li>
 						<li><a href="pages/logout.jsp">Logout</a></li>
 					</ul>
 				</li>
