@@ -4,9 +4,27 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Contul meu</title>
 </head>
 <body>
-<h1>Contul meu</h1>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-content">
+                    <h4 class="card-title">
+                        Contul meu
+                    </h4>
+                    <hr>
+                    <div class="">
+                        Descriere cont
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

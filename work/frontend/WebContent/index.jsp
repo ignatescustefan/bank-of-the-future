@@ -9,6 +9,9 @@
 	<link rel='icon' href='img/favicon.ico' type='image/x-icon' />
 	
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
@@ -27,15 +30,15 @@
 			<ul class="cd-top-nav">
 				<li><a href="#" onclick="load('pages/contact.jsp')">Contact</a></li>
 				<li class="has-children account">
-					<a href="#0">
+					<a href="#">
 						<img src="img/cd-avatar.png" alt="avatar">
 						<%=session.getAttribute("username")%>
 					</a>
 
 					<ul>
 
-						<li><a href="#0">Setări cont</a></li>
-						<li><a href="#0">Logout</a></li>
+						<li><a href="#">Setări cont</a></li>
+						<li><a href="pages/logout.jsp">Logout</a></li>
 					</ul>
 				</li>
 			</ul>
