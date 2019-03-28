@@ -18,13 +18,12 @@
                     </h4>
                     <hr>
                     <div class="">
-                        Descriere cont
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

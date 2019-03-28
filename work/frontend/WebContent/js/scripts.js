@@ -8,3 +8,22 @@ function load(f) {
 	xhttp.open("GET", f, true);
 	xhttp.send();
 }
+
+function displayNume() {
+	  var elem = document.getElementById("nume");
+	  var btn = document.getElementById("submit");
+	  elem.style.display="block";
+	  btn.style.display="block";
+}
+function displayPrenume() {
+	  var elem = document.getElementById("prenume");
+	  var btn = document.getElementById("submit");
+	  elem.style.display="block";
+	  btn.style.display="block";
+}
+function displayTelefon() {
+	  var elem = document.getElementById("telefon");
+	  var btn = document.getElementById("submit");
+	  elem.style.display="block";
+	  btn.style.display="block";
+}
