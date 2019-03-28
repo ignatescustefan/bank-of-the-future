@@ -95,11 +95,12 @@ public class DBManager implements UserDAO, AccountDAO{
 	
 	public List <Account> getClientAccounts(String cnp){
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("SELECT * FROM cont WHERE cnp="+ "\""+cnp+"\"");
+			System.out.println("SELECT * FROM cont WHERE proprietar_cnp="+ "\""+cnp+"\"");
+			st.execute("SELECT * FROM cont WHERE proprietar_cnp="+ "\""+cnp+"\"");
 			List<Account> accounts=new ArrayList<>();
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Account cont =new Account(TipCont.values()[Integer.parseInt(rs.getString("tip_cont"))], rs.getString("iban"), 
+				Account cont =new Account(TipCont.valueOf(rs.getString("tip_cont")), rs.getString("iban"), 
 						rs.getString("proprietar_cnp"), rs.getString("pin"), 
 						Double.parseDouble(rs.getString("sold")));
 				accounts.add(cont);
