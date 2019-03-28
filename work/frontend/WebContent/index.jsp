@@ -29,7 +29,7 @@
 				<li class="has-children account">
 					<a href="#0">
 						<img src="img/cd-avatar.png" alt="avatar">
-						Account
+						<%=session.getAttribute("username")%>
 					</a>
 
 					<ul>
