@@ -9,5 +9,6 @@
   <modules>
     <module>RIPBankServiciiWeb</module>
     <module>RIPBankCore</module>
+    <module>RIPBankDesktop</module>
   </modules>
 </project>
