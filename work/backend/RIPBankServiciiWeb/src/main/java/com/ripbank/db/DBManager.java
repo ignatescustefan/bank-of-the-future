@@ -100,6 +100,7 @@ public class DBManager implements UserDAO, AccountDAO{
 			List<Account> accounts=new ArrayList<>();
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
+				System.out.println(rs.getString("tip_cont"));
 				Account cont =new Account(TipCont.valueOf(rs.getString("tip_cont")), rs.getString("iban"), 
 						rs.getString("proprietar_cnp"), rs.getString("pin"), 
 						Double.parseDouble(rs.getString("sold")));

@@ -9,6 +9,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+DBConnection.java
 
 # External tool builders
 .externalToolBuilders/
