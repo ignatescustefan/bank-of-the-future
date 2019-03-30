@@ -14,11 +14,11 @@ import com.ripbank.core.TipCont;
 
 public class DBManager implements UserDAO, AccountDAO{
 	private static final DBManager instance = new DBManager();
-	
+
 	public static DBManager getInstance() {
 		return instance;
 	}
-	
+
 	@Override
 	public List<User> findUserByCNP(String cnp) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
@@ -75,7 +75,7 @@ public class DBManager implements UserDAO, AccountDAO{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<Double> getBalanceForIBAN(String iban) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
@@ -92,7 +92,7 @@ public class DBManager implements UserDAO, AccountDAO{
 		}
 		return null;
 	}
-	
+
 	public List <Account> getClientAccounts(String cnp){
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
 			System.out.println("SELECT * FROM cont WHERE proprietar_cnp="+ "\""+cnp+"\"");
@@ -111,5 +111,31 @@ public class DBManager implements UserDAO, AccountDAO{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean insertAuthCodeInDB(String cnp, String authCode) {
+		try(Statement st = DBConnection.getInstance().conn.createStatement()){
+			System.out.println("INSERT INTO tranzactie values("
+					//insert ID here
+					+"\"2 \"" 
+					//insert cnp here
+					+"\""+cnp+"\""
+					+"\""+authCode+"\""
+					+"CURRENT_TIMESTAMP"+
+					")");
+			
+			
+			st.execute("INSERT INTO tranzactie values("
+					//insert ID here
+					+"\"2 \"" 
+					//insert cnp here
+					+"\""+cnp+"\""
+					+"\""+authCode+"\""
+					+"CURRENT_TIMESTAMP"+
+					")");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
