@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 @Path("login")
@@ -47,6 +48,19 @@ public class Login {
 				.status(200)
 				.entity(jsonObject.toString())
 				.build();
+	}
+	
+	@Path("/{cnp}")
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response verifyTokenAuth(@PathParam("cnp") String cnp) {
+		//TODO: get current time; if it's <1 min, return ok
+		/*
+		 * if it's fine
+		 * return Response.status(200).build();
+		 */
+		return Response.status(401).build();
+				
 	}
 	
 	private static class SimpleLogging {

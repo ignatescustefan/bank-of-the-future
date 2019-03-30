@@ -10,9 +10,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.ripbank.db.DBManager;
 
-@Path("updatePIN")
+@Path("token")
 public class TokenCommunication {
-
+	@Path("updatePIN")
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)

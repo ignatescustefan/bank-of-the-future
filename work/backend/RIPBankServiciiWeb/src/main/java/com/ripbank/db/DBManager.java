@@ -115,27 +115,20 @@ public class DBManager implements UserDAO, AccountDAO{
 
 	public boolean insertAuthCodeInDB(String cnp, String authCode) {
 		try(Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println("INSERT INTO tranzactie values("
-					//insert ID here
-					+"\"2 \"" 
-					//insert cnp here
-					+"\""+cnp+"\""
-					+"\""+authCode+"\""
+			System.out.println("INSERT INTO token values(NULL, "
+					+"\""+cnp+"\", "
+					+"\""+authCode+"\", "
 					+"CURRENT_TIMESTAMP"+
 					")");
-			
-			
-			st.execute("INSERT INTO tranzactie values("
-					//insert ID here
-					+"\"2 \"" 
-					//insert cnp here
-					+"\""+cnp+"\""
-					+"\""+authCode+"\""
+			st.execute("INSERT INTO token values(NULL, "
+					+"\""+cnp+"\", "
+					+"\""+authCode+"\", "
 					+"CURRENT_TIMESTAMP"+
 					")");
 		}catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 }
