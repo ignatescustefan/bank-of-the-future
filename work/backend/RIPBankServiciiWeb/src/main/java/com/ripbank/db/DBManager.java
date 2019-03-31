@@ -57,7 +57,7 @@ public class DBManager implements UserDAO, AccountDAO{
 		return null;
 	}
 
-	@Override
+	@Override		
 	public List<User> findUserByEmailAndPassword(String email, String password) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
 			List<User> userList=new ArrayList<>();
@@ -115,16 +115,35 @@ public class DBManager implements UserDAO, AccountDAO{
 
 	public boolean insertAuthCodeInDB(String cnp, String authCode) {
 		try(Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println("INSERT INTO token values(NULL, "
-					+"\""+cnp+"\", "
-					+"\""+authCode+"\", "
-					+"CURRENT_TIMESTAMP"+
-					")");
-			st.execute("INSERT INTO token values(NULL, "
-					+"\""+cnp+"\", "
-					+"\""+authCode+"\", "
-					+"CURRENT_TIMESTAMP"+
-					")");
+			System.out.println(
+					"INSERT INTO token (token_cnp, token_key, time_stamp) VALUES("
+							+"\""+cnp+"\","
+							+"\""+authCode+"\","
+							+"CURRENT_TIMESTAMP)");
+			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES("
+					+"\""+cnp+"\","
+					+"\""+authCode+"\","
+					+"CURRENT_TIMESTAMP)");
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean updateUserInformation(String cnp, String email, String nume, 
+			String prenume, String telefon) {
+		try(Statement st = DBConnection.getInstance().conn.createStatement()){
+			System.out.println("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
+					+ ", `prenume`="+"\""+prenume+"\""+
+					",`email`="+"\""+email+"\""+
+					",`telefon`="+ "\""+telefon+"\""+
+					" WHERE cnp="+"\"" +cnp +"\"");
+			st.execute("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
+					+ ", `prenume`="+"\""+prenume+"\""+
+					",`email`="+"\""+email+"\""+
+					",`telefon`="+ "\""+telefon+"\""+
+					" WHERE cnp="+"\"" +cnp +"\"");
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
