@@ -3,6 +3,8 @@ package com.RIPBankDesktop;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -22,12 +25,16 @@ import java.awt.Component;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.Console;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JPasswordField passwordField;
+	private JPasswordField txtPasswordField;
 
 	/**
 	 * Launch the application.
@@ -48,8 +55,20 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	public static final String encrypt(String md5) {
+	    try {
+	        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+	        byte[] array = md.digest(md5.getBytes());
+	        StringBuffer sb = new StringBuffer();
+	        for (int i = 0; i < array.length; ++i) {
+	          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+	       }
+	        return sb.toString();
+	    } catch (java.security.NoSuchAlgorithmException e) {}
+	    return null;
+	}
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/rip-ico.ico")));
+		super("Login");
 		setResizable(false);
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,12 +85,12 @@ public class Login extends JFrame {
 		contentPane.add(desktopPane, BorderLayout.CENTER);
 		desktopPane.setLayout(null);
 		
-		JTextArea username = new JTextArea();
-		username.setToolTipText("username");
-		username.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		username.setBounds(127, 176, 136, 23);
-		username.setBorder(new LineBorder(new Color(171, 173, 179)));
-		desktopPane.add(username);
+		final JTextArea txtUsername = new JTextArea();
+		txtUsername.setToolTipText("username");
+		txtUsername.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtUsername.setBounds(127, 176, 136, 23);
+		txtUsername.setBorder(new LineBorder(new Color(171, 173, 179)));
+		desktopPane.add(txtUsername);
 		
 		JLabel loginIcon = new JLabel();
 		loginIcon.setBounds(0, 0, 391, 104);
@@ -84,13 +103,44 @@ public class Login extends JFrame {
 		lblSignIn.setFont(new Font("Segoe UI", Font.BOLD, 28));
 		lblSignIn.setForeground(new Color(0, 0, 102));
 		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		passwordField.setBorder(new LineBorder(new Color(171, 173, 179)));
-		passwordField.setBounds(127, 217, 136, 23);
-		desktopPane.add(passwordField);
+		txtPasswordField = new JPasswordField();
+		txtPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtPasswordField.setBorder(new LineBorder(new Color(171, 173, 179)));
+		txtPasswordField.setBounds(127, 217, 136, 23);
+		desktopPane.add(txtPasswordField);
+		
+		
 		
 		JButton login = new JButton("Login");
+		login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DashBoardRIP window=new DashBoardRIP();
+				//GraphicsEnvironment localEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				//GraphicsDevice defaultDevice = localEnvironment.getDefaultScreenDevice();
+				//.setFullScreenWindow(window);
+				
+				//TODO: logica de login
+				String user=txtUsername.getText();
+				char[] passwordString=txtPasswordField.getPassword();
+				
+				//char[] pass = tb_pwd.getPassword();
+				String final_pass = "";
+				for (char x : passwordString) {
+				    final_pass += x;
+				}
+
+				
+				System.out.println(user+" "+ final_pass);
+				if (user.equals("ana") && final_pass.equals("ana123")) {
+		            System.out.println("login oki");
+		            window.setVisible(true);
+		            dispose();
+		            }
+		            else{
+		            	System.out.println("login not oki");
+		            }
+				}
+		});
 		login.setBorder(null);
 		login.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		login.setForeground(SystemColor.textHighlightText);
@@ -110,6 +160,12 @@ public class Login extends JFrame {
 		desktopPane.add(userIcon);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
 		btnCancel.setForeground(Color.WHITE);
 		btnCancel.setBorder(null);
 		btnCancel.setBackground(new Color(87, 184, 70));
