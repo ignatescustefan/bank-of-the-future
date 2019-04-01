@@ -98,13 +98,13 @@ public class Login extends HttpServlet {
 			
 			int contor=0;
 			for(int i=0;i<jsonAccount.length();i++) {
-				JSONObject item=(JSONObject) jsonAccount.get(0);			
+				JSONObject item=(JSONObject) jsonAccount.get(i);			
 				//System.out.println(item);
 				++contor;
 				
-				String iban=(String) item.get("iban");
-				String tipCont=(String) item.get("tipCont");
-				double sold=(double) item.get("sold");
+				String iban=item.getString("iban");
+				String tipCont=item.getString("tipCont");
+				double sold= item.getDouble("sold");
 								
 				s.setAttribute("iban"+i,iban);
 				s.setAttribute("tipCont"+i,tipCont);
