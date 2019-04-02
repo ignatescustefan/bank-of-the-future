@@ -30,8 +30,6 @@ public class TokenCommunication {
 			@PathParam("cnp") String cnp,
 			@FormParam("authCode") String authCode
 			) {
-		//TODO: connect to db, insert 
-		System.out.println("aici: "+cnp);
 		DBManager.getInstance().insertAuthCodeInDB(cnp, authCode);
 		return "primit";
 	}
