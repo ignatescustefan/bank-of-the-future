@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 
 public class Account {
 	
-	private static String cnp;
+	static String cnp;
 	public Account(String cnp) {
 		Account.cnp=cnp;
 	}	

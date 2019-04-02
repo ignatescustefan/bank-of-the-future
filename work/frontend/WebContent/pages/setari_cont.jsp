@@ -41,23 +41,23 @@
 					</div>
 					
 					<br/><br/>   
-					<form class="form-horizontal" action="#">
+					<form class="form-horizontal" method="post" action="Modify">
 					  <div class="form-group" id="nume">
 					    <label class="control-label col-sm-2" for="nume">Nume:</label>
 					    <div class="col-sm-8">
-					      <input type="text" class="form-control" id="inputNume" value="<%=session.getAttribute("nume")%>">
+					      <input type="text" class="form-control" id="inputNume" name = "nume" value="<%=session.getAttribute("nume")%>">
 					    </div>
 					  </div>
 					  <div class="form-group" id="prenume">
 					    <label class="control-label col-sm-2" for="prenume">Prenume:</label>
 					    <div class="col-sm-8">
-					      <input type="text" class="form-control" id="inputPrenume" value="<%=session.getAttribute("prenume")%>">
+					      <input type="text" class="form-control" id="inputPrenume" name = "prenume" value="<%=session.getAttribute("prenume")%>">
 					    </div>
 					  </div>
 					  <div class="form-group" id="telefon">
 					    <label class="control-label col-sm-2" for="telefon">Telefon:</label>
 					    <div class="col-sm-8">
-					      <input type="text" class="form-control" id="inputTelefon" value="<%=session.getAttribute("telefon")%>">
+					      <input type="text" class="form-control" id="inputTelefon" name = "telefon" value="<%=session.getAttribute("telefon")%>">
 					    </div>
 					  </div>
 					  

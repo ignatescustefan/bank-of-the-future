@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import com.ripbank.db.DBManager;
 
 @Path("update")
@@ -25,9 +27,12 @@ public class UpdateUserInfo {
 			@FormParam("telefon") String telefon
 			) {
 		DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon);
+		JSONObject obj=new JSONObject();
+		obj.put("fsa", "da");
 		//TODO: get user from DB, create json with updated info
 		return Response
 				.status(200)
+				.entity(obj.toString())
 				.build();
 	}
 }
