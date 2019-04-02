@@ -1,10 +1,12 @@
 package proiect;
 
 import proiect.Manager;
+import proiect.Account;
 
 import java.io.IOException;
 import javax.ws.rs.core.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import DTO.UserDTO;
 
@@ -77,6 +79,40 @@ public class Login extends HttpServlet {
 			s.setAttribute("cnp",cnp);
 			s.setAttribute("email",email);
 			s.setAttribute("telefon",telefon);
+			
+			//send request
+			Account a=new Account(cnp);
+			//get answer
+			Response responseInformation = a.extractAccountInformation();
+			
+			System.out.println("Mesaj test 3");
+			System.out.println(responseInformation);
+	        
+			//create json
+			String informationAsString = responseInformation.readEntity(String.class);
+			JSONObject jsonInformation = new JSONObject(informationAsString);
+			JSONArray jsonAccount = (JSONArray) jsonInformation.get("account");
+			
+			System.out.println("Mesaj test 4");
+			System.out.println(jsonAccount);
+			
+			int contor=0;
+			for(int i=0;i<jsonAccount.length();i++) {
+				JSONObject item=(JSONObject) jsonAccount.get(i);			
+				//System.out.println(item);
+				++contor;
+				
+				String iban=item.getString("iban");
+				String tipCont=item.getString("tipCont");
+				double sold= item.getDouble("sold");
+								
+				s.setAttribute("iban"+i,iban);
+				s.setAttribute("tipCont"+i,tipCont);
+				s.setAttribute("sold"+i,sold);
+			}
+					
+			System.out.println(contor);
+			s.setAttribute("contor", contor);
 			
 			response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
 		}

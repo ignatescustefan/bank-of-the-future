@@ -425,7 +425,7 @@ Sidebar
     float: left;
     top: auto;
     width: 110px;
-    min-height: 100vh;
+    min-height: 99vh;
     padding-top: 55px;
     /* reset style */
     visibility: visible;
