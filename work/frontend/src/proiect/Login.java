@@ -117,6 +117,7 @@ public class Login extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
 		}
 		else {
+			
 			response.sendRedirect(request.getContextPath()+"/login/try_again.jsp");			
 		}
 				

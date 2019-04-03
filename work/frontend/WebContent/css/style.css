@@ -609,7 +609,7 @@ Sidebar
   }
   .cd-top-nav .has-children {
     position: relative;
-    /*background-color: #57b846;*/
+    /*background-color: #499802;*/
     background-color: #fa7307;
   }
   .cd-top-nav .has-children > a {
@@ -716,3 +716,8 @@ Sidebar
 #prenume {display: none;}
 #telefon {display: none;}
 #submit {display: none;}
+
+.title {
+	background-color: #fa7307 !important;
+	color: #ffffff !important;
+}
