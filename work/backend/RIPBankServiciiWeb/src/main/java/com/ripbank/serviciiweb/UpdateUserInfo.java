@@ -26,13 +26,15 @@ public class UpdateUserInfo {
 			@FormParam("prenume") String prenume,
 			@FormParam("telefon") String telefon
 			) {
-		DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon);
-		JSONObject obj=new JSONObject();
 		obj.put("fsa", "da");
-		//TODO: get user from DB, create json with updated info
-		return Response
-				.status(200)
-				.entity(obj.toString())
-				.build();
+		DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon);
+		if (DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon)) {
+			//TODO: get user from DB, create json with updated info
+			return Response
+					.status(200)
+					.build();			
+		};
+		//TODO: get false response
+		return null;
 	}
 }
