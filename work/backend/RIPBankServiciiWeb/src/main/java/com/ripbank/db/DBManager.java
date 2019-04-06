@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ripbank.core.Account;
+import com.ripbank.core.Employee;
 import com.ripbank.core.User;
 import com.ripbank.core.DAO.AccountDAO;
+import com.ripbank.core.DAO.EmployeeDAO;
 import com.ripbank.core.DAO.UserDAO;
 import com.ripbank.core.TipCont;
 
-public class DBManager implements UserDAO, AccountDAO{
+public class DBManager implements UserDAO, AccountDAO, EmployeeDAO{
 	private static final DBManager instance = new DBManager();
 
 	public static DBManager getInstance() {
@@ -46,7 +48,8 @@ public class DBManager implements UserDAO, AccountDAO{
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
 				User user=new User(rs.getString("nume"), rs.getString("prenume"),
-						rs.getString("email"), rs.getString("parola"), rs.getString("cnp"),
+						rs.getString("email"), rs.getString("pa"
+								+ "rola"), rs.getString("cnp"),
 						rs.getString("telefon"));
 				userList.add(user);
 				return userList;
@@ -149,5 +152,23 @@ public class DBManager implements UserDAO, AccountDAO{
 			return false;
 		}
 		return true;
+	}
+	
+	@Override		
+	public List<Employee> findEmployeeByEmailAndPass(String email, String password) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()){
+			List<Employee> employees=new ArrayList<>();
+			st.execute("SELECT * FROM angajat WHERE email="+"\""+email+ "\""+ "AND parola="+"\""+password+"\"");
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				Employee employee=new Employee(rs.getString("nume"), rs.getString("prenume"),
+						rs.getString("email"), null);
+				employees.add(employee);
+				return employees;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

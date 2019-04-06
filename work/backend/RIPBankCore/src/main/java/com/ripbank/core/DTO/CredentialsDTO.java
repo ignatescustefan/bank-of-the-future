@@ -1,6 +1,6 @@
 package com.ripbank.core.DTO;
 
-public class UserDTO {
+public class CredentialsDTO {
 	private String email;
     private String password;
     
