@@ -10,7 +10,6 @@ public class Employee {
 	private String parola;
 	
 	public Employee() {
-		
 	}
 
 	public Employee(String nume, String prenume, String email, String parola) {
