@@ -3,36 +3,38 @@ package com.RIPBankDesktop;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
-import javax.swing.UIManager;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
+
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+
 import javax.swing.JPasswordField;
-import java.awt.Component;
 import javax.swing.JButton;
 import java.awt.Cursor;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.Console;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login extends JFrame {
+public class LoginPanel extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 812408638340163190L;
+	/**
+	 * 
+	 */
 	private JPanel contentPane;
 	private JPasswordField txtPasswordField;
 
@@ -43,7 +45,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					LoginPanel frame = new LoginPanel();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,8 +69,9 @@ public class Login extends JFrame {
 	    } catch (java.security.NoSuchAlgorithmException e) {}
 	    return null;
 	}
-	public Login() {
+	public LoginPanel() {
 		super("Login");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPanel.class.getResource("/img/rip_icon.png")));
 		setResizable(false);
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +97,7 @@ public class Login extends JFrame {
 		
 		JLabel loginIcon = new JLabel();
 		loginIcon.setBounds(0, 0, 391, 104);
-		loginIcon.setIcon(new ImageIcon(Login.class.getResource("/img/logn2.jpg")));
+		loginIcon.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/logn2.jpg")));
 		desktopPane.add(loginIcon);
 		
 		JLabel lblSignIn = new JLabel("Sign in",SwingConstants.CENTER);
@@ -111,16 +114,19 @@ public class Login extends JFrame {
 		
 		
 		
+		final JLabel lblIncorrect = new JLabel("Incorrect credentials.", SwingConstants.LEFT);
 		JButton login = new JButton("Login");
 		login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DashBoardRIP window=new DashBoardRIP();
+				
 				//GraphicsEnvironment localEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				//GraphicsDevice defaultDevice = localEnvironment.getDefaultScreenDevice();
 				//.setFullScreenWindow(window);
 				
 				//TODO: logica de login
-				String user=txtUsername.getText();
+				
+				
+				String userString=txtUsername.getText();
 				char[] passwordString=txtPasswordField.getPassword();
 				
 				//char[] pass = tb_pwd.getPassword();
@@ -128,34 +134,60 @@ public class Login extends JFrame {
 				for (char x : passwordString) {
 				    final_pass += x;
 				}
-
 				
-				System.out.println(user+" "+ final_pass);
-				if (user.equals("ana") && final_pass.equals("ana123")) {
-		            System.out.println("login oki");
-		            window.setVisible(true);
-		            dispose();
-		            }
-		            else{
-		            	System.out.println("login not oki");
-		            }
+				System.out.println(userString+" "+ final_pass);
+				
+				EmployeeDTO user= new EmployeeDTO(userString, final_pass);
+				
+				//send request
+				
+				Manager m=new Manager();
+				
+				Response myResponse=m.createJsonUtilizator(user);
+				
+				System.out.println("My response");
+				System.out.println(myResponse);
+				
+				String responseAsString = myResponse.readEntity(String.class);
+				JSONObject jsonObject = new JSONObject(responseAsString);
+				
+				
+				int loginOk=jsonObject.getInt("LoginOk");
+				System.out.println(loginOk);
+				
+				System.out.println("My response");
+				System.out.println(myResponse);
+				
+				if(loginOk==0) {
+					//false
+					//set label date incorecte
+					System.out.println("Date incorecte : loginOk="+loginOk);
+					lblIncorrect.setVisible(true);;
 				}
+				else{
+					System.out.println("Date valide : loginOk="+loginOk);
+					DashBoardRIP window=new DashBoardRIP();
+					window.setVisible(true);
+		            dispose();
+				}
+				}
+				
 		});
 		login.setBorder(null);
 		login.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		login.setForeground(SystemColor.textHighlightText);
 		//login.setBorder(new LineBorder(SystemColor.scrollbar, 1, true));
 		login.setBackground(new Color(87, 184, 70));
-		login.setBounds(203, 271, 60, 23);
+		login.setBounds(203, 287, 60, 23);
 		desktopPane.add(login);
 		
 		JLabel passwordIcon = new JLabel("");
-		passwordIcon.setIcon(new ImageIcon(Login.class.getResource("/img/key.png")));
+		passwordIcon.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/key.png")));
 		passwordIcon.setBounds(103, 217, 23, 23);
 		desktopPane.add(passwordIcon);
 		
 		JLabel userIcon = new JLabel("");
-		userIcon.setIcon(new ImageIcon(Login.class.getResource("/img/user.png")));
+		userIcon.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/user.png")));
 		userIcon.setBounds(103, 176, 23, 23);
 		desktopPane.add(userIcon);
 		
@@ -169,19 +201,24 @@ public class Login extends JFrame {
 		btnCancel.setForeground(Color.WHITE);
 		btnCancel.setBorder(null);
 		btnCancel.setBackground(new Color(87, 184, 70));
-		btnCancel.setBounds(127, 271, 60, 23);
+		btnCancel.setBounds(127, 287, 60, 23);
 		desktopPane.add(btnCancel);
 		
 		JLabel lblForgotPass = new JLabel("Forgot Password?",SwingConstants.LEFT);
-		lblForgotPass.setBounds(127, 246, 136, 14);
+		lblForgotPass.setBounds(127, 262, 136, 14);
 		lblForgotPass.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		lblForgotPass.setForeground(new Color(87, 184, 70));
 		desktopPane.add(lblForgotPass);
 		
+		lblIncorrect.setVisible(false);
+		lblIncorrect.setForeground(Color.RED);
+		lblIncorrect.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		lblIncorrect.setBounds(127, 247, 136, 14);
+		desktopPane.add(lblIncorrect);
+		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(171, 173, 179), 1));
-		panel.setBackground(new Color(250, 250, 250));
-		panel.setBounds(90, 115, 211, 193);
+		panel.setBackground(new Color(250,250,250));
+		panel.setBounds(86, 115, 219, 214);
 		desktopPane.add(panel);
 	}
 }

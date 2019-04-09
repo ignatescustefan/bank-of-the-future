@@ -1,23 +1,21 @@
 package com.RIPBankDesktop;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 
 public class DashBoardRIP extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7456512844086031995L;
 	private JPanel contentPane;
 
 	/**
