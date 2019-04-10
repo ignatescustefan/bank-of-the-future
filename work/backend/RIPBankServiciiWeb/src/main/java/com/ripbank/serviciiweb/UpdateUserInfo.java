@@ -26,7 +26,6 @@ public class UpdateUserInfo {
 			@FormParam("prenume") String prenume,
 			@FormParam("telefon") String telefon
 			) {
-		//obj.put("fsa", "da");
 		DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon);
 		if (DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon)) {
 			//TODO: get user from DB, create json with updated info

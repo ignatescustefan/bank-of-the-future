@@ -1,4 +1,4 @@
-package com.ripbank.serviciiweb;
+ package com.ripbank.serviciiweb;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

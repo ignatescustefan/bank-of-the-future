@@ -12,7 +12,6 @@ import com.ripbank.core.DTO.CredentialsDTO;
 import com.ripbank.db.DBManager;
 import java.util.List;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -51,12 +50,6 @@ public class Login {
 				.put("Email", employees.get(0).getEmail())
 				.put("Nume", employees.get(0).getNume())
 				.put("Prenume", employees.get(0).getPrenume());
-	}
-	
-	@GET
-	@Produces({MediaType.TEXT_PLAIN})
-	public String returnSmth() {
-		return "da";
 	}
 	
 	@POST

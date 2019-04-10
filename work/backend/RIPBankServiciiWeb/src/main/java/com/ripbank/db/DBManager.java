@@ -11,10 +11,12 @@ import com.ripbank.core.Employee;
 import com.ripbank.core.User;
 import com.ripbank.core.DAO.AccountDAO;
 import com.ripbank.core.DAO.EmployeeDAO;
+import com.ripbank.core.DAO.TransactionDAO;
 import com.ripbank.core.DAO.UserDAO;
+import com.ripbank.core.DTO.TransactionDTO;
 import com.ripbank.core.TipCont;
 
-public class DBManager implements UserDAO, AccountDAO, EmployeeDAO{
+public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionDAO{
 	private static final DBManager instance = new DBManager();
 
 	public static DBManager getInstance() {
@@ -170,5 +172,16 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean makeTransaction(TransactionDTO transaction) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()){
+			st.execute("");
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
