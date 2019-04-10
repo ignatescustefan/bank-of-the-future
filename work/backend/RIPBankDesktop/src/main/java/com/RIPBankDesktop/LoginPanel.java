@@ -37,6 +37,7 @@ public class LoginPanel extends JFrame {
 	 */
 	private JPanel contentPane;
 	private JPasswordField txtPasswordField;
+	private Employee angajat;
 
 	/**
 	 * Launch the application.
@@ -70,7 +71,10 @@ public class LoginPanel extends JFrame {
 	    return null;
 	}
 	public LoginPanel() {
+		
+		
 		super("Login");
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPanel.class.getResource("/img/rip_icon.png")));
 		setResizable(false);
 		setBackground(Color.WHITE);
@@ -125,7 +129,7 @@ public class LoginPanel extends JFrame {
 				
 				//TODO: logica de login
 				
-				
+	
 				String userString=txtUsername.getText();
 				char[] passwordString=txtPasswordField.getPassword();
 				
@@ -165,8 +169,18 @@ public class LoginPanel extends JFrame {
 					lblIncorrect.setVisible(true);;
 				}
 				else{
+					
 					System.out.println("Date valide : loginOk="+loginOk);
-					DashBoardRIP window=new DashBoardRIP();
+					
+					String numeString=jsonObject.getString("Nume");
+					String prenumeString=jsonObject.getString("Prenume");
+					String emailString=jsonObject.getString("Email");
+					
+					angajat=new Employee(numeString,prenumeString,emailString);
+					
+					DashBoardRIP window=new DashBoardRIP(angajat);
+					
+					System.out.println("loginpanel angajat "+ angajat.toString());
 					window.setVisible(true);
 		            dispose();
 				}
