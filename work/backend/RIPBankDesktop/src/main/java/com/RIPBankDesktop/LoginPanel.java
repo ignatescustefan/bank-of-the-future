@@ -19,12 +19,13 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
-
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginPanel extends JFrame {
 
@@ -76,11 +77,32 @@ public class LoginPanel extends JFrame {
 		super("Login");
 
 		txtUsername = new JTextArea();
+		txtUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode()==KeyEvent.VK_TAB) {
+					if (arg0.getModifiers() > 0) {
+                        txtUsername.transferFocusBackward();
+                    } else {
+                    	txtUsername.transferFocus();
+                    }
+                    arg0.consume();
+                }
+				
+			}
+		});
 		desktopPane = new JDesktopPane();
 		loginIcon = new JLabel();
 		lblSignIn = new JLabel("Sign in", SwingConstants.CENTER);
 		lblIncorrect = new JLabel("Incorrect credentials.", SwingConstants.LEFT);
 		login = new JButton("Login");
+		login.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyChar()==KeyEvent.VK_ENTER)
+					login.doClick();
+			}
+		});
 		passwordIcon = new JLabel("");
 		userIcon = new JLabel("");
 		btnCancel = new JButton("Cancel");
@@ -119,6 +141,14 @@ public class LoginPanel extends JFrame {
 		lblSignIn.setForeground(new Color(0, 0, 102));
 
 		txtPasswordField = new JPasswordField();
+		txtPasswordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyChar()==KeyEvent.VK_ENTER) {
+					login.doClick();
+				}
+			}
+		});
 		txtPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtPasswordField.setBorder(new LineBorder(new Color(171, 173, 179)));
 		txtPasswordField.setBounds(127, 217, 136, 23);
@@ -162,8 +192,10 @@ public class LoginPanel extends JFrame {
 					// false
 					// set label date incorecte
 					System.out.println("Date incorecte : loginOk=" + loginOk);
+					txtUsername.setText("");
+					txtPasswordField.setText("");
 					lblIncorrect.setVisible(true);
-					;
+					txtPasswordField.transferFocusBackward();
 				} else {
 
 					System.out.println("Date valide : loginOk=" + loginOk);

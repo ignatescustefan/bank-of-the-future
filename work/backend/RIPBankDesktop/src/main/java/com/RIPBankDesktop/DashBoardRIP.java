@@ -132,7 +132,7 @@ public class DashBoardRIP extends JFrame {
 		contentPane.add(rightPanel);
 		rightPanel.setLayout(null);
 
-		btnSetariCont.setBounds(69, 49, 110, 23);
+		btnSetariCont.setBounds(69, 173, 110, 23);
 		rightPanel.add(btnSetariCont);
 
 		btnLogout.addActionListener(new ActionListener() {
@@ -142,29 +142,37 @@ public class DashBoardRIP extends JFrame {
 				dispose();
 			}
 		});
-		btnLogout.setBounds(69, 463, 110, 23);
+		btnLogout.setBounds(69, 483, 110, 23);
 		rightPanel.add(btnLogout);
 
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setBounds(52, 97, 144, 29);
+		lblName.setBounds(52, 221, 144, 29);
 		lblName.setVisible(false);
 		rightPanel.add(lblName);
 
 		lblPrenume.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrenume.setBounds(52, 137, 144, 29);
+		lblPrenume.setBounds(52, 261, 144, 29);
 		lblPrenume.setVisible(false);
 		rightPanel.add(lblPrenume);
 
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmail.setBounds(52, 177, 144, 29);
+		lblEmail.setBounds(52, 301, 144, 29);
 		lblEmail.setVisible(false);
 		rightPanel.add(lblEmail);
 		
 		
 		btnModifica.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnModifica.setBounds(69, 217, 110, 23);
+		btnModifica.setBounds(69, 341, 110, 23);
 		btnModifica.setVisible(false);
 		rightPanel.add(btnModifica);
+		
+		JButton btnCautareClient = new JButton("Cautare client");
+		btnCautareClient.setBounds(69, 47, 110, 23);
+		rightPanel.add(btnCautareClient);
+		
+		JButton btnAgaugareClient = new JButton("Agaugare client");
+		btnAgaugareClient.setBounds(69, 98, 110, 23);
+		rightPanel.add(btnAgaugareClient);
 
 		employeePanel.setBounds(1200, 0, 168, 140);
 		employeePanel.setBackground(new Color(251, 141, 2));
@@ -194,7 +202,7 @@ public class DashBoardRIP extends JFrame {
 		
 		panelWelc = new JPanel();
 		panelWelc.setBorder(new LineBorder(UIManager.getColor("Button.disabledForeground")));
-		panelWelc.setBounds(374, 38, 400, 74);
+		panelWelc.setBounds(277, 38, 400, 74);
 		panelWelc.setBackground(new Color(251, 141, 2));
 		firstPanel.add(panelWelc);
 		panelWelc.setLayout(null);
@@ -222,12 +230,12 @@ public class DashBoardRIP extends JFrame {
 		
 		JLabel lblCautaClient = new JLabel("Cauta client");
 		lblCautaClient.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCautaClient.setBounds(193, 50, 91, 38);
+		lblCautaClient.setBounds(211, 50, 91, 38);
 		panelContent.add(lblCautaClient);
 		
 		JButton btnCauta = new JButton("");
 		btnCauta.setIcon(new ImageIcon(DashBoardRIP.class.getResource("/img/client_search.png")));
-		btnCauta.setBounds(532, 50, 38, 38);
+		btnCauta.setBounds(512, 50, 38, 38);
 		panelContent.add(btnCauta);
 
 	}
