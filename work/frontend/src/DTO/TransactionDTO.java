@@ -1,30 +1,48 @@
 package DTO;
 
+import proiect.TipCont;
+
 public class TransactionDTO {
-	private String ibanSursa;
-    private String ibanDestinatie;
-    private double suma;
-    
-    public String getIbanSursa() {
-		return ibanSursa;
+	private String ibanDest;
+	private String ibanSource;
+	private double amount;
+	private TipCont tipCont;
+	private String operatorTranzactie;
+
+	public String getIbanSource() {
+		return ibanSource;
 	}
-    public String getIbanDestinatie() {
-		return ibanDestinatie;
+	public void setIbanSource(String ibanSource) {
+		this.ibanSource = ibanSource;
 	}
-    public double getSuma() {
-    	return suma;
-    }
-    public void setIbanSursa(String newIbanSursa) {
-    	ibanSursa=newIbanSursa;
-    }
-    public void setIbanDestinatie(String newIbanDestinatie) {
-    	ibanDestinatie=newIbanDestinatie;
-    }
-    public void setSuma(double newSuma) {
-    	suma=newSuma;
-    }
+	public String getIbanDest() {
+		return ibanDest;
+	}
+	public void setIbanDest(String ibanDest) {
+		this.ibanDest = ibanDest;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public TipCont getTipCont() {
+		return tipCont;
+	}
+	public void setTipCont(TipCont tipCont) {
+		this.tipCont = tipCont;
+	}
+	public String getOperatorTranzactie() {
+		return operatorTranzactie;
+	}
+	public void setOperatorTranzactie(String operatorTranzactie) {
+		this.operatorTranzactie = operatorTranzactie;
+	}
 	@Override
 	public String toString() {
-		return "TransactionDTO [ibanSursa=" + ibanSursa + ", ibanDestinatie=" + ibanDestinatie  + ", suma=" + suma + "]";
+		return "TransactionDTO [ibanDest=" + ibanDest + ", ibanSource=" + ibanSource + ", amount=" + amount
+				+ ", tipCont=" + tipCont + ", operatorTranzactie=" + operatorTranzactie + "]";
 	}
+	
 }

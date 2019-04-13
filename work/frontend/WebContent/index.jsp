@@ -26,8 +26,8 @@
 </head>
 <body onload="load('pages/contul_meu.jsp');">
 	<header class="cd-main-header">
-		<a href="#0" class="cd-logo"><img src="img/logo2.png" alt="Logo"> </a>
-		<a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+		<a href="#" class="cd-logo" onclick="load('pages/contul_meu.jsp')"><img src="img/logo2.png" alt="Logo"> </a>
+		<a href="#" class="cd-nav-trigger">Menu<span></span></a>
 
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
@@ -56,12 +56,7 @@
 				</li>
 				
 				<li class="has-children comments">
-					<a href="#0">Plăți</a>					
-					<ul>
-						<li><a href="#0">Plată între conturile mele</a></li>
-						<li><a href="#0">Plată în lei</a></li>
-						<li><a href="#0">Plată în valută</a></li>
-					</ul>
+					<a href="#">Plăți</a>					
 				</li>
 			
 				<li class="has-children bookmarks">
