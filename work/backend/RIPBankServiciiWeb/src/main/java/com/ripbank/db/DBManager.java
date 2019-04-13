@@ -175,6 +175,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	}
 
 	@Override
+	//TODO: need to implement this
 	public boolean makeTransaction(TransactionDTO transaction) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
 			st.execute("");

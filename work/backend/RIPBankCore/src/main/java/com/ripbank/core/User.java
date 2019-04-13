@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class User {
-	
 	private String nume;
 	private String prenume;
 	private String email;
