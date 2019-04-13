@@ -136,17 +136,15 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return true;
 	}
 
-	public boolean updateUserInformation(String cnp, String email, String nume, 
+	public boolean updateUserInformation(String cnp, String nume, 
 			String prenume, String telefon) {
 		try(Statement st = DBConnection.getInstance().conn.createStatement()){
 			System.out.println("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
 					+ ", `prenume`="+"\""+prenume+"\""+
-					",`email`="+"\""+email+"\""+
 					",`telefon`="+ "\""+telefon+"\""+
 					" WHERE cnp="+"\"" +cnp +"\"");
 			st.execute("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
 					+ ", `prenume`="+"\""+prenume+"\""+
-					",`email`="+"\""+email+"\""+
 					",`telefon`="+ "\""+telefon+"\""+
 					" WHERE cnp="+"\"" +cnp +"\"");
 		}catch (SQLException e) {

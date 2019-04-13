@@ -10,4 +10,6 @@ public interface UserDAO {
 	public List<User> findUserByEmailAndPassword(String email, String password);
 	
 	public List<User> findUserByCNP(String cnp);
+	
+	public boolean updateUserInformation(String cnp, String nume, String prenume, String telefon); 
 }
