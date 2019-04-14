@@ -1,6 +1,5 @@
 package com.ripbank.core.DTO;
 
-import com.ripbank.core.TipCont;
 import com.ripbank.core.TipTranzactie;
 
 public class TransactionDTO {
