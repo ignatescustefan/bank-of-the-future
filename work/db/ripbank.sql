@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 31, 2019 la 05:45 PM
+-- Timp de generare: apr. 14, 2019 la 04:27 PM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -118,6 +118,14 @@ CREATE TABLE `token` (
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Eliminarea datelor din tabel `token`
+--
+
+INSERT INTO `token` (`id`, `token_cnp`, `token_key`, `time_stamp`) VALUES
+(1, '2920204189726', '672lUw75j2AXe6Dc', '2019-03-31 19:33:54'),
+(2, '2920204189726', '672lUw75j2AXe6Dc', '2019-03-31 19:34:20');
+
 -- --------------------------------------------------------
 
 --
@@ -134,6 +142,13 @@ CREATE TABLE `tranzactie` (
   `ora_tranzactie` time NOT NULL,
   `suma_tranzactie` double(10,2) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Eliminarea datelor din tabel `tranzactie`
+--
+
+INSERT INTO `tranzactie` (`id_Tranzactie`, `tip_Tranzactie`, `IBAN_sursa`, `IBAN_destinatie`, `operator_tranzactie`, `data_tranzactie`, `ora_tranzactie`, `suma_tranzactie`) VALUES
+(5, 'retragere', 'RO84RIPB1524312158460260', 'RO84RIPB5240682116554790', 'Alina Frona', '2019-04-09', '12:22:23', 523.14);
 
 -- --------------------------------------------------------
 
@@ -224,13 +239,13 @@ ALTER TABLE `utilizator`
 -- AUTO_INCREMENT pentru tabele `token`
 --
 ALTER TABLE `token`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pentru tabele `tranzactie`
 --
 ALTER TABLE `tranzactie`
-  MODIFY `id_Tranzactie` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Tranzactie` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constrângeri pentru tabele eliminate
@@ -258,3 +273,8 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+GRANT USAGE ON *.* TO 'adminRIP'@'localhost' IDENTIFIED BY PASSWORD '*8E72A19AF7B8254F78C10C035E7C41B3A7746A45';
+
+GRANT ALL PRIVILEGES ON `ripbank`.* TO 'adminRIP'@'localhost';
