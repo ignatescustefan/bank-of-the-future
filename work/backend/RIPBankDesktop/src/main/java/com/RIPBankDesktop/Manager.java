@@ -14,7 +14,7 @@ public class Manager {
 
 	private Client client = ClientBuilder.newClient();
 	
-	public Response createJsonUtilizator(EmployeeDTO user) {
+	public Response createJsonAngajat(EmployeeDTO user) {
 	    return client
 	      .target(REST_URI)
 	      .request(MediaType.APPLICATION_JSON)

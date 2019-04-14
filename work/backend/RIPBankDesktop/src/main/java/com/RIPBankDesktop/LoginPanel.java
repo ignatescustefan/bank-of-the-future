@@ -174,7 +174,7 @@ public class LoginPanel extends JFrame {
 
 				Manager m = new Manager();
 
-				Response myResponse = m.createJsonUtilizator(user);
+				Response myResponse = m.createJsonAngajat(user);
 
 				System.out.println("My response");
 				System.out.println(myResponse);
@@ -187,6 +187,7 @@ public class LoginPanel extends JFrame {
 
 				System.out.println("My response");
 				System.out.println(myResponse);
+				System.out.println(responseAsString);
 
 				if (loginOk == 0) {
 					// false
