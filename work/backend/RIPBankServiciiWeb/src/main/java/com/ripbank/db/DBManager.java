@@ -177,20 +177,20 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	public boolean makeTransaction(TransactionDTO transaction) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
 			System.out.println("INSERT INTO tranzactie values"
-					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\", "
-					+ "\"" + transaction.getIbanSource() +"\", "
-					+"\", "+transaction.getIbanDest()+"\", "
-					+"\", "+transaction.getOperatorTranzactie()+"\", "
-					+"CURDATE(),"+ "CURRENT_TIME"
-					+"\", "+transaction.getAmount()
+					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
+					+ "\"" + transaction.getIbanSource() +"\","
+					+"\" "+transaction.getIbanDest()+"\","
+					+"\" "+transaction.getOperatorTranzactie()+"\","
+					+"CURDATE(),"+ "CURRENT_TIME, "
+					+transaction.getAmount()+")"
 					);
 			st.execute("INSERT INTO tranzactie values"
-					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\", "
-					+ "\"" + transaction.getIbanSource() +"\", "
-					+"\", "+transaction.getIbanDest()+"\", "
-					+"\", "+transaction.getOperatorTranzactie()+"\", "
-					+"CURDATE(),"+ "CURRENT_TIME"
-					+"\", "+transaction.getAmount()
+					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
+					+ "\"" + transaction.getIbanSource() +"\","
+					+"\" "+transaction.getIbanDest()+"\","
+					+"\" "+transaction.getOperatorTranzactie()+"\","
+					+"CURDATE(),"+ "CURRENT_TIME, "
+					+transaction.getAmount()+")"
 					);
 			return true;
 		}catch(SQLException e) {
