@@ -37,7 +37,7 @@ public class Transaction extends HttpServlet {
 		String iban_sursa = (String) request.getSession().getAttribute("iban"+nr_cont);
 		String iban_destinatie = request.getParameter("iban_destinatie");
 		Double suma_introdusa = Double.parseDouble(request.getParameter("suma"));
-		Double suma_disponibila = Double.parseDouble((String) request.getSession().getAttribute("sold"+nr_cont));
+		Double suma_disponibila = Double.parseDouble((request.getSession().getAttribute("sold"+nr_cont)).toString());
 		
 		System.out.println(operator_tranzactie + " " + nr_cont + " " + tip_cont + " " + iban_sursa + " " + iban_destinatie + " " + suma_disponibila + " " + suma_introdusa);
 		
@@ -49,8 +49,8 @@ public class Transaction extends HttpServlet {
 			transaction.setIbanDest(iban_destinatie);
 			transaction.setAmount(suma_introdusa);	
 			
-			TipCont tip = TipCont.valueOf(tip_cont);			
-			transaction.setTipCont(tip);
+			TipTranzactie tip_tranzactie = TipTranzactie.depunere;			
+			transaction.setTipCont(tip_tranzactie);
 			
 			SendTransaction myTransaction=new SendTransaction();
 			Response myResponse = myTransaction.getAnswer(transaction);
