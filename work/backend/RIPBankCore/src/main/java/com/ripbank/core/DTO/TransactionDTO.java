@@ -1,12 +1,13 @@
 package com.ripbank.core.DTO;
 
 import com.ripbank.core.TipCont;
+import com.ripbank.core.TipTranzactie;
 
 public class TransactionDTO {
 	private String ibanDest;
 	private String ibanSource;
 	private double amount;
-	private TipCont tipCont;
+	private TipTranzactie tipTranzactie;
 	private String operatorTranzactie;
 
 	public String getIbanSource() {
@@ -27,11 +28,11 @@ public class TransactionDTO {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public TipCont getTipCont() {
-		return tipCont;
+	public TipTranzactie getTipTranzactie() {
+		return tipTranzactie;
 	}
-	public void setTipCont(TipCont tipCont) {
-		this.tipCont = tipCont;
+	public void setTipCont(TipTranzactie tipTranzactie) {
+		this.tipTranzactie = tipTranzactie;
 	}
 	public String getOperatorTranzactie() {
 		return operatorTranzactie;
@@ -42,7 +43,7 @@ public class TransactionDTO {
 	@Override
 	public String toString() {
 		return "TransactionDTO [ibanDest=" + ibanDest + ", ibanSource=" + ibanSource + ", amount=" + amount
-				+ ", tipCont=" + tipCont + ", operatorTranzactie=" + operatorTranzactie + "]";
+				+ ", tipTranzactie=" + tipTranzactie + ", operatorTranzactie=" + operatorTranzactie + "]";
 	}
 	
 }

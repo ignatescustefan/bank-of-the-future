@@ -16,15 +16,8 @@ public class Transaction {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response makeTransaction(TransactionDTO transactionDTO) {
-//		DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon);
-//		if (DBManager.getInstance().updateUserInformation(cnp, email, nume, prenume, telefon)) {
-//			//TODO: get user from DB, create json with updated info
-//			return Response
-//					.status(200)
-//					.build();			
-//		};
 		JSONObject object = new JSONObject();
-		object.put("TransactionResult", 0);
+		object.put("TransactionResult", DBManager.getInstance().makeTransaction(transactionDTO));
 		return Response
 				.status(200)
 				.entity(object)
