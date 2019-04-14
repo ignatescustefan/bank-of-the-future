@@ -173,17 +173,9 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	}
 
 	@Override
-	//TODO: need to implement this
 	public boolean makeTransaction(TransactionDTO transaction) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println("INSERT INTO tranzactie values"
-					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
-					+ "\"" + transaction.getIbanSource() +"\","
-					+"\" "+transaction.getIbanDest()+"\","
-					+"\" "+transaction.getOperatorTranzactie()+"\","
-					+"CURDATE(),"+ "CURRENT_TIME, "
-					+transaction.getAmount()+")"
-					);
+			//TODO: need to check current credit
 			st.execute("INSERT INTO tranzactie values"
 					+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
 					+ "\"" + transaction.getIbanSource() +"\","
