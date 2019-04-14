@@ -67,6 +67,10 @@
 						<li><a href="#0">Extras de cont</a></li>
 					</ul>
 				</li>
+				
+				<li class="has-children notifications">
+					<a href="pages/curs.html">Curs valutar</a>
+				</li>
 			</ul>
 
 		</nav>

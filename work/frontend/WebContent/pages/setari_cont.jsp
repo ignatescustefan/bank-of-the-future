@@ -9,7 +9,7 @@
                     <h4 class="card-title">
                         Setări cont
                     </h4>
-                    <br/><br/>                     
+                    <br/>                    
                     <div class="table-responsive">
 					  <table class="table">
 					   <tr>
