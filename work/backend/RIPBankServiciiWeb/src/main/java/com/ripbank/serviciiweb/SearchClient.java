@@ -19,9 +19,10 @@ public class SearchClient {
 	@Path("{cnp}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getClient(@PathParam("cnp") String cnp){
+		System.out.println("Dsa");
 		List<User> clients=DBManager.getInstance().findUserByCNP(cnp);
 		JSONObject json=new JSONObject();
-		if (clients.size() >1) {
+		if (null== clients || clients.size() >1) {
 			json.put("Error", 1);
 		}
 		else {
@@ -35,6 +36,7 @@ public class SearchClient {
 				json.append("client", obj);
 			}
 		}
+		//la asta nu ajunge
 		System.out.println(json.toString());
 		return Response.status(200)
 				.entity(json.toString())
