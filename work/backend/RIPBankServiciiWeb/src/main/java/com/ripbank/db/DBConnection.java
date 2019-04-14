@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	private static final String URL = "jdbc:mysql://localhost:3306/ripbank";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
+	private static final String USERNAME = "adminRIP";
+	private static final String PASSWORD = "KjAmNMoIg7NJw9UW";
 	private static final DBConnection instance = new DBConnection();
 	Connection conn;
 	public static DBConnection getInstance() {
