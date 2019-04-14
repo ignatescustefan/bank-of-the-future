@@ -56,7 +56,7 @@
 				</li>
 				
 				<li class="has-children comments">
-					<a href="#">Plăți</a>					
+					<a href="#" onclick="load('pages/tranzactii.jsp')">Tranzacții</a>					
 				</li>
 			
 				<li class="has-children bookmarks">
