@@ -18,9 +18,10 @@ public class Transaction {
 	public Response makeTransaction(TransactionDTO transactionDTO) {
 		JSONObject object = new JSONObject();
 		object.put("TransactionResult", DBManager.getInstance().makeTransaction(transactionDTO));
+		System.out.println("BE:" + object);
 		return Response
 				.status(200)
-				.entity(object)
+				.entity(object.toString())
 				.build();
 	}
 }
