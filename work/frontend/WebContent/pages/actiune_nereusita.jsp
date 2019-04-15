@@ -36,10 +36,10 @@
             <div class="card">
                 <div class="card-content atention">
                     <h4 class="card-title">
-                        Tranzacție reușită
+                       Acțiune nereușită
                     </h4>
                     <hr>
-					<center><button type="button" class="btn btn-success" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button></center>
+					<center><button type="button" class="btn btn-danger" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button></center>
     				<br/>
                 </div>
             </div>

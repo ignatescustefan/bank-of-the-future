@@ -68,14 +68,14 @@ public class Transaction extends HttpServlet {
 			System.out.println(transactionResult);
 			
 			if(transactionResult==true) {
-				response.sendRedirect(request.getContextPath()+"/pages/tranzactie_reusita.jsp");
+				response.sendRedirect(request.getContextPath()+"/pages/actiune_reusita.jsp");
 			}
 			else {
-				response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
+				response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
 			}
 		}
 		else {
-			response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
+			response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
 		}
 	}
 

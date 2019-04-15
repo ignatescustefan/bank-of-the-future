@@ -19,6 +19,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
+import org.json.JSONObject;
 
 import DTO.PersonDTO;
 
@@ -80,5 +81,22 @@ public class Modify extends HttpServlet {
 	    resp = service.path(cnp).request(MediaType.APPLICATION_JSON)
 	    		.method("PATCH", Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
 	    System.out.println("bbb");
+	    
+	    System.out.println(resp);
+		
+		String informationAsString = resp.readEntity(String.class);					
+		JSONObject jsonObject = new JSONObject(informationAsString); 
+		
+		System.out.println(informationAsString);
+		
+		int updateStatus = (int) jsonObject.get("UpdateUserInfo");
+		System.out.println(updateStatus);
+		
+		if(updateStatus==1) {
+			response.sendRedirect(request.getContextPath()+"/pages/actiune_reusita.jsp");
+		}
+		else {
+			response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
+		}
 	}
 }
