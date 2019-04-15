@@ -76,10 +76,9 @@ public class Modify extends HttpServlet {
 	    person.setNume(nume);
 	    person.setPrenume(prenume);
 	    person.setTelefon(telefon);
-	    		
+	    		System.out.println("aaaa");
 	    resp = service.path(cnp).request(MediaType.APPLICATION_JSON)
-                .put(Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
-       
-       
+	    		.method("PATCH", Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
+	    System.out.println("bbb");
 	}
 }
