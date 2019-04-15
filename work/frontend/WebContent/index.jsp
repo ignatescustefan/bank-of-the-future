@@ -69,7 +69,7 @@
 				</li>
 				
 				<li class="has-children notifications">
-					<a href="pages/curs.html">Curs valutar</a>
+					<a target="_blank" rel="noopener noreferrer" href="pages/curs.html">Curs valutar</a>
 				</li>
 			</ul>
 

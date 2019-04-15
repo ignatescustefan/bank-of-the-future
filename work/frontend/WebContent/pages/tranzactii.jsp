@@ -41,7 +41,7 @@
 					   <div class="form-group">
 					    <label class="control-label col-sm-4">Suma:</label>
 					    <div class="col-sm-4">
-					      <input type="text" class="form-control" id="suma" name="suma" required>
+					      <input type="number" step=0.01 min=0 class="form-control" id="suma" name="suma" required>
 					    </div>
 					  </div>
 					  

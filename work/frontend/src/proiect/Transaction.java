@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import DTO.TransactionDTO;
 
 /**
@@ -56,9 +58,24 @@ public class Transaction extends HttpServlet {
 			Response myResponse = myTransaction.getAnswer(transaction);
 			
 			System.out.println(myResponse);
+			
+			String informationAsString = myResponse.readEntity(String.class);					
+			JSONObject jsonObject = new JSONObject(informationAsString); 
+			
+			System.out.println(informationAsString);
+			
+			Boolean transactionResult = (Boolean) jsonObject.get("TransactionResult");
+			System.out.println(transactionResult);
+			
+			if(transactionResult==true) {
+				response.sendRedirect(request.getContextPath()+"/pages/tranzactie_reusita.jsp");
+			}
+			else {
+				response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
+			}
 		}
 		else {
-			//mesaj eroare
+			response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
 		}
 	}
 
