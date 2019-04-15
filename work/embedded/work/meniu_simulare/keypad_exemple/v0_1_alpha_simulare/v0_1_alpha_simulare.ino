@@ -38,6 +38,11 @@ bool PIN_good=true;
 void Execute_State_0()
 {
   State=0;
+  lcd.begin(20,4);
+  lcd.init();
+  lcd.backlight();
+  lcd.clear();
+  lcd.setCursor(0, 1);
   lcd.clear();
   Ci=6;
   Cj=1;
@@ -384,8 +389,9 @@ void Execute_State_18()
     Cj=1;
     lcd.setCursor(Ci,Cj);
     lcd.print("Se inchide....");
-    delay(3000);
+    delay(2000);
     lcd.clear();
+    lcd.noBacklight();
 }
 String kcharr="";
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
@@ -438,7 +444,7 @@ void keypadEvent(KeypadEvent key)
       }
       if(key=='1')
       {
-        if(State==10)
+        if(State==10 and PIN_attempts>0)
         {
           Execute_State_12();
         }
@@ -450,9 +456,9 @@ void keypadEvent(KeypadEvent key)
           Execute_State_11();
         }
       }
-      if(key=='3' and State!=12)
+      if(key=='3' and State==10)
       {
-        lcd.clear();
+        Execute_State_18();
       }
       if(key=='*')
       {
@@ -474,11 +480,7 @@ void keypadEvent(KeypadEvent key)
 
 void setup()
 {
-  lcd.begin(20,4);
-  lcd.init();
-  lcd.backlight();
-  lcd.clear();
-  lcd.setCursor(0, 1);
+  
   
   keypad.addEventListener(keypadEvent);  // Add an event listener.
   keypad.setHoldTime(100);               // Default is 1000mS
