@@ -49,77 +49,84 @@ public class Login extends HttpServlet {
 		user.setEmail(u);
 		user.setPassword(p);
 		
-		//send request
-		Manager m=new Manager();
-		//get answer
-		Response myResponse = m.createJsonUtilizator(user);
-		
-		System.out.println("Mesaj test 2");
-		System.out.println(myResponse);
-        
-		//create json
-		String responseAsString = myResponse.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(responseAsString);
-		
-		System.out.println(responseAsString);
-		
-		int loginOk=(int) jsonObject.get("LoginOk");
-		System.out.println(loginOk);
-		
-		if(loginOk==1) {
-			String nume=(String) jsonObject.get("Nume");
-			String prenume=(String) jsonObject.get("Prenume");
-			String cnp=(String) jsonObject.get("CNP");
-			String email=(String) jsonObject.get("Email");
-			String telefon=(String) jsonObject.get("Telefon");
-			
-			HttpSession s=request.getSession(true);
-			s.setAttribute("nume",nume);
-			s.setAttribute("prenume",prenume);
-			s.setAttribute("cnp",cnp);
-			s.setAttribute("email",email);
-			s.setAttribute("telefon",telefon);
+		try {
 			
 			//send request
-			Account a=new Account(cnp);
+			Manager m=new Manager();
 			//get answer
-			Response responseInformation = a.extractAccountInformation();
+			Response myResponse = m.createJsonUtilizator(user);
 			
-			System.out.println("Mesaj test 3");
-			System.out.println(responseInformation);
+			System.out.println("Mesaj test 2");
+			System.out.println(myResponse);
 	        
 			//create json
-			String informationAsString = responseInformation.readEntity(String.class);
-			JSONObject jsonInformation = new JSONObject(informationAsString);
-			JSONArray jsonAccount = (JSONArray) jsonInformation.get("account");
+			String responseAsString = myResponse.readEntity(String.class);
+			JSONObject jsonObject = new JSONObject(responseAsString);
 			
-			System.out.println("Mesaj test 4");
-			System.out.println(jsonAccount);
+			System.out.println(responseAsString);
 			
-			int contor=0;
-			for(int i=0;i<jsonAccount.length();i++) {
-				JSONObject item=(JSONObject) jsonAccount.get(i);			
-				//System.out.println(item);
-				++contor;
+			int loginOk=(int) jsonObject.get("LoginOk");
+			System.out.println(loginOk);
+			
+			if(loginOk==1) {
+				String nume=(String) jsonObject.get("Nume");
+				String prenume=(String) jsonObject.get("Prenume");
+				String cnp=(String) jsonObject.get("CNP");
+				String email=(String) jsonObject.get("Email");
+				String telefon=(String) jsonObject.get("Telefon");
 				
-				String iban=item.getString("iban");
-				String tipCont=item.getString("tipCont");
-				double sold= item.getDouble("sold");
-								
-				s.setAttribute("iban"+i,iban);
-				s.setAttribute("tipCont"+i,tipCont);
-				s.setAttribute("sold"+i,sold);
-			}
+				HttpSession s=request.getSession(true);
+				s.setAttribute("nume",nume);
+				s.setAttribute("prenume",prenume);
+				s.setAttribute("cnp",cnp);
+				s.setAttribute("email",email);
+				s.setAttribute("telefon",telefon);
+				
+				//send request
+				Account a=new Account(cnp);
+				//get answer
+				Response responseInformation = a.extractAccountInformation();
+				
+				System.out.println("Mesaj test 3");
+				System.out.println(responseInformation);
+		        
+				//create json
+				String informationAsString = responseInformation.readEntity(String.class);
+				JSONObject jsonInformation = new JSONObject(informationAsString);
+				JSONArray jsonAccount = (JSONArray) jsonInformation.get("account");
+				
+				System.out.println("Mesaj test 4");
+				System.out.println(jsonAccount);
+				
+				int contor=0;
+				for(int i=0;i<jsonAccount.length();i++) {
+					JSONObject item=(JSONObject) jsonAccount.get(i);			
+					//System.out.println(item);
+					++contor;
 					
-			System.out.println(contor);
-			s.setAttribute("contor", contor);
+					String iban=item.getString("iban");
+					String tipCont=item.getString("tipCont");
+					double sold= item.getDouble("sold");
+									
+					s.setAttribute("iban"+i,iban);
+					s.setAttribute("tipCont"+i,tipCont);
+					s.setAttribute("sold"+i,sold);
+				}
+						
+				System.out.println(contor);
+				s.setAttribute("contor", contor);
+				
+				response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
+			}
+			else {
+				
+				response.sendRedirect(request.getContextPath()+"/login/try_again.jsp");			
+			}
 			
-			response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
+		} catch (Exception e) {
+			System.out.println("Eroare in servlet-ul de login!");
 		}
-		else {
-			
-			response.sendRedirect(request.getContextPath()+"/login/try_again.jsp");			
-		}
+		
 				
 	}
 

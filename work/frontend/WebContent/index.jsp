@@ -21,9 +21,13 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
-  	
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->  	
 </head>
+
+<%  
+     if (session.getAttribute("cnp") != null) {  
+%>
+
 <body onload="load('pages/contul_meu.jsp');">
 	<header class="cd-main-header">
 		<a href="#" class="cd-logo" onclick="load('pages/contul_meu.jsp')"><img src="img/logo2.png" alt="Logo"> </a>
@@ -81,8 +85,31 @@
 		</div> <!-- .content-wrapper -->
 	</main> <!-- .cd-main-content -->
 	
+<%  
+     } else {
+ %>
+	 <br/><br/> <br/><br/>  <br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-content atention">
+                    <h4 class="card-title">
+                       Nu puteți accesa această pagină dacă nu sunteți autentificați!
+                    </h4>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	
+<%  
+     }
+ %>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/jquery.menu-aim.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
 </body>
+
+
 </html>
