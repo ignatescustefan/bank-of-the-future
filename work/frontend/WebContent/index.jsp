@@ -85,31 +85,32 @@
 		</div> <!-- .content-wrapper -->
 	</main> <!-- .cd-main-content -->
 	
+	<script src="js/jquery-2.1.4.js"></script>
+	<script src="js/jquery.menu-aim.js"></script>
+	<script src="js/main.js"></script> <!-- Resource jQuery -->
+	</body>
+	
 <%  
      } else {
  %>
-	 <br/><br/> <br/><br/>  <br/><br/>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-10">
-            <div class="card">
-                <div class="card-content atention">
-                    <h4 class="card-title">
-                       Nu puteți accesa această pagină dacă nu sunteți autentificați!
-                    </h4>                   
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-	
+ 	<body>
+	<br/><br/> <br/><br/> <br/><br/>
+	<div class="container">
+	    <div class="row">
+	        <div class="col-sm-10">
+	            <div class="card">
+	                <div class="card-content atention">
+	                    <h4 class="card-title">
+	                       Nu puteți accesa această pagină dacă nu sunteți autentificați!
+	                    </h4>                   
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	</body>	
 <%  
      }
  %>
-<script src="js/jquery-2.1.4.js"></script>
-<script src="js/jquery.menu-aim.js"></script>
-<script src="js/main.js"></script> <!-- Resource jQuery -->
-</body>
-
 
 </html>
