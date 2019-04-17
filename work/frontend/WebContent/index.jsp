@@ -100,9 +100,11 @@
 	        <div class="col-sm-10">
 	            <div class="card">
 	                <div class="card-content atention">
-	                    <h4 class="card-title">
-	                       Nu puteți accesa această pagină dacă nu sunteți autentificați!
-	                    </h4>                   
+	                    <div class="card-title">
+                        <h4>Nu puteți accesa această pagină dacă nu sunteți autentificat!</h4>
+	                    <hr>
+						<button type="button" class="btn btn-primary" onclick="location.href='login.jsp'">Accesează pagina de login</button>
+                    </div>    			               
 	                </div>
 	            </div>
 	        </div>

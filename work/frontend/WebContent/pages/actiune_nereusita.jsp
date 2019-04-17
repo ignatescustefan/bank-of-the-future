@@ -35,12 +35,11 @@
         <div class="col-sm-10">
             <div class="card">
                 <div class="card-content atention">
-                    <h4 class="card-title">
-                       Acțiune nereușită
-                    </h4>
-                    <hr>
-					<center><button type="button" class="btn btn-danger" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button></center>
-    				<br/>
+                     <div class="card-title">
+                        <h4>Acțiune nereușită</h4>
+	                    <hr>
+						<button type="button" class="btn btn-danger" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+                    </div>    				
                 </div>
             </div>
         </div>
