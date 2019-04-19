@@ -175,7 +175,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	@Override
 	public boolean makeTransaction(TransactionDTO transaction) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("SELECT IBAN FROM cont WHERE IBAN="+"\""+transaction.getIbanDest()+"\"");
+			st.execute("SELECT IBAN, sold FROM cont WHERE IBAN="+"\""+transaction.getIbanDest()+"\"");
 			ResultSet rs = st.getResultSet();
 			if (null != rs) {
 				int size= 0;  
@@ -184,6 +184,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 				size = rs.getRow();
 				System.out.println("Size: "+size);
 				if (1 == size) {
+					double balanceAfterTransactionSource=rs.getDouble("sold")-transaction.getAmount();
 					System.out.println("INSERT INTO tranzactie values"
 							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
 							+ "\"" + transaction.getIbanSource() +"\","
@@ -200,6 +201,10 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 							+"CURDATE(),"+ "CURRENT_TIME, "
 							+transaction.getAmount()+")"
 							);
+					System.out.println("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
+					st.execute("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
+					
+					//TODO: need to add the amount to dest iban
 					return true;
 				}
 			}
