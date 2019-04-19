@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -77,10 +78,11 @@ public class Modify extends HttpServlet {
 	    person.setNume(nume);
 	    person.setPrenume(prenume);
 	    person.setTelefon(telefon);
-	    		System.out.println("aaaa");
+	    
+	    System.out.println("Modify before resp");
 	    resp = service.path(cnp).request(MediaType.APPLICATION_JSON)
 	    		.method("PATCH", Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
-	    System.out.println("bbb");
+	    System.out.println("Modify after resp");
 	    
 	    System.out.println(resp);
 		
@@ -93,6 +95,16 @@ public class Modify extends HttpServlet {
 		System.out.println(updateStatus);
 		
 		if(updateStatus==1) {
+			
+			String newNume=(String) jsonObject.get("Nume");
+			String newPrenume=(String) jsonObject.get("Prenume");
+			String newTelefon=(String) jsonObject.get("Telefon");
+			
+			HttpSession s=request.getSession(true);
+			s.setAttribute("nume",newNume);
+			s.setAttribute("prenume",newPrenume);
+			s.setAttribute("telefon",newTelefon);
+			
 			response.sendRedirect(request.getContextPath()+"/pages/actiune_reusita.jsp");
 		}
 		else {
