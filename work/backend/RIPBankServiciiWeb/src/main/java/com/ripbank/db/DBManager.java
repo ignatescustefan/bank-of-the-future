@@ -235,4 +235,15 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		}
 		return null;	
 	}
+	
+	public boolean deleteClient(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()){
+			st.execute("DELETE FROM utilizator WHERE cnp="+"\""+cnp+ "\"");
+			return true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
