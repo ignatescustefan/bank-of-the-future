@@ -25,28 +25,22 @@
 </head>
 <body>
 
- <header class="cd-main-header">
-	<a class="cd-logo"><img src="../img/logo2.png" alt="Logo"> </a>
-</header> <!-- .cd-main-header -->
- 
  <br/><br/> <br/><br/>  <br/><br/>
 <div class="container">
-    <div class="row">
-        <div class="col-sm-10">
-            <div class="card">
-                <div class="card-content atention">
-                    <h4 class="card-title">
-                        Atenție
-                    </h4>
-                    <hr>
-					
-    				<br/>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
- 
+	    <div class="row">
+	        <div class="col-sm-10">
+	            <div class="card">
+	                <div class="card-content atention">
+	                    <div class="card-title">
+                        <h4>Nu pare rău! A apărut o eroare la server!</h4>
+	                    <hr>
+						<button type="button" class="btn btn-primary" onclick="location.href='../login.jsp'">Accesează pagina de login</button>
+                    </div>    			               
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div> 
  
 </body>
 </html>

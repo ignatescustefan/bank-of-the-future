@@ -721,6 +721,8 @@ Sidebar
 	background-color: #fa7307 !important;
 	color: #ffffff !important;
 }
-.atention {
-	align-content: center !important;
+.small-text {
+	font-weight: 200;
+ 	font-size: 0.8em;
+  	text-align: center;
 }

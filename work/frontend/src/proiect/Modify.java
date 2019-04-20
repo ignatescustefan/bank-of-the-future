@@ -60,55 +60,55 @@ public class Modify extends HttpServlet {
 
 		String cnp=(String) request.getSession().getAttribute("cnp");
 
-		/*StringBuilder builder=new StringBuilder();
-		builder.append("nume="+nume);
-		builder.append("&prenume="+prenume);
-		builder.append("&telefon="+telefon);*/
+		try {
 					
+			ClientConfig config = new ClientConfig();
+			Client client = ClientBuilder.newClient(config);
+			client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+		       
+		    WebTarget service = client.target(getBaseURI());
+		    
+		    Response resp;
+		    
+		    PersonDTO person = new PersonDTO();
+		    person.setNume(nume);
+		    person.setPrenume(prenume);
+		    person.setTelefon(telefon);
+		    
+		    System.out.println("Modify before resp");
+		    resp = service.path(cnp).request(MediaType.APPLICATION_JSON)
+		    		.method("PATCH", Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
+		    System.out.println("Modify after resp");
+		    
+		    System.out.println(resp);
+			
+			String informationAsString = resp.readEntity(String.class);					
+			JSONObject jsonObject = new JSONObject(informationAsString); 
+			
+			System.out.println(informationAsString);
+			
+			int updateStatus = (int) jsonObject.get("UpdateUserInfo");
+			System.out.println(updateStatus);
+			
+			if(updateStatus==1) {
 				
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
-	       
-	    WebTarget service = client.target(getBaseURI());
-	    
-	    Response resp;
-	    
-	    PersonDTO person = new PersonDTO();
-	    person.setNume(nume);
-	    person.setPrenume(prenume);
-	    person.setTelefon(telefon);
-	    
-	    System.out.println("Modify before resp");
-	    resp = service.path(cnp).request(MediaType.APPLICATION_JSON)
-	    		.method("PATCH", Entity.entity(person, MediaType.APPLICATION_JSON), Response.class);
-	    System.out.println("Modify after resp");
-	    
-	    System.out.println(resp);
-		
-		String informationAsString = resp.readEntity(String.class);					
-		JSONObject jsonObject = new JSONObject(informationAsString); 
-		
-		System.out.println(informationAsString);
-		
-		int updateStatus = (int) jsonObject.get("UpdateUserInfo");
-		System.out.println(updateStatus);
-		
-		if(updateStatus==1) {
+				String newNume=(String) jsonObject.get("Nume");
+				String newPrenume=(String) jsonObject.get("Prenume");
+				String newTelefon=(String) jsonObject.get("Telefon");
+				
+				HttpSession s=request.getSession(true);
+				s.setAttribute("nume",newNume);
+				s.setAttribute("prenume",newPrenume);
+				s.setAttribute("telefon",newTelefon);
+				
+				response.sendRedirect(request.getContextPath()+"/pages/modificare_reusita.jsp");
+			}
+			else {
+				response.sendRedirect(request.getContextPath()+"/pages/modificare_nereusita.jsp");
+			}
 			
-			String newNume=(String) jsonObject.get("Nume");
-			String newPrenume=(String) jsonObject.get("Prenume");
-			String newTelefon=(String) jsonObject.get("Telefon");
-			
-			HttpSession s=request.getSession(true);
-			s.setAttribute("nume",newNume);
-			s.setAttribute("prenume",newPrenume);
-			s.setAttribute("telefon",newTelefon);
-			
-			response.sendRedirect(request.getContextPath()+"/pages/actiune_reusita.jsp");
-		}
-		else {
-			response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
+		} catch (Exception e) {
+			System.out.println("Eroare in servlet-ul modify!");
 		}
 	}
 }

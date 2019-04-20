@@ -125,6 +125,7 @@ public class Login extends HttpServlet {
 			
 		} catch (Exception e) {
 			System.out.println("Eroare in servlet-ul de login!");
+			response.sendRedirect(request.getContextPath()+"/pages/eroare.jsp");
 		}
 		
 				

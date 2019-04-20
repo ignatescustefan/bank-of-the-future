@@ -6,8 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import DTO.TransactionDTO;
@@ -44,38 +46,66 @@ public class Transaction extends HttpServlet {
 		System.out.println(operator_tranzactie + " " + nr_cont + " " + tip_cont + " " + iban_sursa + " " + iban_destinatie + " " + suma_disponibila + " " + suma_introdusa);
 		
 		if(suma_introdusa<=suma_disponibila) {
+			
+			try {
 
-			TransactionDTO transaction=new TransactionDTO();
-			transaction.setOperatorTranzactie(operator_tranzactie);
-			transaction.setIbanSource(iban_sursa);
-			transaction.setIbanDest(iban_destinatie);
-			transaction.setAmount(suma_introdusa);	
+				TransactionDTO transaction=new TransactionDTO();
+				transaction.setOperatorTranzactie(operator_tranzactie);
+				transaction.setIbanSource(iban_sursa);
+				transaction.setIbanDest(iban_destinatie);
+				transaction.setAmount(suma_introdusa);	
+				
+				TipTranzactie tip_tranzactie = TipTranzactie.depunere;			
+				transaction.setTipCont(tip_tranzactie);
+				
+				SendTransaction myTransaction=new SendTransaction();
+				Response myResponse = myTransaction.getAnswer(transaction);
+				
+				System.out.println(myResponse);
+				
+				String informationAsString = myResponse.readEntity(String.class);					
+				JSONObject jsonObject = new JSONObject(informationAsString); 
+				
+				System.out.println(informationAsString);
+				
+				Boolean transactionResult = (Boolean) jsonObject.get("TransactionResult");
+				System.out.println(transactionResult);
+				
+				if(transactionResult==true) {
+					
+					JSONObject jsonAccountFirst = (JSONObject) jsonObject.get("Accounts");
+					JSONArray jsonAccount = (JSONArray) jsonAccountFirst.get("account");
+					
+					System.out.println("Mesaj transaction true");
+					System.out.println(jsonAccount);
+					
+					HttpSession s=request.getSession(true);
+					
+					for(int i=0;i<jsonAccount.length();i++) {
+						JSONObject item=(JSONObject) jsonAccount.get(i);			
+						//System.out.println(item);
+											
+						String iban=item.getString("iban");
+						String tipCont=item.getString("tipCont");
+						double sold= item.getDouble("sold");
+						
+						s.setAttribute("iban"+i,iban);
+						s.setAttribute("tipCont"+i,tipCont);
+						s.setAttribute("sold"+i,sold);
+					}
+									
+					response.sendRedirect(request.getContextPath()+"/pages/tranzactie_reusita.jsp");
+				}
+				else {
+					response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
+				}
 			
-			TipTranzactie tip_tranzactie = TipTranzactie.depunere;			
-			transaction.setTipCont(tip_tranzactie);
-			
-			SendTransaction myTransaction=new SendTransaction();
-			Response myResponse = myTransaction.getAnswer(transaction);
-			
-			System.out.println(myResponse);
-			
-			String informationAsString = myResponse.readEntity(String.class);					
-			JSONObject jsonObject = new JSONObject(informationAsString); 
-			
-			System.out.println(informationAsString);
-			
-			Boolean transactionResult = (Boolean) jsonObject.get("TransactionResult");
-			System.out.println(transactionResult);
-			
-			if(transactionResult==true) {
-				response.sendRedirect(request.getContextPath()+"/pages/actiune_reusita.jsp");
-			}
-			else {
-				response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
+			} catch (Exception e) {
+				System.out.println("Eroare in servlet-ul de tranzactie!");
 			}
 		}
 		else {
-			response.sendRedirect(request.getContextPath()+"/pages/actiune_nereusita.jsp");
+			response.sendRedirect(request.getContextPath()+"/pages/tranzactie_nereusita.jsp");
 		}
 	}
 

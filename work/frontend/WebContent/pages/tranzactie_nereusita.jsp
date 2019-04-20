@@ -34,12 +34,13 @@
     <div class="row">
         <div class="col-sm-10">
             <div class="card">
-                <div class="card-content atention">
-                    <div class="card-title">
-                        <h4>Acțiune reușită</h4>
+                <div class="card-content">
+                     <div class="card-title">
+                        <h4>Tranzacție nereușită</h4>                        
+                        <span class="small-text">Vă rugăm să verificați dacă aveți suficienți bani în cont sau dacă IBAN-ul contului destinație există!</span>	
 	                    <hr>
-						<button type="button" class="btn btn-success" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
-                    </div>
+						<button type="button" class="btn btn-danger" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+                    </div>   	
                 </div>
             </div>
         </div>
