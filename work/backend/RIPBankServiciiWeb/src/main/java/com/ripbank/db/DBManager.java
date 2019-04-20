@@ -16,7 +16,7 @@ import com.ripbank.core.DAO.UserDAO;
 import com.ripbank.core.DTO.TransactionDTO;
 import com.ripbank.core.TipCont;
 
-public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionDAO{
+public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionDAO {
 	private static final DBManager instance = new DBManager();
 
 	public static DBManager getInstance() {
@@ -25,18 +25,17 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<User> findUserByCNP(String cnp) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			List<User> userList=new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE cnp="+cnp);
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			List<User> userList = new ArrayList<>();
+			st.execute("SELECT * FROM utilizator WHERE cnp=" + cnp);
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user=new User(rs.getString("nume"), rs.getString("prenume"),
-						rs.getString("email"), rs.getString("parola"), rs.getString("cnp"),
-						rs.getString("telefon"));
+				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
+						rs.getString("parola"), rs.getString("cnp"), rs.getString("telefon"));
 				userList.add(user);
 				return userList;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -44,38 +43,36 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<User> findUserByEmail(String email) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			List<User> userList=new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE email="+"\""+email+"\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			List<User> userList = new ArrayList<>();
+			st.execute("SELECT * FROM utilizator WHERE email=" + "\"" + email + "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user=new User(rs.getString("nume"), rs.getString("prenume"),
-						rs.getString("email"), rs.getString("pa"
-								+ "rola"), rs.getString("cnp"),
-						rs.getString("telefon"));
+				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
+						rs.getString("pa" + "rola"), rs.getString("cnp"), rs.getString("telefon"));
 				userList.add(user);
 				return userList;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@Override		
+	@Override
 	public List<User> findUserByEmailAndPassword(String email, String password) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			List<User> userList=new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE email="+"\""+email+ "\""+ "AND parola="+"\""+password+"\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			List<User> userList = new ArrayList<>();
+			st.execute("SELECT * FROM utilizator WHERE email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
+					+ "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user=new User(rs.getString("nume"), rs.getString("prenume"),
-						rs.getString("email"), rs.getString("parola"), rs.getString("cnp"),
-						rs.getString("telefon"));
+				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
+						rs.getString("parola"), rs.getString("cnp"), rs.getString("telefon"));
 				userList.add(user);
 				return userList;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -83,90 +80,80 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<Double> getBalanceForIBAN(String iban) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("SELECT * FROM cont WHERE iban="+ "\""+iban+"\"");
-			List<Double> money=new ArrayList<>();
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT * FROM cont WHERE iban=" + "\"" + iban + "\"");
+			List<Double> money = new ArrayList<>();
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Double currentBalance=new Double(rs.getString("sold"));
+				Double currentBalance = new Double(rs.getString("sold"));
 				money.add(currentBalance);
 			}
 			return money;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public List <Account> getClientAccounts(String cnp){
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println("SELECT * FROM cont WHERE proprietar_cnp="+ "\""+cnp+"\"");
-			st.execute("SELECT * FROM cont WHERE proprietar_cnp="+ "\""+cnp+"\"");
-			List<Account> accounts=new ArrayList<>();
+	public List<Account> getClientAccounts(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			System.out.println("SELECT * FROM cont WHERE proprietar_cnp=" + "\"" + cnp + "\"");
+			st.execute("SELECT * FROM cont WHERE proprietar_cnp=" + "\"" + cnp + "\"");
+			List<Account> accounts = new ArrayList<>();
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
 				System.out.println(rs.getString("tip_cont"));
-				Account cont =new Account(TipCont.valueOf(rs.getString("tip_cont")), rs.getString("iban"), 
-						rs.getString("proprietar_cnp"), rs.getString("pin"), 
-						Double.parseDouble(rs.getString("sold")));
+				Account cont = new Account(TipCont.valueOf(rs.getString("tip_cont")), rs.getString("iban"),
+						rs.getString("proprietar_cnp"), rs.getString("pin"), Double.parseDouble(rs.getString("sold")));
 				accounts.add(cont);
 			}
 			return accounts;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public boolean insertAuthCodeInDB(String cnp, String authCode) {
-		try(Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println(
-					"INSERT INTO token (token_cnp, token_key, time_stamp) VALUES("
-							+"\""+cnp+"\","
-							+"\""+authCode+"\","
-							+"CURRENT_TIMESTAMP)");
-			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES("
-					+"\""+cnp+"\","
-					+"\""+authCode+"\","
-					+"CURRENT_TIMESTAMP)");
-		}catch (SQLException e) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			System.out.println("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\","
+					+ "\"" + authCode + "\"," + "CURRENT_TIMESTAMP)");
+			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\"," + "\""
+					+ authCode + "\"," + "CURRENT_TIMESTAMP)");
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
 
-	public boolean updateUserInformation(String cnp, String nume, 
-			String prenume, String telefon) {
-		try(Statement st = DBConnection.getInstance().conn.createStatement()){
-			System.out.println("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
-					+ ", `prenume`="+"\""+prenume+"\""+
-					",`telefon`="+ "\""+telefon+"\""+
-					" WHERE cnp="+"\"" +cnp +"\"");
-			st.execute("UPDATE `utilizator` SET `nume`="+"\""+nume+"\""
-					+ ", `prenume`="+"\""+prenume+"\""+
-					",`telefon`="+ "\""+telefon+"\""+
-					" WHERE cnp="+"\"" +cnp +"\"");
-		}catch (SQLException e) {
+	public boolean updateUserInformation(String cnp, String nume, String prenume, String telefon) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			System.out.println("UPDATE `utilizator` SET `nume`=" + "\"" + nume + "\"" + ", `prenume`=" + "\"" + prenume
+					+ "\"" + ",`telefon`=" + "\"" + telefon + "\"" + " WHERE cnp=" + "\"" + cnp + "\"");
+			st.execute("UPDATE `utilizator` SET `nume`=" + "\"" + nume + "\"" + ", `prenume`=" + "\"" + prenume + "\""
+					+ ",`telefon`=" + "\"" + telefon + "\"" + " WHERE cnp=" + "\"" + cnp + "\"");
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
 
-	@Override		
+	@Override
 	public List<Employee> findEmployeeByEmailAndPass(String email, String password) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			List<Employee> employees=new ArrayList<>();
-			st.execute("SELECT * FROM angajat WHERE email="+"\""+email+ "\""+ "AND parola="+"\""+password+"\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			List<Employee> employees = new ArrayList<>();
+			st.execute("SELECT * FROM angajat WHERE email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
+					+ "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Employee employee=new Employee(rs.getString("nume"), rs.getString("prenume"),
-						rs.getString("email"), null);
+				Employee employee = new Employee(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
+						null);
 				employees.add(employee);
 				return employees;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -174,74 +161,76 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public boolean makeTransaction(TransactionDTO transaction) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("SELECT IBAN, sold FROM cont WHERE IBAN="+"\""+transaction.getIbanDest()+"\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT IBAN, sold FROM cont WHERE IBAN=" + "\"" + transaction.getIbanDest() + "\"");
 			ResultSet rs = st.getResultSet();
 			if (null != rs) {
 				// check if destination IBAN exist
-				int size= 0;  
-				rs.beforeFirst();  
-				rs.last();  
+				int size = 0;
+				rs.beforeFirst();
+				rs.last();
 				size = rs.getRow();
-				System.out.println("Size: "+size);
+				System.out.println("Size: " + size);
 				if (1 == size) {
-					double balanceAfterTransactionDestination=rs.getDouble("sold")+transaction.getAmount();
-					//					System.out.println("INSERT INTO tranzactie values"
-					//							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
-					//							+ "\"" + transaction.getIbanSource() +"\","
-					//							+"\" "+transaction.getIbanDest()+"\","
-					//							+"\" "+transaction.getOperatorTranzactie()+"\","
-					//							+"CURDATE(),"+ "CURRENT_TIME, "
-					//							+transaction.getAmount()+")"
-					//							);
-					st.execute("INSERT INTO tranzactie values"
-							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
-							+ "\"" + transaction.getIbanSource() +"\","
-							+"\""+transaction.getIbanDest()+"\","
-							+"\""+transaction.getOperatorTranzactie()+"\","
-							+"CURDATE(),"+ "CURRENT_TIME, "
-							+transaction.getAmount()+")"
-							);
-					System.out.println("UPDATE cont SET sold="+balanceAfterTransactionDestination+" WHERE iban="+"\""+transaction.getIbanDest()+"\"");
-					st.execute("UPDATE cont SET sold="+balanceAfterTransactionDestination+" WHERE iban="+"\""+transaction.getIbanDest()+"\"");
+					double balanceAfterTransactionDestination = rs.getDouble("sold") + transaction.getAmount();
+					// System.out.println("INSERT INTO tranzactie values"
+					// + "(0, " +"\"" +transaction.getTipTranzactie() +"\","
+					// + "\"" + transaction.getIbanSource() +"\","
+					// +"\" "+transaction.getIbanDest()+"\","
+					// +"\" "+transaction.getOperatorTranzactie()+"\","
+					// +"CURDATE(),"+ "CURRENT_TIME, "
+					// +transaction.getAmount()+")"
+					// );
+					st.execute("INSERT INTO tranzactie values" + "(0, " + "\"" + transaction.getTipTranzactie() + "\","
+							+ "\"" + transaction.getIbanSource() + "\"," + "\"" + transaction.getIbanDest() + "\","
+							+ "\"" + transaction.getOperatorTranzactie() + "\"," + "CURDATE()," + "CURRENT_TIME, "
+							+ transaction.getAmount() + ")");
+					System.out.println("UPDATE cont SET sold=" + balanceAfterTransactionDestination + " WHERE iban="
+							+ "\"" + transaction.getIbanDest() + "\"");
+					st.execute("UPDATE cont SET sold=" + balanceAfterTransactionDestination + " WHERE iban=" + "\""
+							+ transaction.getIbanDest() + "\"");
+				}
+				else {
+					return false;
 				}
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		try (Statement st1= DBConnection.getInstance().conn.createStatement()){
-			st1.execute("SELECT IBAN, sold FROM cont WHERE IBAN="+"\""+transaction.getIbanSource()+"\"");
+		try (Statement st1 = DBConnection.getInstance().conn.createStatement()) {
+			st1.execute("SELECT IBAN, sold FROM cont WHERE IBAN=" + "\"" + transaction.getIbanSource() + "\"");
 			ResultSet rs1 = st1.getResultSet();
 			rs1.next();
-			double balanceAfterTransactionSource=rs1.getDouble("sold")-transaction.getAmount();
-			st1.execute("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
+			double balanceAfterTransactionSource = rs1.getDouble("sold") - transaction.getAmount();
+			st1.execute("UPDATE cont SET sold=" + balanceAfterTransactionSource + " WHERE iban=" + "\""
+					+ transaction.getIbanSource() + "\"");
 			return true;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;		
+		return false;
 	}
-	
+
 	public String getCNPByIBAN(String IBAN) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("SELECT proprietar_cnp FROM cont WHERE iban="+"\""+IBAN+ "\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT proprietar_cnp FROM cont WHERE iban=" + "\"" + IBAN + "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				String cnp=rs.getString("proprietar_cnp");
+				String cnp = rs.getString("proprietar_cnp");
 				return cnp;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;	
+		return null;
 	}
-	
+
 	public boolean deleteClient(String cnp) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()){
-			st.execute("DELETE FROM utilizator WHERE cnp="+"\""+cnp+ "\"");
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("DELETE FROM utilizator WHERE cnp=" + "\"" + cnp + "\"");
 			return true;
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
