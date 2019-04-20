@@ -23,7 +23,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
 
-
 public class DashBoardRIP extends JFrame {
 
 	/**
@@ -55,19 +54,20 @@ public class DashBoardRIP extends JFrame {
 	private JLabel labelClientPrenume;
 	private JLabel labelClientEmail;
 	private JLabel labelClientTelefon;
-	ModificaClient modificaClient;
+	private ModificaClient modificaClient;
 	private String cnp;
-	
+	private AddClientPanel addClientPanel;
+
 	/**
 	 * Launch the demo Board.
 	 */
-	
-	  public static void main(String[] args) { EventQueue.invokeLater(new
-	  Runnable() { public void run() { try { DashBoardRIP frame = new
-	  DashBoardRIP(new Employee("Aline", "Dua", "alina@mail.com"));
-	  frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
-	  }
-	 
+
+	public static void main(String[] args) { EventQueue.invokeLater(new
+			Runnable() { public void run() { try { DashBoardRIP frame = new
+			DashBoardRIP(new Employee("Aline", "Dua", "alina@mail.com"));
+			frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
+	}
+
 	/**
 	 * Create the frame.
 	 */
@@ -81,7 +81,7 @@ public class DashBoardRIP extends JFrame {
 		rightPanel = new JPanel();
 		btnSetariCont = new JButton("Detalii cont");
 		btnModifica = new JButton("Modifica");
-		
+
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -177,20 +177,28 @@ public class DashBoardRIP extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				userSearch.setVisible(true);
+				addClientPanel.setVisible(false);
 			}
 		});
 		btnCautareClient.setBounds(61, 84, 127, 23);
 		rightPanel.add(btnCautareClient);
 
 		JButton btnAgaugareClient = new JButton("Agaugare client");
+		btnAgaugareClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addClientPanel.setVisible(true);
+				userSearch.setVisible(false);
+			}
+		});
 		btnAgaugareClient.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAgaugareClient.setBounds(61, 135, 127, 23);
 		rightPanel.add(btnAgaugareClient);
-		
+
 		JButton btnAcasa = new JButton("Acasa");
 		btnAcasa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				userSearch.setVisible(false);
+				addClientPanel.setVisible(false);
 			}
 		});
 		btnAcasa.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -212,19 +220,19 @@ public class DashBoardRIP extends JFrame {
 
 
 		mainPanel = new JPanel();
-
 		mainPanel.setBackground(new Color(250,250,250));
 		mainPanel.setBounds(247, 139, 1121, 576);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
+		addClientPanel = new AddClientPanel();
+		addClientPanel.setVisible(false);
 
 		userSearch = new JPanel();
-		userSearch.setVisible(false);
-		userSearch.setOpaque(true);
 		userSearch.setBounds(110, 71, 929, 430);
+		userSearch.setOpaque(true);
 		mainPanel.add(userSearch);
 		userSearch.setLayout(null);
-		
+		userSearch.setVisible(false);
 		textCnp = new JTextField();
 		textCnp.setBounds(331, 104, 264, 38);
 		userSearch.add(textCnp);
@@ -258,7 +266,7 @@ public class DashBoardRIP extends JFrame {
 					panelClientSearch.setVisible(false);
 				}
 				else {
-					
+
 					System.out.println("Client found");
 					lblNoClient.setVisible(false);
 					lblNoClient.setText("");
@@ -268,7 +276,7 @@ public class DashBoardRIP extends JFrame {
 
 						String telefonString=jsonClient.getString("telefon");
 						String prenumeString = jsonClient.getString("prenume");
-	//					String paroString=jsonClient.getString("parola");
+						//					String paroString=jsonClient.getString("parola");
 						String numeString = jsonClient.getString("nume");
 						String emailString = jsonClient.getString("email");
 						clientInfo.setEmail(emailString);
@@ -276,7 +284,7 @@ public class DashBoardRIP extends JFrame {
 						clientInfo.setPrenume(prenumeString);
 						clientInfo.setTelefon(telefonString);
 						System.out.println(clientInfo.toString());
-						
+
 					}
 					panelClientSearch.setVisible(true);
 					labelClientEmail.setText(clientInfo.getEmail());
@@ -291,7 +299,7 @@ public class DashBoardRIP extends JFrame {
 		});
 		btnCauta.setIcon(new ImageIcon(DashBoardRIP.class.getResource("/img/client_search.png")));
 		userSearch.add(btnCauta);
-		
+
 		JLabel lblCautareClient = new JLabel("Cautare Client");
 		lblCautareClient.setBounds(298, 11, 330, 82);
 		lblCautareClient.setBackground(Color.RED);
@@ -299,80 +307,16 @@ public class DashBoardRIP extends JFrame {
 		lblCautareClient.setFont(new Font("Times New Roman", Font.ITALIC, 37));
 		lblCautareClient.setHorizontalAlignment(SwingConstants.CENTER);
 		userSearch.add(lblCautareClient);
-		
+
 		lblNoClient = new JLabel("text");
 		lblNoClient.setBounds(209, 153, 264, 27);
 		lblNoClient.setForeground(Color.RED);
 		lblNoClient.setVisible(false);
 		userSearch.add(lblNoClient);
-		
+
 		panelClientSearch = new JPanel();
 		panelClientSearch.setVisible(false);
-		panelClientSearch.setBounds(10, 181, 820, 69);
-		panelClientSearch.setBackground(Color.LIGHT_GRAY);
-		userSearch.add(panelClientSearch);
-		panelClientSearch.setLayout(null);
-		
-		
-		
-		JLabel lblNume = new JLabel("Nume");
-		lblNume.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNume.setBounds(10, 11, 123, 20);
-		panelClientSearch.add(lblNume);
-		
-		JLabel labelPrenume = new JLabel("Prenume");
-		labelPrenume.setHorizontalAlignment(SwingConstants.CENTER);
-		labelPrenume.setBounds(127, 11, 123, 20);
-		panelClientSearch.add(labelPrenume);
-		
-		JLabel lblEmailClient = new JLabel("Email");
-		lblEmailClient.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmailClient.setBounds(250, 11, 151, 20);
-		panelClientSearch.add(lblEmailClient);
-		
-		lblTelefon = new JLabel("Telefon");
-		lblTelefon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTelefon.setBounds(401, 11, 97, 20);
-		panelClientSearch.add(lblTelefon);
-		
-		labelClientName = new JLabel("Nume");
-		labelClientName.setHorizontalAlignment(SwingConstants.CENTER);
-		labelClientName.setBounds(10, 38, 123, 20);
-		panelClientSearch.add(labelClientName);
-		
-		labelClientPrenume = new JLabel("Prenume");
-		labelClientPrenume.setHorizontalAlignment(SwingConstants.CENTER);
-		labelClientPrenume.setBounds(127, 38, 123, 20);
-		panelClientSearch.add(labelClientPrenume);
-		
-		labelClientEmail = new JLabel("Email");
-		labelClientEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		labelClientEmail.setBounds(250, 38, 151, 20);
-		panelClientSearch.add(labelClientEmail);
-		
-		labelClientTelefon = new JLabel("Telefon");
-		labelClientTelefon.setHorizontalAlignment(SwingConstants.CENTER);
-		labelClientTelefon.setBounds(401, 38, 97, 20);
-		panelClientSearch.add(labelClientTelefon);
-		
-		JButton btnNewButton = new JButton("Conturi");
-		btnNewButton.setBounds(538, 37, 84, 23);
-		panelClientSearch.add(btnNewButton);
-		
-		JButton btnModifica_1 = new JButton("Modifica");
-		btnModifica_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				modificaClient.setVisible(true);
-				modificaClient.setCnp(cnp);
-			}
-		});
-		btnModifica_1.setBounds(632, 37, 84, 23);
-		panelClientSearch.add(btnModifica_1);
-		
-		JButton btnSterge = new JButton("Sterge");
-		btnSterge.setBounds(726, 37, 84, 23);
-		panelClientSearch.add(btnSterge);
-		
+
 		modificaClient = new ModificaClient();
 		modificaClient.btnSalveaza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -383,7 +327,72 @@ public class DashBoardRIP extends JFrame {
 		});
 		modificaClient.setVisible(false);
 		userSearch.add(modificaClient);
-		
+		panelClientSearch.setBounds(10, 181, 820, 69);
+		panelClientSearch.setBackground(Color.LIGHT_GRAY);
+		userSearch.add(panelClientSearch);
+		panelClientSearch.setLayout(null);
+
+
+
+		JLabel lblNume = new JLabel("Nume");
+		lblNume.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNume.setBounds(10, 11, 123, 20);
+		panelClientSearch.add(lblNume);
+
+		JLabel labelPrenume = new JLabel("Prenume");
+		labelPrenume.setHorizontalAlignment(SwingConstants.CENTER);
+		labelPrenume.setBounds(127, 11, 123, 20);
+		panelClientSearch.add(labelPrenume);
+
+		JLabel lblEmailClient = new JLabel("Email");
+		lblEmailClient.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmailClient.setBounds(250, 11, 151, 20);
+		panelClientSearch.add(lblEmailClient);
+
+		lblTelefon = new JLabel("Telefon");
+		lblTelefon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTelefon.setBounds(401, 11, 97, 20);
+		panelClientSearch.add(lblTelefon);
+
+		labelClientName = new JLabel("Nume");
+		labelClientName.setHorizontalAlignment(SwingConstants.CENTER);
+		labelClientName.setBounds(10, 38, 123, 20);
+		panelClientSearch.add(labelClientName);
+
+		labelClientPrenume = new JLabel("Prenume");
+		labelClientPrenume.setHorizontalAlignment(SwingConstants.CENTER);
+		labelClientPrenume.setBounds(127, 38, 123, 20);
+		panelClientSearch.add(labelClientPrenume);
+
+		labelClientEmail = new JLabel("Email");
+		labelClientEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		labelClientEmail.setBounds(250, 38, 151, 20);
+		panelClientSearch.add(labelClientEmail);
+
+		labelClientTelefon = new JLabel("Telefon");
+		labelClientTelefon.setHorizontalAlignment(SwingConstants.CENTER);
+		labelClientTelefon.setBounds(401, 38, 97, 20);
+		panelClientSearch.add(labelClientTelefon);
+
+		JButton btnNewButton = new JButton("Conturi");
+		btnNewButton.setBounds(538, 37, 84, 23);
+		panelClientSearch.add(btnNewButton);
+
+		JButton btnModifica_1 = new JButton("Modifica");
+		btnModifica_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				modificaClient.setVisible(true);
+				modificaClient.setCnp(cnp);
+			}
+		});
+		btnModifica_1.setBounds(632, 37, 84, 23);
+		panelClientSearch.add(btnModifica_1);
+
+		JButton btnSterge = new JButton("Sterge");
+		btnSterge.setBounds(726, 37, 84, 23);
+		panelClientSearch.add(btnSterge);
+		mainPanel.add(addClientPanel);
+
 		lblBackimage = new JLabel("backImage");
 		lblBackimage.setBounds(0, 0, 1121, 576);
 		lblBackimage.setIcon(new ImageIcon(DashBoardRIP.class.getResource("/img/WelcomeWallpaper.png")));
