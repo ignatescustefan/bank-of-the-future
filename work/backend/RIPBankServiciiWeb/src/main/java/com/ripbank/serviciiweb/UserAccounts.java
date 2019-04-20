@@ -18,6 +18,14 @@ public class UserAccounts {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAccounts(@PathParam("cnp") String cnp){
+		JSONObject json = retreiveUserAccounts(cnp);
+		System.out.println(json.toString());
+		return Response.status(200)
+				.entity(json.toString())
+				.build();
+	}
+
+	public static JSONObject retreiveUserAccounts(String cnp) {
 		List<Account> accounts=DBManager.getInstance().getClientAccounts(cnp);
 		JSONObject json=new JSONObject();
 		for (Account acc : accounts) {
@@ -27,9 +35,6 @@ public class UserAccounts {
 					.put("sold", acc.getSold());
 			json.append("account", obj);
 		}
-		System.out.println(json.toString());
-		return Response.status(200)
-				.entity(json.toString())
-				.build();
+		return json;
 	}
 }

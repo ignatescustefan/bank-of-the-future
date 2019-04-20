@@ -178,21 +178,22 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			st.execute("SELECT IBAN, sold FROM cont WHERE IBAN="+"\""+transaction.getIbanDest()+"\"");
 			ResultSet rs = st.getResultSet();
 			if (null != rs) {
+				// check if destination IBAN exist
 				int size= 0;  
 				rs.beforeFirst();  
 				rs.last();  
 				size = rs.getRow();
 				System.out.println("Size: "+size);
 				if (1 == size) {
-					double balanceAfterTransactionSource=rs.getDouble("sold")-transaction.getAmount();
-					System.out.println("INSERT INTO tranzactie values"
-							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
-							+ "\"" + transaction.getIbanSource() +"\","
-							+"\" "+transaction.getIbanDest()+"\","
-							+"\" "+transaction.getOperatorTranzactie()+"\","
-							+"CURDATE(),"+ "CURRENT_TIME, "
-							+transaction.getAmount()+")"
-							);
+					double balanceAfterTransactionDestination=rs.getDouble("sold")+transaction.getAmount();
+					//					System.out.println("INSERT INTO tranzactie values"
+					//							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
+					//							+ "\"" + transaction.getIbanSource() +"\","
+					//							+"\" "+transaction.getIbanDest()+"\","
+					//							+"\" "+transaction.getOperatorTranzactie()+"\","
+					//							+"CURDATE(),"+ "CURRENT_TIME, "
+					//							+transaction.getAmount()+")"
+					//							);
 					st.execute("INSERT INTO tranzactie values"
 							+ "(0, " +"\"" +transaction.getTipTranzactie() +"\","
 							+ "\"" + transaction.getIbanSource() +"\","
@@ -201,16 +202,37 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 							+"CURDATE(),"+ "CURRENT_TIME, "
 							+transaction.getAmount()+")"
 							);
-					System.out.println("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
-					st.execute("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
-					
-					//TODO: need to add the amount to dest iban
-					return true;
+					System.out.println("UPDATE cont SET sold="+balanceAfterTransactionDestination+" WHERE iban="+"\""+transaction.getIbanDest()+"\"");
+					st.execute("UPDATE cont SET sold="+balanceAfterTransactionDestination+" WHERE iban="+"\""+transaction.getIbanDest()+"\"");
 				}
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		try (Statement st1= DBConnection.getInstance().conn.createStatement()){
+			st1.execute("SELECT IBAN, sold FROM cont WHERE IBAN="+"\""+transaction.getIbanSource()+"\"");
+			ResultSet rs1 = st1.getResultSet();
+			rs1.next();
+			double balanceAfterTransactionSource=rs1.getDouble("sold")-transaction.getAmount();
+			st1.execute("UPDATE cont SET sold="+balanceAfterTransactionSource+" WHERE iban="+"\""+transaction.getIbanSource()+"\"");
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;		
+	}
+	
+	public String getCNPByIBAN(String IBAN) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()){
+			st.execute("SELECT proprietar_cnp FROM cont WHERE iban="+"\""+IBAN+ "\"");
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				String cnp=rs.getString("proprietar_cnp");
+				return cnp;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 }

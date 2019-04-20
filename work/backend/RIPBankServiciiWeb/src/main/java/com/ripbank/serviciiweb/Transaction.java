@@ -5,11 +5,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.json.JSONObject;
 
 import com.ripbank.core.DTO.TransactionDTO;
 import com.ripbank.db.DBManager;
+import com.ripbank.serviciiweb.UserAccounts;
 
 @Path("transaction")
 public class Transaction {
@@ -18,6 +18,8 @@ public class Transaction {
 	public Response makeTransaction(TransactionDTO transactionDTO) {
 		JSONObject object = new JSONObject();
 		object.put("TransactionResult", DBManager.getInstance().makeTransaction(transactionDTO));
+		JSONObject accounts = UserAccounts.retreiveUserAccounts(DBManager.getInstance().getCNPByIBAN(transactionDTO.getIbanSource()));
+		object.put("Accounts", accounts);
 		System.out.println("BE:" + object);
 		return Response
 				.status(200)
