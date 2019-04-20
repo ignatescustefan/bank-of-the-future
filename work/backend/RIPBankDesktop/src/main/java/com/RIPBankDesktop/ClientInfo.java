@@ -6,6 +6,16 @@ public class ClientInfo{
 	private String email;
 	private String telefon;
 
+	public ClientInfo() {
+			}
+	
+	public ClientInfo(String nume, String prenume, String email, String telefon) {
+		super();
+		this.nume = nume;
+		this.prenume = prenume;
+		this.email = email;
+		this.telefon = telefon;
+	}
 	public String getEmail() {
 		return email;
 	}
