@@ -30,7 +30,7 @@ public class TransactionDTO {
 	public TipTranzactie getTipCont() {
 		return tipTranzactie;
 	}
-	public void setTipCont(TipTranzactie tipTranzactie) {
+	public void setTipTranzactie(TipTranzactie tipTranzactie) {
 		this.tipTranzactie = tipTranzactie;
 	}
 	public String getOperatorTranzactie() {

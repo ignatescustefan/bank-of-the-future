@@ -13,8 +13,11 @@ import com.ripbank.core.DAO.AccountDAO;
 import com.ripbank.core.DAO.EmployeeDAO;
 import com.ripbank.core.DAO.TransactionDAO;
 import com.ripbank.core.DAO.UserDAO;
+import com.ripbank.core.DTO.CompleteTransactionDetailsDTO;
 import com.ripbank.core.DTO.TransactionDTO;
+import com.ripbank.core.DTO.TransactionReportInformationDTO;
 import com.ripbank.core.TipCont;
+import com.ripbank.core.TipTranzactie;
 
 public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionDAO {
 	private static final DBManager instance = new DBManager();
@@ -189,8 +192,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 							+ "\"" + transaction.getIbanDest() + "\"");
 					st.execute("UPDATE cont SET sold=" + balanceAfterTransactionDestination + " WHERE iban=" + "\""
 							+ transaction.getIbanDest() + "\"");
-				}
-				else {
+				} else {
 					return false;
 				}
 			}
@@ -226,6 +228,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return null;
 	}
 
+	// TODO: need to work on this
 	public boolean deleteClient(String cnp) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			st.execute("DELETE FROM utilizator WHERE cnp=" + "\"" + cnp + "\"");
@@ -234,5 +237,62 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public List<CompleteTransactionDetailsDTO> getTransactions(
+			TransactionReportInformationDTO transactionReportInformationDTO) {
+		List<String> IBANs = getIBANByCNP(transactionReportInformationDTO.getCnp());
+		List<CompleteTransactionDetailsDTO> transactions = new ArrayList<>();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
+				+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
+		query.append("AND (");
+		for (String iban : IBANs) {
+			query.append("IBAN_sursa='" + iban + "'");
+			query.append("OR ");
+			query.append("IBAN_destinatie='" + iban + "'");
+			if (IBANs.indexOf(iban) != IBANs.size() - 1) {
+				query.append("OR ");
+			}
+		}
+		query.append(")");
+		System.out.println("Query: " + query.toString());
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute(query.toString());
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				CompleteTransactionDetailsDTO transaction = new CompleteTransactionDetailsDTO();
+				transaction.setIdTranzactie(rs.getInt("id_Tranzactie"));
+				transaction.setTipTranzactie(TipTranzactie.valueOf(rs.getString("tip_Tranzactie")));
+				transaction.setIbanSource(rs.getString("IBAN_sursa"));
+				transaction.setIbanDest(rs.getString("IBAN_destinatie"));
+				transaction.setOperatorTranzactie(rs.getString("operator_tranzactie"));
+				transaction.setDataTranzactie(rs.getString("data_tranzactie"));
+				transaction.setOraTranzactie(rs.getString("ora_tranzactie"));
+				transaction.setAmount(rs.getDouble("suma_tranzactie"));
+				transactions.add(transaction);
+			}
+			System.out.println(transactions.toString());
+			return transactions;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private List<String> getIBANByCNP(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT IBAN FROM cont WHERE proprietar_cnp='" + cnp + "'");
+			List<String> ibans = new ArrayList<>();
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				ibans.add(rs.getString("IBAN"));
+			}
+			return ibans;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
