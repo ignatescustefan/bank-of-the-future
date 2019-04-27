@@ -10,6 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
+
+import com.logging.Log4J;
 import com.ripbank.core.Account;
 import com.ripbank.db.DBManager;
 
@@ -18,14 +20,15 @@ public class UserAccounts {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAccounts(@PathParam("cnp") String cnp){
-		JSONObject json = retreiveUserAccounts(cnp);
-		System.out.println(json.toString());
+		Log4J.getLogger().info("Request for getting bank accounts for CNP: "+cnp);
+		JSONObject json = this.retreiveUserAccounts(cnp);
+		Log4J.getLogger().info("Response for getting bank accounts for CNP: "+cnp+ " :"+json.toString());
 		return Response.status(200)
 				.entity(json.toString())
 				.build();
 	}
 
-	public static JSONObject retreiveUserAccounts(String cnp) {
+	private JSONObject retreiveUserAccounts(String cnp) {
 		List<Account> accounts=DBManager.getInstance().getClientAccounts(cnp);
 		JSONObject json=new JSONObject();
 		for (Account acc : accounts) {

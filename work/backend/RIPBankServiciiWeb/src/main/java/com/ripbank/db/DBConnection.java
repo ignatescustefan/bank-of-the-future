@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.logging.Log4J;
+
 public class DBConnection {
 	private static final String URL = "jdbc:mysql://localhost:3306/ripbank";
 	private static final String USERNAME = "adminRIP";
@@ -14,10 +16,10 @@ public class DBConnection {
 		return instance;
 	}
 	private DBConnection() {
-		System.out.println("Loading driver...");
+		Log4J.getLogger().info("Loading driver...");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("Driver loaded!");
+			Log4J.getLogger().info("Driver loaded!");
 		} catch (ClassNotFoundException e) {
 			throw new IllegalStateException(
 					"Cannot find the driver in the classpath!", e);

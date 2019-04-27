@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
+import com.logging.Log4J;
 import com.ripbank.core.User;
 import com.ripbank.core.DTO.ClientInfoDTO;
 import com.ripbank.db.DBManager;
@@ -20,32 +21,27 @@ import com.ripbank.db.DBManager;
 public class UpdateUserInfo {
 	@Path("userInfo/{cnp}")
 	@PATCH
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response updateUserInfo(@PathParam("cnp") String cnp,
-			ClientInfoDTO clientInfo) {
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response updateUserInfo(@PathParam("cnp") String cnp, ClientInfoDTO clientInfo) {
 		JSONObject jsonObject = new JSONObject();
-		if (DBManager.getInstance().updateUserInformation(cnp, clientInfo.getNume(), clientInfo.getPrenume(), 
+		Log4J.getLogger().info("Request for change information for user: " + clientInfo.toString() + ", CNP: " + cnp);
+		if (DBManager.getInstance().updateUserInformation(cnp, clientInfo.getNume(), clientInfo.getPrenume(),
 				clientInfo.getTelefon())) {
-			List<User> users=DBManager.getInstance().findUserByCNP(cnp);
+			List<User> users = DBManager.getInstance().findUserByCNP(cnp);
 			if (1 == users.size()) {
 				jsonObject.put("UpdateUserInfo", 1);
-				for (User user:users) {
-					jsonObject
-					.put("Nume", user.getNume())
-					.put("Prenume", user.getPrenume())
-					.put("Telefon", user.getTelefon());
+				for (User user : users) {
+					jsonObject.put("Nume", user.getNume()).put("Prenume", user.getPrenume()).put("Telefon",
+							user.getTelefon());
 				}
-				return Response
-						.status(200)
-						.entity(jsonObject.toString())
-						.build();			
+				Log4J.getLogger().info("Successfully changed details for user: "+cnp+jsonObject.toString());
+				return Response.status(200).entity(jsonObject.toString()).build();
 			}
-		};
+		}
+		;
 		jsonObject.put("UpdateUserInfo", 0);
-		return Response
-				.status(304)
-				.entity(jsonObject)
-				.build();
+		Log4J.getLogger().info("Failed operation of changing details for user: "+cnp+jsonObject.toString());
+		return Response.status(304).entity(jsonObject).build();
 	}
 }

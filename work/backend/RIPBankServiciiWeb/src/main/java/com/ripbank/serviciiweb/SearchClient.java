@@ -10,36 +10,32 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
+
+import com.logging.Log4J;
 import com.ripbank.core.User;
 import com.ripbank.db.DBManager;
 
 @Path("clients")
 public class SearchClient {
-	@POST 
+	@POST
 	@Path("{cnp}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response getClient(@PathParam("cnp") String cnp){
-		System.out.println("Dsa");
-		List<User> clients=DBManager.getInstance().findUserByCNP(cnp);
-		JSONObject json=new JSONObject();
-		if (null== clients || clients.size() >1) {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getClient(@PathParam("cnp") String cnp) {
+		Log4J.getLogger().info("Request for client with cnp: " + cnp);
+		List<User> clients = DBManager.getInstance().findUserByCNP(cnp);
+		JSONObject json = new JSONObject();
+		if (null == clients || clients.size() > 1) {
 			json.put("Error", 1);
-		}
-		else {
+			Log4J.getLogger().error("Error at searching client with cnp: " + cnp);
+		} else {
 			for (User client : clients) {
-				JSONObject obj=new JSONObject()
-						.put("nume", client.getNume())
-						.put("prenume", client.getPrenume())
-						.put("email", client.getEmail())
-						.put("parola", client.getParola())
+				JSONObject obj = new JSONObject().put("nume", client.getNume()).put("prenume", client.getPrenume())
+						.put("email", client.getEmail()).put("parola", client.getParola())
 						.put("telefon", client.getTelefon());
 				json.append("client", obj);
 			}
 		}
-		//la asta nu ajunge
-		System.out.println(json.toString());
-		return Response.status(200)
-				.entity(json.toString())
-				.build();
+		Log4J.getLogger().error("SearchClient with CNP " + cnp + " result: " + json.toString());
+		return Response.status(200).entity(json.toString()).build();
 	}
 }
