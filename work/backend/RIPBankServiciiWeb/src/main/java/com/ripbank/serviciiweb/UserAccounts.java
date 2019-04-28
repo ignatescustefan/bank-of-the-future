@@ -21,14 +21,14 @@ public class UserAccounts {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAccounts(@PathParam("cnp") String cnp){
 		Log4J.getLogger().info("Request for getting bank accounts for CNP: "+cnp);
-		JSONObject json = this.retreiveUserAccounts(cnp);
+		JSONObject json = retreiveUserAccounts(cnp);
 		Log4J.getLogger().info("Response for getting bank accounts for CNP: "+cnp+ " :"+json.toString());
 		return Response.status(200)
 				.entity(json.toString())
 				.build();
 	}
 
-	private JSONObject retreiveUserAccounts(String cnp) {
+	static JSONObject retreiveUserAccounts(String cnp) {
 		List<Account> accounts=DBManager.getInstance().getClientAccounts(cnp);
 		JSONObject json=new JSONObject();
 		for (Account acc : accounts) {

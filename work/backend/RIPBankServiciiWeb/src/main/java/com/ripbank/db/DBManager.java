@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import com.logging.Log4J;
 import com.ripbank.core.Account;
 import com.ripbank.core.Employee;
 import com.ripbank.core.User;
@@ -176,14 +178,6 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 				System.out.println("Size: " + size);
 				if (1 == size) {
 					double balanceAfterTransactionDestination = rs.getDouble("sold") + transaction.getAmount();
-					// System.out.println("INSERT INTO tranzactie values"
-					// + "(0, " +"\"" +transaction.getTipTranzactie() +"\","
-					// + "\"" + transaction.getIbanSource() +"\","
-					// +"\" "+transaction.getIbanDest()+"\","
-					// +"\" "+transaction.getOperatorTranzactie()+"\","
-					// +"CURDATE(),"+ "CURRENT_TIME, "
-					// +transaction.getAmount()+")"
-					// );
 					st.execute("INSERT INTO tranzactie values" + "(0, " + "\"" + transaction.getTipTranzactie() + "\","
 							+ "\"" + transaction.getIbanSource() + "\"," + "\"" + transaction.getIbanDest() + "\","
 							+ "\"" + transaction.getOperatorTranzactie() + "\"," + "CURDATE()," + "CURRENT_TIME, "
@@ -245,8 +239,9 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		List<String> IBANs = getIBANByCNP(transactionReportInformationDTO.getCnp());
 		List<CompleteTransactionDetailsDTO> transactions = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
-				+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
+		query.append(
+				"SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
+						+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
 		query.append("AND (");
 		for (String iban : IBANs) {
 			query.append("IBAN_sursa='" + iban + "'");
@@ -294,5 +289,65 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean createUser(User user) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\"" + user.getPrenume()
+					+ "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", " + "\"" + user.getCnp()
+					+ "\", " + "\"" + user.getTelefon() + "\")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private String generateIbanCandidate() {
+		Random rand = new Random();
+		StringBuilder iban = new StringBuilder();
+		for (int i = 0; i < 16; ++i) {
+			iban.append(rand.nextInt(10) + "");
+		}
+		return "RO84RIPB" + iban.toString();
+	}
+
+	public String generateIBAN(String cnp) {
+		int size = 1;
+		while (size >= 1) {
+			try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+				Log4J.getLogger().info("Generating IBAN for: " + cnp);
+				String ibanCandidate = generateIbanCandidate();
+				Log4J.getLogger().info("Generated IBAN: " + ibanCandidate);
+				st.execute("SELECT * FROM cont WHERE IBAN=\"" + ibanCandidate + "\"");
+				ResultSet rs = st.getResultSet();
+				if (null != rs) {
+					rs.beforeFirst();
+					rs.last();
+					size = rs.getRow();
+					if (0 == size) {
+						return ibanCandidate;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean createAccount(User user, String iban) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			// TODO: need to add support for account type
+			// TODO: randomize PIN & return it
+			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + user.getCnp() + "\", " + "\"" + "depozit"
+					+ "\", " + "\"" + "0000" + "\", " + "0.0)");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

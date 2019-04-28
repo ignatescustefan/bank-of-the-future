@@ -14,4 +14,6 @@ public interface UserDAO {
 	public boolean updateUserInformation(String cnp, String nume, String prenume, String telefon);
 	
 	public boolean deleteClient(String cnp);
+	
+	public boolean createUser(User user);
 }

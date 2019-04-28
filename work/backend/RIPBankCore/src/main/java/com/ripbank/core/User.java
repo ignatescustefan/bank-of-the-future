@@ -10,9 +10,9 @@ public class User {
 	private String parola;
 	private String cnp;
 	private String telefon;
-	
+
 	public User() {
-		
+
 	}
 
 	public User(String nume, String prenume, String email, String parola, String cnp, String telefon) {
@@ -72,12 +72,11 @@ public class User {
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
-	
+
 	@Override
 	public String toString() {
-		StringBuilder builder=new StringBuilder();
-		builder.append("Client: ").append(prenume).append(" ").append(nume);
-		builder.append(" Email: ").append(email);
-		return builder.toString();
+		return "User [nume=" + nume + ", prenume=" + prenume + ", email=" + email + ", parola=" + parola + ", cnp="
+				+ cnp + ", telefon=" + telefon + "]";
 	}
+
 }
