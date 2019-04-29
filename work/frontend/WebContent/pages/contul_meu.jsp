@@ -8,8 +8,7 @@
                 <div class="card-content title">
                     <h4 class="card-title">
                         Contul meu
-                    </h4>
-                                
+                    </h4>                                
                </div>
             </div>
         </div>

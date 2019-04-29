@@ -27,7 +27,7 @@ public class TransactionDTO {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public TipTranzactie getTipCont() {
+	public TipTranzactie getTipTranzactie() {
 		return tipTranzactie;
 	}
 	public void setTipTranzactie(TipTranzactie tipTranzactie) {
@@ -42,7 +42,7 @@ public class TransactionDTO {
 	@Override
 	public String toString() {
 		return "TransactionDTO [ibanDest=" + ibanDest + ", ibanSource=" + ibanSource + ", amount=" + amount
-				+ ", tipCont=" + tipTranzactie + ", operatorTranzactie=" + operatorTranzactie + "]";
+				+ ", tipTranzactie=" + tipTranzactie + ", operatorTranzactie=" + operatorTranzactie + "]";
 	}
 	
 }
