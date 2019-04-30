@@ -32,7 +32,7 @@ public class TransactionHistory {
 				jsonObject.put("idTranzactie", completeTransactionDetailsDTO.getIdTranzactie());
 				jsonObject.put("dataTranzactie", completeTransactionDetailsDTO.getDataTranzactie());
 				jsonObject.put("oraTranzactie", completeTransactionDetailsDTO.getOraTranzactie());
-				finalJSONObj.put("#"+completeTransactionDetailsDTO.getIdTranzactie(), jsonObject);
+				finalJSONObj.put(transactions.indexOf(completeTransactionDetailsDTO)+"", jsonObject);
 			}
 			return Response.status(200).entity(finalJSONObj.toString()).build();
 		}

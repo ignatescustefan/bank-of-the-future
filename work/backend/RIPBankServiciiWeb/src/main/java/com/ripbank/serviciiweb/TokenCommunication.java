@@ -10,6 +10,8 @@ import javax.ws.rs.core.MediaType;
 
 import com.ripbank.db.DBManager;
 
+
+//TODO: need to review this
 @Path("token")
 public class TokenCommunication {
 	@Path("updatePIN")

@@ -46,4 +46,38 @@ public class CompleteTransactionDetailsDTO extends TransactionDTO {
 				+ ", oraTranzactie=" + oraTranzactie + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataTranzactie == null) ? 0 : dataTranzactie.hashCode());
+		result = prime * result + idTranzactie;
+		result = prime * result + ((oraTranzactie == null) ? 0 : oraTranzactie.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CompleteTransactionDetailsDTO other = (CompleteTransactionDetailsDTO) obj;
+		if (dataTranzactie == null) {
+			if (other.dataTranzactie != null)
+				return false;
+		} else if (!dataTranzactie.equals(other.dataTranzactie))
+			return false;
+		if (idTranzactie != other.idTranzactie)
+			return false;
+		if (oraTranzactie == null) {
+			if (other.oraTranzactie != null)
+				return false;
+		} else if (!oraTranzactie.equals(other.oraTranzactie))
+			return false;
+		return true;
+	}
+
 }
