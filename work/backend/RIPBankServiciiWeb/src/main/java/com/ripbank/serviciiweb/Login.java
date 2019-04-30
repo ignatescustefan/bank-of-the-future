@@ -14,11 +14,17 @@ import java.util.List;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 @Path("login")
 public class Login {
+
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAuthorizedUser(CredentialsDTO user) {
+		JSONObject jsonObject = checkUserEmailAndPass(user);
+		return Response.status(200).entity(jsonObject.toString()).build();
+	}
 
 	private JSONObject checkUserEmailAndPass(CredentialsDTO user) {
 		List<User> usersList = DBManager.getInstance().findUserByEmailAndPassword(user.getEmail(), user.getPassword());
@@ -33,6 +39,14 @@ public class Login {
 				.put("Prenume", usersList.get(0).getPrenume()).put("Telefon", usersList.get(0).getTelefon());
 	}
 
+	@Path("employee")
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAuthorizedEmployee(CredentialsDTO user) {
+		JSONObject jsonObject = checkEmployeeEmailAndPass(user);
+		return Response.status(200).entity(jsonObject.toString()).build();
+	}
+
 	private JSONObject checkEmployeeEmailAndPass(CredentialsDTO employee) {
 		List<Employee> employees = DBManager.getInstance().findEmployeeByEmailAndPass(employee.getEmail(),
 				employee.getPassword());
@@ -45,31 +59,14 @@ public class Login {
 				.put("Nume", employees.get(0).getNume()).put("Prenume", employees.get(0).getPrenume());
 	}
 
+	@Path("secondStepAuth")
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getAuthorizedUser(CredentialsDTO user) {
-		JSONObject jsonObject = checkUserEmailAndPass(user);
+	public Response verifyTokenAuth(String cnp) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("timeIntervalOk", DBManager.getInstance().verifyAuthCodeTiming(cnp));
 		return Response.status(200).entity(jsonObject.toString()).build();
-	}
-
-	@Path("/employee")
-	@POST
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getAuthorizedEmployee(CredentialsDTO user) {
-		JSONObject jsonObject = checkEmployeeEmailAndPass(user);
-		return Response.status(200).entity(jsonObject.toString()).build();
-	}
-
-	// TODO: need to move verifyTokenAuth to another API
-	@Path("/{cnp}")
-	@POST
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response verifyTokenAuth(@PathParam("cnp") String cnp) {
-		// TODO: get current time; if it's <1 min, return ok
-		/*
-		 * if it's fine return Response.status(200).build();
-		 */
-		return Response.status(401).build();
 
 	}
+
 }

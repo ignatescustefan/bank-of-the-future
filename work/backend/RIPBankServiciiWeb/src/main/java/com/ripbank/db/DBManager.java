@@ -124,10 +124,11 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return null;
 	}
 
-	public boolean insertAuthCodeInDB(String cnp, String authCode) {
+	public boolean insertAuthCodeIntoDB(String cnp, String authCode) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			System.out.println("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\","
-					+ "\"" + authCode + "\"," + "CURRENT_TIMESTAMP)");
+			// System.out.println("INSERT INTO token (token_cnp, token_key, time_stamp)
+			// VALUES(" + "\"" + cnp + "\","
+			// + "\"" + authCode + "\"," + "CURRENT_TIMESTAMP)");
 			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\"," + "\""
 					+ authCode + "\"," + "CURRENT_TIMESTAMP)");
 		} catch (SQLException e) {
@@ -350,6 +351,37 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + user.getCnp() + "\", " + "\"" + "depozit"
 					+ "\", " + "\"" + "0000" + "\", " + "0.0)");
 			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public String getPINForUserCNP(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT PIN from cont WHERE proprietar_cnp=" + "\"" + cnp + "\"");
+			ResultSet rs = st.getResultSet();
+			rs.next();
+			return rs.getString("PIN");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean verifyAuthCodeTiming(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute(
+					"SELECT (NOW()-time_stamp) seconds FROM token WHERE id=(SELECT max(id) FROM token) AND token_cnp='"
+							+ cnp + "'          ");
+			ResultSet rs = st.getResultSet();
+			rs.next();
+			if (rs.getInt("seconds") <= 120) {
+				return true;
+			}
+			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
