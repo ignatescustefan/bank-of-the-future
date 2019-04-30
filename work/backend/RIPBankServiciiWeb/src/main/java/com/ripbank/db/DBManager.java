@@ -9,6 +9,7 @@ import java.util.Random;
 
 import com.logging.Log4J;
 import com.ripbank.core.Account;
+import com.ripbank.core.ClientStatus;
 import com.ripbank.core.Employee;
 import com.ripbank.core.User;
 import com.ripbank.core.DAO.AccountDAO;
@@ -35,8 +36,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			st.execute("SELECT * FROM utilizator WHERE cnp=" + cnp);
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
-						rs.getString("parola"), rs.getString("cnp"), rs.getString("telefon"));
+				User user = createUserByResultSet(rs);
 				userList.add(user);
 				return userList;
 			}
@@ -53,8 +53,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			st.execute("SELECT * FROM utilizator WHERE email=" + "\"" + email + "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
-						rs.getString("pa" + "rola"), rs.getString("cnp"), rs.getString("telefon"));
+				User user = createUserByResultSet(rs);
 				userList.add(user);
 				return userList;
 			}
@@ -72,8 +71,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 					+ "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
-						rs.getString("parola"), rs.getString("cnp"), rs.getString("telefon"));
+				User user = createUserByResultSet(rs);
 				userList.add(user);
 				return userList;
 			}
@@ -81,6 +79,13 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private User createUserByResultSet(ResultSet rs) throws SQLException {
+		User user = new User(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
+				rs.getString("parola"), rs.getString("cnp"), rs.getString("telefon"),
+				ClientStatus.valueOf(rs.getString("client_status")));
+		return user;
 	}
 
 	@Override
@@ -222,10 +227,10 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return null;
 	}
 
-	// TODO: need to work on this
+	@Override
 	public boolean deleteClient(String cnp) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			st.execute("DELETE FROM utilizator WHERE cnp=" + "\"" + cnp + "\"");
+			st.execute("UPDATE utilizator SET client_status='inactiv' WHERE CNP=" + "\"" + cnp + "\"");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

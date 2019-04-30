@@ -16,8 +16,6 @@ public class AddClient {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addClient(User user) {
 		Log4J.getLogger().info("Request for creating an user: " + user.toString());
-		// TODO: insert into db values from user
-		// TODO: create an accounts
 		if (DBManager.getInstance().createUser(user)) {
 			// random an IBAN
 			String accountIBAN = DBManager.getInstance().generateIBAN(user.getCnp());
