@@ -19,6 +19,7 @@
 					   		<input type="hidden" id="operator_tranzactie" name="operator_tranzactie" value="<%=session.getAttribute("nume")%> <%=session.getAttribute("prenume")%>">
 					    </div>
 					  </div>
+					  
 					  <div class="form-group" id="selectare_cont">
 					    <label class="control-label col-sm-4">Selectare cont:</label>
 					    <div class="col-sm-4">
@@ -31,14 +32,45 @@
 					       <% } %> 
 					      </select>
 					      </div>
+					      <button type="button" class="btn btn-link btn-sm" onclick="detaliiCont()">Detalii conturi</button>
 					  </div>
+					  
+					  <div class="form-group" id="conturi_disponibile">
+					    <label class="control-label col-sm-4">Conturi disponibile:</label>
+					    <div class="col-sm-4">
+					     
+					      <table class="table">
+							  <thead>
+							    <tr>
+							      <th scope="col">#</th>
+							      <th scope="col">Tip cont</th>
+							      <th scope="col">Sold</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							  	<%
+									for(int i=0;i<contor;i++) {
+								 %>     
+							    <tr>
+							      <th scope="row"><%=i+1%></th>
+							      <td><%=session.getAttribute("tipCont"+i)%></td>
+							      <td><%=session.getAttribute("sold"+i)%> lei</td>
+							    </tr>
+							    <% } %> 
+							  </tbody>
+							</table>
+					     
+					    </div>
+					  </div>
+					  
 					  <div class="form-group">
 					    <label class="control-label col-sm-4">IBAN cont destinație:</label>
 					    <div class="col-sm-4">
 					      <input type="text" class="form-control" id="iban_destinatie" name="iban_destinatie" required>
 					    </div>
 					  </div>
-					   <div class="form-group">
+					  
+					  <div class="form-group">
 					    <label class="control-label col-sm-4">Suma:</label>
 					    <div class="col-sm-4">
 					      <input type="number" step=0.01 min=0 class="form-control" id="suma" name="suma" required>

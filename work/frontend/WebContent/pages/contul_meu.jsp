@@ -14,10 +14,10 @@
         </div>
     </div>
 </div>
-
-
- <%
- 	int contor=(int)session.getAttribute("contor");
+<% 
+	int contor=(int)session.getAttribute("contor"); 
+	if(contor>0) {
+ 	
     for(int i=0;i<contor;i++) {
  %>     
  <div class="container">
@@ -46,5 +46,23 @@
             </div>
         </div>
     </div>
-</div>             
-<% } %>   
+</div> 
+            
+<% }   
+} else { %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-content">
+                    <div class="message_box">
+						<p>Nu există conturi de afișat!</p>
+					</div>                            
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+	
+<% } %>

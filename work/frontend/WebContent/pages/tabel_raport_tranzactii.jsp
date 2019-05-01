@@ -38,9 +38,6 @@
                     <div class="card-title">
                         <h4>Raport tranzacții</h4>
 	                    <hr>
-						<!--
-						<button type="button" class="btn btn-success" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
-                    	-->
                     </div>
                     
                     	<% 
@@ -68,7 +65,7 @@
 									for(int i=0;i<contor;i++) {
 								 %>     
 								<tr>
-									<th scope="row"><%=i%></th>
+									<th scope="row"><%=i+1%></th>
 									<td><%=session.getAttribute("operatorTranzactie_RT"+i)%></td>
 									<td><%=session.getAttribute("tipTranzactie_RT"+i)%></td>
 									<td><%=session.getAttribute("ibanSource_RT"+i)%></td>
@@ -95,7 +92,7 @@
 							<br/>
 						    <button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
 						</div>
-						<br/>
+						
 						<% } %>
                 </div>
             </div>

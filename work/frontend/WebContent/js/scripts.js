@@ -27,3 +27,8 @@ function displayTelefon() {
 	  elem.style.display="block";
 	  btn.style.display="block";
 }
+
+function detaliiCont() {
+	var elem = document.getElementById("conturi_disponibile");
+	elem.style.display="block";
+}
