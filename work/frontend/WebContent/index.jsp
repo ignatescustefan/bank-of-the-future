@@ -26,6 +26,7 @@
 
 <%  
      if (session.getAttribute("cnp") != null) {  
+    	 System.out.println("Bine ai venit!");
 %>
 
 <body onload="load('pages/contul_meu.jsp');">
