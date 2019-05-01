@@ -711,6 +711,7 @@ Sidebar
     border: 0;
 }
 
+
 /*fields id */
 #nume {display: none;}
 #prenume {display: none;}
@@ -725,4 +726,19 @@ Sidebar
 	font-weight: 200;
  	font-size: 0.8em;
   	text-align: center;
+}
+.message_box {
+    text-align: center;
+}
+.home_button {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 10px 24px;
+    background-color: #fa7307;
 }

@@ -64,11 +64,11 @@
 				</li>
 			
 				<li class="has-children bookmarks">
-					<a href="#0">Rapoarte și extrase</a>
+					<a href="#">Rapoarte și extrase</a>
 					
 					<ul>
-						<li><a href="#0">Raport tranzacții</a></li>
-						<li><a href="#0">Extras de cont</a></li>
+						<li><a href="#" onclick="load('pages/raport_tranzactii.jsp')">Raport tranzacții</a></li>
+						<li><a href="#">Extras de cont</a></li>
 					</ul>
 				</li>
 				
@@ -103,8 +103,10 @@
 	                    <div class="card-title">
                         <h4>Nu puteți accesa această pagină dacă nu sunteți autentificat!</h4>
 	                    <hr>
-						<button type="button" class="btn btn-primary" onclick="location.href='login.jsp'">Accesează pagina de login</button>
-                    </div>    			               
+                    </div>
+                    <div class="message_box">
+						<button class="home_button" onclick="location.href='login.jsp'">Accesează pagina de login</button>
+					</div> 	    			               
 	                </div>
 	            </div>
 	        </div>

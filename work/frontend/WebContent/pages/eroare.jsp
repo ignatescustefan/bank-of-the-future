@@ -31,11 +31,13 @@
 	        <div class="col-sm-10">
 	            <div class="card">
 	                <div class="card-content atention">
-	                    <div class="card-title">
-                        <h4>Nu pare rău! A apărut o eroare la server!</h4>
-	                    <hr>
-						<button type="button" class="btn btn-primary" onclick="location.href='../login.jsp'">Accesează pagina de login</button>
-                    </div>    			               
+		                <div class="card-title">
+	                        <h4>Nu pare rău! A apărut o eroare la server!</h4>
+		                    <hr>
+	                    </div>
+	                    <div class="message_box">
+							<button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+						</div> 	    			               
 	                </div>
 	            </div>
 	        </div>

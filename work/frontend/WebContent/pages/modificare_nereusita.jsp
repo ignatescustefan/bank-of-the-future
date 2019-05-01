@@ -38,8 +38,10 @@
                      <div class="card-title">
                         <h4>Modificarea datelor nu s-a putut realiza</h4>
 	                    <hr>
-						<button type="button" class="btn btn-danger" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
-                    </div>    				
+                    </div> 
+                    <div class="message_box">
+						<button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+					</div> 	   				
                 </div>
             </div>
         </div>

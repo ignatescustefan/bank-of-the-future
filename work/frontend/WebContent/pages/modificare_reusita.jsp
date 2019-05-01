@@ -38,8 +38,10 @@
                     <div class="card-title">
                         <h4>Modificarea datelor s-a realizat cu succes</h4>
 	                    <hr>
-						<button type="button" class="btn btn-success" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
                     </div>
+                    <div class="message_box">
+						<button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+					</div> 	
                 </div>
             </div>
         </div>
