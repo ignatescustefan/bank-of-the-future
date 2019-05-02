@@ -26,7 +26,6 @@
 
 <%  
      if (session.getAttribute("cnp") != null) {  
-    	 System.out.println("Bine ai venit!");
 %>
 
 <body onload="load('pages/contul_meu.jsp');">
@@ -74,7 +73,7 @@
 				</li>
 				
 				<li class="has-children notifications">
-					<a target="_blank" rel="noopener noreferrer" href="pages/curs.html">Curs valutar</a>
+					<a href="pages/curs_valutar.jsp">Curs valutar</a>
 				</li>
 			</ul>
 
