@@ -43,12 +43,12 @@
 					</span>
 				</div>
 
-				<form class="login100-form validate-form second-step" method="post" action="../TokenLogin">
-					Folosiți token-ul pentru a finaliza conectarea, iar apoi confirmați apasând butonul de mai jos! 
+				<form class="login100-form validate-form second-step" action="../login.jsp">
+					Conectarea cu token-ul nu s-a putut realiza!
 					<br/><br/>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Finalizare
+							Încearcă din nou
 						</button>
 					</div>
 				</form>
