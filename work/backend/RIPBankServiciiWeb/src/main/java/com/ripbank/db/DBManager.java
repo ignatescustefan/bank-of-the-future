@@ -246,7 +246,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		StringBuilder query = new StringBuilder();
 		query.append(
 				"SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
-						+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
+				+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
 		query.append("AND (");
 		for (String iban : IBANs) {
 			query.append("IBAN_sursa='" + iban + "'");
@@ -298,14 +298,18 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	public boolean createUser(User user) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			st.execute("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\"" + user.getPrenume()
-					+ "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", " + "\"" + user.getCnp()
-					+ "\", " + "\"" + user.getTelefon() + "\")");
+			if (1==st.executeUpdate("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\"" + user.getPrenume()
+			+ "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", " + "\"" + user.getCnp()
+			+ "\", " + "\"" + user.getTelefon()
+			+"\", "+"\""+"activ"+"\""
+			+ ")")) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
+		return false;
 	}
 
 	private String generateIbanCandidate() {
