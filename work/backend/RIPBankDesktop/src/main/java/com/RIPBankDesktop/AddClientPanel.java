@@ -2,6 +2,13 @@ package com.RIPBankDesktop;
 
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
+
+import com.ripbank.core.ClientStatus;
+import com.ripbank.core.User;
+import com.ripbank.response.AddManager;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
+
 
 public class AddClientPanel extends JPanel {
 
@@ -20,13 +32,13 @@ public class AddClientPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblnregistrareClient;
 	private JTextField txtNume;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtPrenume;
+	private JTextField txtEmail;
+	private JTextField txtCnp;
+	private JTextField txtTelefon;
 	private JPasswordField pwdParola;
 	private JPasswordField pwdConfirmareparola;
-	
+	private User newClient;
 	/**
 	 * Create the panel.
 	 */
@@ -36,7 +48,7 @@ public class AddClientPanel extends JPanel {
 		this.setBounds(110, 71, 929, 430);
 		setVisible(true);
 		setLayout(null);
-		
+		newClient = new User();
 		lblnregistrareClient = new JLabel("Înregistrare client");
 		lblnregistrareClient.setBounds(298, 11, 330, 82);
 		lblnregistrareClient.setBackground(Color.RED);
@@ -100,29 +112,29 @@ public class AddClientPanel extends JPanel {
 		panel.add(txtNume);
 		txtNume.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setText("Nume");
-		textField.setColumns(10);
-		textField.setBounds(401, 52, 198, 24);
-		panel.add(textField);
+		txtPrenume = new JTextField();
+		txtPrenume.setText("Prenume");
+		txtPrenume.setColumns(10);
+		txtPrenume.setBounds(401, 52, 198, 24);
+		panel.add(txtPrenume);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("Nume");
-		textField_1.setColumns(10);
-		textField_1.setBounds(401, 90, 198, 24);
-		panel.add(textField_1);
+		txtEmail = new JTextField();
+		txtEmail.setText("Email");
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(401, 90, 198, 24);
+		panel.add(txtEmail);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("Nume");
-		textField_2.setColumns(10);
-		textField_2.setBounds(401, 128, 198, 24);
-		panel.add(textField_2);
+		txtCnp = new JTextField();
+		txtCnp.setText("Cnp\r\n");
+		txtCnp.setColumns(10);
+		txtCnp.setBounds(401, 128, 198, 24);
+		panel.add(txtCnp);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("Nume");
-		textField_3.setColumns(10);
-		textField_3.setBounds(401, 242, 198, 24);
-		panel.add(textField_3);
+		txtTelefon = new JTextField();
+		txtTelefon.setText("Telefon");
+		txtTelefon.setColumns(10);
+		txtTelefon.setBounds(401, 242, 198, 24);
+		panel.add(txtTelefon);
 		
 		pwdParola = new JPasswordField();
 		pwdParola.setText("Parola");
@@ -130,11 +142,67 @@ public class AddClientPanel extends JPanel {
 		panel.add(pwdParola);
 		
 		pwdConfirmareparola = new JPasswordField();
-		pwdConfirmareparola.setText("ConfirmareParola");
+		pwdConfirmareparola.setText("Parola");
 		pwdConfirmareparola.setBounds(401, 204, 198, 20);
 		panel.add(pwdConfirmareparola);
 		
 		JButton btnInregistreaza = new JButton("Inregistreaza");
+		btnInregistreaza.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String nume=txtNume.getText();
+				String prenume=txtPrenume.getText();
+				String email=txtEmail.getText();
+				char[] passwordString = pwdParola.getPassword();
+				char[] passwordConfirm = pwdConfirmareparola.getPassword();
+				String cnp=txtCnp.getText();
+				String telefon=txtTelefon.getText();
+				if(Arrays.equals(passwordString, passwordConfirm)){
+					System.out.println("Parole identice");
+					String final_pass = "";
+					for (char x : passwordString) {
+						final_pass += x;
+					}
+					newClient.setNume(nume);
+					newClient.setPrenume(prenume);
+					newClient.setEmail(email);
+					newClient.setCnp(cnp);
+					newClient.setTelefon(telefon);
+					newClient.setParola(final_pass);
+					newClient.setClientStatus(ClientStatus.activ);
+					AddManager m = new AddManager();
+
+					try {
+						Response myResponse = m.createJsonClient(newClient);			
+						System.out.println("My response");
+						System.out.println(myResponse);
+						
+						String responseAsString = myResponse.readEntity(String.class);
+						System.out.println(responseAsString);
+						
+						JSONObject jsonObject = new JSONObject(responseAsString);
+
+						boolean result=jsonObject.getBoolean("Created");
+						
+						if(result==true) {
+							System.out.println("client created true");
+						}
+						else {
+							System.out.println("client created false ");
+						}
+					}
+					catch(Exception e) {
+						System.out.println("eroare");
+					}
+
+				}
+				else {
+					System.out.println("Parole diferite");
+				}
+				
+				
+			}
+		});
 		btnInregistreaza.setBounds(253, 295, 106, 23);
 		panel.add(btnInregistreaza);
 		

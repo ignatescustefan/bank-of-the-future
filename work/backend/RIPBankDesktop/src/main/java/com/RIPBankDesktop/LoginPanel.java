@@ -14,6 +14,10 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
+import com.ripbank.core.Employee;
+import com.ripbank.core.EmployeeDTO;
+import com.ripbank.response.Manager;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;

@@ -7,12 +7,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.ripbank.core.ClientInfo;
+import com.ripbank.core.Employee;
+import com.ripbank.response.ClientSearch;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -21,6 +33,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
+
 import javax.swing.JTextField;
 
 public class DashBoardRIP extends JFrame {
@@ -42,7 +56,6 @@ public class DashBoardRIP extends JFrame {
 	private JLabel employeeLbl;
 	private JLabel employeeNameLbl;
 	private Employee angajat;
-	private JButton btnModifica;
 	private JPanel mainPanel;
 	private JLabel lblBackimage;
 	private JPanel userSearch;
@@ -57,7 +70,7 @@ public class DashBoardRIP extends JFrame {
 	private ModificaClient modificaClient;
 	private String cnp;
 	private AddClientPanel addClientPanel;
-
+	private AccountPanel accountPanel;
 	/**
 	 * Launch the demo Board.
 	 */
@@ -80,13 +93,6 @@ public class DashBoardRIP extends JFrame {
 		contentPane = new JPanel();
 		rightPanel = new JPanel();
 		btnSetariCont = new JButton("Detalii cont");
-		btnModifica = new JButton("Modifica");
-
-		btnModifica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
 		btnSetariCont.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSetariCont.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -96,13 +102,11 @@ public class DashBoardRIP extends JFrame {
 					lblName.setVisible(true);
 					lblPrenume.setVisible(true);
 					lblEmailEmployee.setVisible(true);
-					btnModifica.setVisible(true);
 					btnSetariCont.setText("Ascunde detalii");
 				} else {
 					lblName.setVisible(false);
 					lblPrenume.setVisible(false);
 					lblEmailEmployee.setVisible(false);
-					btnModifica.setVisible(false);
 					btnSetariCont.setText("Detalii cont");
 				}
 			}
@@ -164,12 +168,6 @@ public class DashBoardRIP extends JFrame {
 		lblEmailEmployee.setBounds(10, 338, 229, 29);
 		lblEmailEmployee.setVisible(false);
 		rightPanel.add(lblEmailEmployee);
-
-
-		btnModifica.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnModifica.setBounds(61, 378, 127, 23);
-		btnModifica.setVisible(false);
-		rightPanel.add(btnModifica);
 
 		JButton btnCautareClient = new JButton("Cautare client");
 		btnCautareClient.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -233,6 +231,10 @@ public class DashBoardRIP extends JFrame {
 		mainPanel.add(userSearch);
 		userSearch.setLayout(null);
 		userSearch.setVisible(false);
+		accountPanel = new AccountPanel();
+		accountPanel.setVisible(false);
+		accountPanel.setBounds(10, 285, 820, 134);
+		userSearch.add(accountPanel);
 		textCnp = new JTextField();
 		textCnp.setBounds(331, 104, 264, 38);
 		userSearch.add(textCnp);
@@ -375,6 +377,11 @@ public class DashBoardRIP extends JFrame {
 		panelClientSearch.add(labelClientTelefon);
 
 		JButton btnNewButton = new JButton("Conturi");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				accountPanel.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(538, 37, 84, 23);
 		panelClientSearch.add(btnNewButton);
 
@@ -389,6 +396,37 @@ public class DashBoardRIP extends JFrame {
 		panelClientSearch.add(btnModifica_1);
 
 		JButton btnSterge = new JButton("Sterge");
+		btnSterge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClientConfig config = new ClientConfig();
+				Client client = ClientBuilder.newClient(config);
+				client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+
+				WebTarget service = client.target(getBaseURI());
+
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Your Message", "Title on Box", dialogButton);
+				if(dialogResult == 0) {
+					System.out.println("Yes option");
+					Response myresponse = service.path("cnp").request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
+					
+					String informationAsString = myresponse.readEntity(String.class);					
+					System.out.println(informationAsString);
+					
+					//JSONObject jsonObject = new JSONObject(informationAsString); 
+					
+					//System.out.println(informationAsString);
+					
+					//boolean updateStatus = jsonObject.getBoolean("Deleted");
+					//System.out.println("Status Deleted : " + updateStatus);
+					
+					panelClientSearch.setVisible(false);
+	
+				} else {
+					System.out.println("No Option");
+				} 
+			}
+		});
 		btnSterge.setBounds(726, 37, 84, 23);
 		panelClientSearch.add(btnSterge);
 		mainPanel.add(addClientPanel);
@@ -398,6 +436,11 @@ public class DashBoardRIP extends JFrame {
 		lblBackimage.setIcon(new ImageIcon(DashBoardRIP.class.getResource("/img/WelcomeWallpaper.png")));
 		mainPanel.add(lblBackimage);
 
+	}
+
+	protected URI getBaseURI() {
+		// TODO Auto-generated method stub
+		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
 	}
 
 	public boolean getThisResizable() {
