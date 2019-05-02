@@ -45,7 +45,7 @@ public class TokenLogin extends HttpServlet {
 			System.out.println(result);
 
 			if(result==true) {
-				response.sendRedirect(request.getContextPath()+"index.jsp");
+				response.sendRedirect(request.getContextPath()+"/index.jsp");
 			} else {
 				response.sendRedirect(request.getContextPath()+"/login/token_fail.jsp");
 			}
