@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: apr. 14, 2019 la 04:27 PM
+-- Timp de generare: apr. 30, 2019 la 01:18 PM
 -- Versiune server: 10.1.36-MariaDB
 -- Versiune PHP: 7.2.11
 
@@ -162,34 +162,35 @@ CREATE TABLE `utilizator` (
   `email` varchar(40) NOT NULL,
   `parola` varchar(30) NOT NULL,
   `cnp` varchar(14) NOT NULL,
-  `telefon` varchar(10) NOT NULL
+  `telefon` varchar(10) NOT NULL,
+  `client_status` enum('activ','inactiv') NOT NULL DEFAULT 'activ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Eliminarea datelor din tabel `utilizator`
 --
 
-INSERT INTO `utilizator` (`nume`, `prenume`, `email`, `parola`, `cnp`, `telefon`) VALUES
-('Ana', 'Maria', 'ana@maria.ro', '12312', '12', '09321'),
-('Ababei', 'Mitică', 'mitica_ababei_1963@mail.ru', 'MarinarulVesel189', '1630228547890', '725161718'),
-('Ionescu', 'Cosmin-Mihai', 'cm_ionescu_1976@hotmail.com', 'AlbatroS8265', '1761207374081', '752019777'),
-('Florescu', 'Ciprian', 'cipp_flor_1121@yahoo.com', 'CipyStrong2019', '1900908231890', '761259098'),
-('Georgescu', 'Matei', 'matei_grg_230@gmail.com', 'matYg2167', '1901109227809', '746210984'),
-('Lovin', 'Emil', 'emy_92_lovin@gmail.com', 'Emy2310Cash', '1920131374098', '744120934'),
-('Voicu', 'Ioan', 'voicu@mail.com', 'voicu123', '1921312', '03213'),
-('Cojocaru', 'Vlad', 'vlad@mail.com', 'vlad1234', '19213131', '0741123'),
-('Vranciu', 'Vasile', 'vasi@mail.com', 'vasi1234', '193213', '094213'),
-('Manea', 'Cristi', 'cristi@mail.com', 'cristi123', '198321', '071331'),
-('Dan', 'Marius', 'dan@marius.ro', 'dan123', '23', '08732'),
-('Creangă', 'Mircea', 'mircea@mail.com', 'mircea1234', '23123', '083123'),
-('Ionescu', 'George', 'george@mail.com', 'george1234', '23432', '04123'),
-('Calancea', 'Iuliana', 'iulica_calancea@hotmail.com', 'RoșuNegru_9012a', '2810430127890', '720514869'),
-('Eminescu', 'Mihai', 'emi@mail.com', 'luceafarul1234', '291231', '0831234'),
-('Micle', 'Veronica', 'vero@mail.com', 'emi1234', '29123123', '039231'),
-('Chiriac', 'Florina', 'flory_ch832@yahoo.com', 'Parlament7615', '2920204189726', '723990178'),
-('Mihăiescu', 'Georgiana', 'georgy_mih93@gmail.com', 'FloareDeCactus328', '2930101780911', '761200807'),
-('Darie', 'Ancuța', 'ancutza_darie_96@outlook.com', 'MaiMuTica999', '2961112228906', '771387123'),
-('Ciobanu', 'Victorița', 'victoria_cb@.com', 'Călăreț890', '2980315221900', '788304899');
+INSERT INTO `utilizator` (`nume`, `prenume`, `email`, `parola`, `cnp`, `telefon`, `client_status`) VALUES
+('Alina', 'Maria', 'ana@maria.ro', '12312', '12', '07312312', 'activ'),
+('Ababei', 'Mitică', 'mitica_ababei_1963@mail.ru', 'MarinarulVesel189', '1630228547890', '725161718', 'activ'),
+('Ionescu', 'Cosmin-Mihai', 'cm_ionescu_1976@hotmail.com', 'AlbatroS8265', '1761207374081', '752019777', 'activ'),
+('Florescu', 'Ciprian', 'cipp_flor_1121@yahoo.com', 'CipyStrong2019', '1900908231890', '761259098', 'activ'),
+('Georgescu', 'Matei', 'matei_grg_230@gmail.com', 'matYg2167', '1901109227809', '746210984', 'activ'),
+('Lovin', 'Emil', 'emy_92_lovin@gmail.com', 'Emy2310Cash', '1920131374098', '744120934', 'activ'),
+('Voicu', 'Ioan', 'voicu@mail.com', 'voicu123', '1921312', '03213', 'activ'),
+('Cojocaru', 'Vlad', 'vlad@mail.com', 'vlad1234', '19213131', '0741123', 'activ'),
+('Vranciu', 'Vasile', 'vasi@mail.com', 'vasi1234', '193213', '094213', 'activ'),
+('Manea', 'Cristi', 'cristi@mail.com', 'cristi123', '198321', '071331', 'activ'),
+('Dan', 'Marius', 'dan@marius.ro', 'dan123', '23', '075445455', 'activ'),
+('Creangă', 'Mircea', 'mircea@mail.com', 'mircea1234', '23123', '083123', 'activ'),
+('Ionescu', 'George', 'george@mail.com', 'george1234', '23432', '04123', 'activ'),
+('Calancea', 'Iuliana', 'iulica_calancea@hotmail.com', 'RoșuNegru_9012a', '2810430127890', '720514869', 'activ'),
+('Eminescu', 'Mihai', 'emi@mail.com', 'luceafarul1234', '291231', '0831234', 'activ'),
+('Micle', 'Veronica', 'vero@mail.com', 'emi1234', '29123123', '039231', 'activ'),
+('Chiriac', 'Florina', 'flory_ch832@yahoo.com', 'Parlament7615', '2920204189726', '723990178', 'activ'),
+('Mihăiescu', 'Georgiana', 'georgy_mih93@gmail.com', 'FloareDeCactus328', '2930101780911', '761200807', 'activ'),
+('Darie', 'Ancuța', 'ancutza_darie_96@outlook.com', 'MaiMuTica999', '2961112228906', '771387123', 'activ'),
+('Ciobanu', 'Victorița', 'victoria_cb@.com', 'Călăreț890', '2980315221900', '788304899', 'activ');
 
 --
 -- Indexuri pentru tabele eliminate
@@ -273,7 +274,6 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 
 GRANT USAGE ON *.* TO 'adminRIP'@'localhost' IDENTIFIED BY PASSWORD '*8E72A19AF7B8254F78C10C035E7C41B3A7746A45';
 
