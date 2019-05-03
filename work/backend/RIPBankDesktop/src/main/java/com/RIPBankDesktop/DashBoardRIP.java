@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -380,6 +381,7 @@ public class DashBoardRIP extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				accountPanel.setVisible(true);
+			
 			}
 		});
 		btnNewButton.setBounds(538, 37, 84, 23);
@@ -388,6 +390,7 @@ public class DashBoardRIP extends JFrame {
 		JButton btnModifica_1 = new JButton("Modifica");
 		btnModifica_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				accountPanel.setVisible(false);
 				modificaClient.setVisible(true);
 				modificaClient.setCnp(cnp);
 			}
@@ -398,6 +401,8 @@ public class DashBoardRIP extends JFrame {
 		JButton btnSterge = new JButton("Sterge");
 		btnSterge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				accountPanel.setVisible(false);
+				modificaClient.setVisible(false);
 				ClientConfig config = new ClientConfig();
 				Client client = ClientBuilder.newClient(config);
 				client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
@@ -408,17 +413,17 @@ public class DashBoardRIP extends JFrame {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Your Message", "Title on Box", dialogButton);
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
-					Response myresponse = service.path("cnp").request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
+					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
 					
 					String informationAsString = myresponse.readEntity(String.class);					
 					System.out.println(informationAsString);
 					
-					//JSONObject jsonObject = new JSONObject(informationAsString); 
+					JSONObject jsonObject = new JSONObject(informationAsString); 
 					
-					//System.out.println(informationAsString);
+					System.out.println(informationAsString);
 					
-					//boolean updateStatus = jsonObject.getBoolean("Deleted");
-					//System.out.println("Status Deleted : " + updateStatus);
+					boolean updateStatus = jsonObject.getBoolean("Deleted");
+					System.out.println("Status Deleted : " + updateStatus);
 					
 					panelClientSearch.setVisible(false);
 	

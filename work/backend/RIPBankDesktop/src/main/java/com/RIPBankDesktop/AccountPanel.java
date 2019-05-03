@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
  
 /**
  * A Swing program demonstrates how to use a custom renderer for
@@ -18,7 +19,7 @@ public class AccountPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTable table;
+	public JTable table;
      
     public AccountPanel(){
         super();
@@ -26,19 +27,33 @@ public class AccountPanel extends JPanel{
         setVisible(true);
 		//setLayout(null);
         // constructs the table
+        /*
         String[] columnNames = new String[] {"IBAN", "Tip Cont", "Sold"};
         String[][] rowData = new String[][] {
         };
+        */
         setLayout(null);
                  
-        table = new JTable(rowData, columnNames);
+       // table = new JTable(rowData, columnNames);
        // table.getTableHeader().setDefaultRenderer(new AccountPanel());
+        DefaultTableModel model = new DefaultTableModel(); 
+        JTable table = new JTable(model); 
+
+        // Create a couple of columns 
+        model.addColumn("Col1"); 
+        model.addColumn("Col2"); 
+
+        // Append a row 
+        model.addRow(new Object[]{"v1", "v2"});
+        model.addRow(new Object[]{"v1", "v2"});
+        model.addRow(new Object[]{"v1", "v2"});
+        model.addRow(new Object[]{"v1", "v2"});
+        
         table.setSize(820, 134);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 5, 820, 129);
         add(scrollPane);
-         
-      //  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       //  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // setSize(722, 154);
   //      setLocationRelativeTo(null);
     }
