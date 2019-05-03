@@ -347,12 +347,12 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	}
 
 	@Override
-	public boolean createAccount(User user, String iban) {
+	public boolean createAccount(String cnp, String iban, TipCont tipCont, Double amount) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			// TODO: need to add support for account type
 			// TODO: randomize PIN & return it
-			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + user.getCnp() + "\", " + "\"" + "depozit"
-					+ "\", " + "\"" + "0000" + "\", " + "0.0)");
+			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + cnp + "\", " 
+					+ "\""+tipCont+"\","+"\"" + "0000" + "\", " + amount+")");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -14,7 +14,6 @@ import com.ripbank.db.DBManager;
 
 @Path("delete/{cnp}")
 public class DeleteClient {
-
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteClient(@PathParam("cnp") String cnp) {
