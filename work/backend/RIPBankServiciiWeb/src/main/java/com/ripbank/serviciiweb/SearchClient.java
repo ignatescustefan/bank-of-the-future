@@ -2,7 +2,7 @@ package com.ripbank.serviciiweb;
 
 import java.util.List;
 
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +17,7 @@ import com.ripbank.db.DBManager;
 
 @Path("clients")
 public class SearchClient {
-	@POST
+	@GET
 	@Path("{cnp}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getClient(@PathParam("cnp") String cnp) {
@@ -29,13 +29,11 @@ public class SearchClient {
 			Log4J.getLogger().error("Error at searching client with cnp: " + cnp);
 		} else {
 			for (User client : clients) {
-				JSONObject obj = new JSONObject().put("nume", client.getNume()).put("prenume", client.getPrenume())
-						.put("email", client.getEmail()).put("parola", client.getParola())
-						.put("telefon", client.getTelefon());
-				json.append("client", obj);
+				json.put("nume", client.getNume()).put("prenume", client.getPrenume()).put("email", client.getEmail())
+				.put("parola", client.getParola()).put("telefon", client.getTelefon());
 			}
 		}
-		Log4J.getLogger().error("SearchClient with CNP " + cnp + " result: " + json.toString());
+		Log4J.getLogger().error("Search result for CNP " + cnp + " result: " + json.toString());
 		return Response.status(200).entity(json.toString()).build();
 	}
 }

@@ -1,6 +1,5 @@
 package com.ripbank.serviciiweb;
 
-import javax.annotation.Generated;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
