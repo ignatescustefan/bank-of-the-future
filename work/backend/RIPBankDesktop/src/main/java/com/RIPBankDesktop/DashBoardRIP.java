@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -17,12 +16,12 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
 
 import com.ripbank.core.ClientInfo;
 import com.ripbank.core.Employee;
-import com.ripbank.response.ClientSearch;
+
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -232,7 +231,7 @@ public class DashBoardRIP extends JFrame {
 		mainPanel.add(userSearch);
 		userSearch.setLayout(null);
 		userSearch.setVisible(false);
-		accountPanel = new AccountPanel();
+		accountPanel = new AccountPanel(cnp);
 		accountPanel.setVisible(false);
 		accountPanel.setBounds(10, 285, 820, 134);
 		userSearch.add(accountPanel);
@@ -245,23 +244,26 @@ public class DashBoardRIP extends JFrame {
 		btnCauta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				accountPanel.setVisible(false);
+				modificaClient.setVisible(false);
+				ClientConfig config = new ClientConfig();
+				Client client = ClientBuilder.newClient(config);
+				client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+				WebTarget service = client.target(getBaseSearchURI());
 				cnp=textCnp.getText();
-				ClientSearch client=new ClientSearch(cnp);
 				ClientInfo clientInfo;
 				clientInfo=new ClientInfo();
-				Response myResponse=client.createJsonClient(cnp);
+				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
 				System.out.println("CNP : "+ cnp);
 				System.out.println("my response");
-				System.out.println(myResponse);
+				System.out.println(response);
 
-				String myResponseAsString=myResponse.readEntity(String.class);
+				String myResponseAsString=response.readEntity(String.class);
 
 				System.out.println(myResponseAsString);
 
 				JSONObject jsonInfo=new JSONObject(myResponseAsString);
 
-				//int findUser=jsonObject.getInt("Error");
 				if(jsonInfo.isNull("Error")==false){
 					lblNoClient.setVisible(true);
 					lblNoClient.setText("Nu s-a gasit nici un client cu aceest cnp");
@@ -273,22 +275,17 @@ public class DashBoardRIP extends JFrame {
 					System.out.println("Client found");
 					lblNoClient.setVisible(false);
 					lblNoClient.setText("");
-					JSONArray jsonArr=(JSONArray) jsonInfo.get("client");
-					for(int i=0;i<jsonArr.length();i++) {
-						JSONObject jsonClient=(JSONObject) jsonArr.get(i);			
 
-						String telefonString=jsonClient.getString("telefon");
-						String prenumeString = jsonClient.getString("prenume");
-						//					String paroString=jsonClient.getString("parola");
-						String numeString = jsonClient.getString("nume");
-						String emailString = jsonClient.getString("email");
-						clientInfo.setEmail(emailString);
-						clientInfo.setNume(numeString);
-						clientInfo.setPrenume(prenumeString);
-						clientInfo.setTelefon(telefonString);
-						System.out.println(clientInfo.toString());
+					String telefonString=jsonInfo.getString("telefon");
+					String prenumeString = jsonInfo.getString("prenume");
+					String numeString = jsonInfo.getString("nume");
+					String emailString = jsonInfo.getString("email");
+					clientInfo.setEmail(emailString);
+					clientInfo.setNume(numeString);
+					clientInfo.setPrenume(prenumeString);
+					clientInfo.setTelefon(telefonString);
+					System.out.println(clientInfo.toString());
 
-					}
 					panelClientSearch.setVisible(true);
 					labelClientEmail.setText(clientInfo.getEmail());
 					labelClientName.setText(clientInfo.getNume());
@@ -381,7 +378,7 @@ public class DashBoardRIP extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				accountPanel.setVisible(true);
-			
+				accountPanel.accountImport(cnp);
 			}
 		});
 		btnNewButton.setBounds(538, 37, 84, 23);
@@ -414,19 +411,19 @@ public class DashBoardRIP extends JFrame {
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
 					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
-					
+
 					String informationAsString = myresponse.readEntity(String.class);					
 					System.out.println(informationAsString);
-					
+
 					JSONObject jsonObject = new JSONObject(informationAsString); 
-					
+
 					System.out.println(informationAsString);
-					
+
 					boolean updateStatus = jsonObject.getBoolean("Deleted");
 					System.out.println("Status Deleted : " + updateStatus);
-					
+
 					panelClientSearch.setVisible(false);
-	
+
 				} else {
 					System.out.println("No Option");
 				} 
@@ -447,7 +444,10 @@ public class DashBoardRIP extends JFrame {
 		// TODO Auto-generated method stub
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
 	}
-
+	protected URI getBaseSearchURI() {
+		// TODO Auto-generated method stub
+		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/clients").build();
+	}
 	public boolean getThisResizable() {
 		return isResizable();
 	}

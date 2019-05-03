@@ -6,6 +6,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.ripbank.response.Account;
  
 /**
  * A Swing program demonstrates how to use a custom renderer for
@@ -20,34 +26,23 @@ public class AccountPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	public JTable table;
-     
-    public AccountPanel(){
+	DefaultTableModel model;
+	
+    public AccountPanel(String cnp){
         super();
         setBounds(10, 285, 820, 134);
         setVisible(true);
-		//setLayout(null);
-        // constructs the table
-        /*
-        String[] columnNames = new String[] {"IBAN", "Tip Cont", "Sold"};
-        String[][] rowData = new String[][] {
-        };
-        */
         setLayout(null);
-                 
-       // table = new JTable(rowData, columnNames);
-       // table.getTableHeader().setDefaultRenderer(new AccountPanel());
-        DefaultTableModel model = new DefaultTableModel(); 
-        JTable table = new JTable(model); 
-
+        model = new DefaultTableModel(); 
+        table = new JTable(model); 
+        table.setDefaultEditor(Object.class, null);
         // Create a couple of columns 
-        model.addColumn("Col1"); 
-        model.addColumn("Col2"); 
+        model.addColumn("IBAN"); 
+        model.addColumn("Tip Cont"); 
+        model.addColumn("Sold");
 
         // Append a row 
-        model.addRow(new Object[]{"v1", "v2"});
-        model.addRow(new Object[]{"v1", "v2"});
-        model.addRow(new Object[]{"v1", "v2"});
-        model.addRow(new Object[]{"v1", "v2"});
+        
         
         table.setSize(820, 134);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -57,11 +52,42 @@ public class AccountPanel extends JPanel{
        // setSize(722, 154);
   //      setLocationRelativeTo(null);
     }
-     
+    
+    public void accountImport(String cnp) {
+    	model.setRowCount(0);
+    	Account a = new Account(cnp);
+    	Response responseInformation = a.extractAccountInformation();
+		
+    	System.out.println(responseInformation);
+    	
+    	String informationAsString = responseInformation.readEntity(String.class);
+		
+    	System.out.println(informationAsString);
+    	JSONObject jsonInformation = new JSONObject(informationAsString);
+		JSONArray jsonAccount = (JSONArray) jsonInformation.get("account");
+		System.out.println(jsonAccount);
+		
+		
+		for(int i=0;i<jsonAccount.length();i++) {
+			JSONObject item=(JSONObject) jsonAccount.get(i);			
+			//System.out.println(item);
+			
+			
+			String iban=item.getString("iban");
+			String tipCont=item.getString("tipCont");
+			double sold= item.getDouble("sold");
+				
+			model.addRow(new Object[]{iban, tipCont,sold});
+	        
+		}
+		
+    	
+    }
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new AccountPanel().setVisible(true);
+                new AccountPanel("").setVisible(true);
             }
         });
     }

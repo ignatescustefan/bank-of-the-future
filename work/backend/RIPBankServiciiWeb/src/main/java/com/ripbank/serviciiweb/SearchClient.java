@@ -30,7 +30,7 @@ public class SearchClient {
 		} else {
 			for (User client : clients) {
 				json.put("nume", client.getNume()).put("prenume", client.getPrenume()).put("email", client.getEmail())
-				.put("parola", client.getParola()).put("telefon", client.getTelefon());
+				.put("parola", client.getParola()).put("telefon", client.getTelefon()).put("status", client.getClientStatus());
 			}
 		}
 		Log4J.getLogger().error("Search result for CNP " + cnp + " result: " + json.toString());
