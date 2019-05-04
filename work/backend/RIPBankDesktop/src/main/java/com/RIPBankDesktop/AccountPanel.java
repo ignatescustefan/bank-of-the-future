@@ -30,7 +30,7 @@ public class AccountPanel extends JPanel{
 	
     public AccountPanel(String cnp){
         super();
-        setBounds(10, 285, 820, 134);
+        setBounds(10, 285, 893, 134);
         setVisible(true);
         setLayout(null);
         model = new DefaultTableModel(); 
@@ -46,7 +46,7 @@ public class AccountPanel extends JPanel{
         
         table.setSize(820, 134);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 5, 820, 129);
+        scrollPane.setBounds(0, 5, 893, 129);
         add(scrollPane);
        //  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // setSize(722, 154);

@@ -50,7 +50,7 @@ public class ModificaClient extends JPanel {
 	{
 		super();
 		setBackground(Color.GRAY);
-		setBounds(10, 285, 820, 134);
+		setBounds(10, 285, 893, 134);
 		setLayout(null);
 		setVisible(true);
 		label = new JLabel("Nume");

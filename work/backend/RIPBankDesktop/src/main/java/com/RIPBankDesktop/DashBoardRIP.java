@@ -71,6 +71,7 @@ public class DashBoardRIP extends JFrame {
 	private String cnp;
 	private AddClientPanel addClientPanel;
 	private AccountPanel accountPanel;
+	private JLabel lblClientStatus;
 	/**
 	 * Launch the demo Board.
 	 */
@@ -93,6 +94,7 @@ public class DashBoardRIP extends JFrame {
 		contentPane = new JPanel();
 		rightPanel = new JPanel();
 		btnSetariCont = new JButton("Detalii cont");
+		lblClientStatus = new JLabel("Status");
 		btnSetariCont.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSetariCont.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -233,7 +235,7 @@ public class DashBoardRIP extends JFrame {
 		userSearch.setVisible(false);
 		accountPanel = new AccountPanel(cnp);
 		accountPanel.setVisible(false);
-		accountPanel.setBounds(10, 285, 820, 134);
+		accountPanel.setBounds(18, 285, 893, 134);
 		userSearch.add(accountPanel);
 		textCnp = new JTextField();
 		textCnp.setBounds(331, 104, 264, 38);
@@ -280,6 +282,7 @@ public class DashBoardRIP extends JFrame {
 					String prenumeString = jsonInfo.getString("prenume");
 					String numeString = jsonInfo.getString("nume");
 					String emailString = jsonInfo.getString("email");
+					String statusString =jsonInfo.getString("status");
 					clientInfo.setEmail(emailString);
 					clientInfo.setNume(numeString);
 					clientInfo.setPrenume(prenumeString);
@@ -291,6 +294,7 @@ public class DashBoardRIP extends JFrame {
 					labelClientName.setText(clientInfo.getNume());
 					labelClientPrenume.setText(clientInfo.getPrenume());
 					labelClientTelefon.setText(clientInfo.getTelefon());
+					lblClientStatus.setText(statusString);
 				}
 
 
@@ -318,6 +322,7 @@ public class DashBoardRIP extends JFrame {
 		panelClientSearch.setVisible(false);
 
 		modificaClient = new ModificaClient();
+		modificaClient.setLocation(18, 285);
 		modificaClient.btnSalveaza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				labelClientName.setText(modificaClient.textNumeUpdate.getText());
@@ -327,7 +332,7 @@ public class DashBoardRIP extends JFrame {
 		});
 		modificaClient.setVisible(false);
 		userSearch.add(modificaClient);
-		panelClientSearch.setBounds(10, 181, 820, 69);
+		panelClientSearch.setBounds(18, 181, 893, 69);
 		panelClientSearch.setBackground(Color.LIGHT_GRAY);
 		userSearch.add(panelClientSearch);
 		panelClientSearch.setLayout(null);
@@ -381,7 +386,7 @@ public class DashBoardRIP extends JFrame {
 				accountPanel.accountImport(cnp);
 			}
 		});
-		btnNewButton.setBounds(538, 37, 84, 23);
+		btnNewButton.setBounds(611, 38, 84, 23);
 		panelClientSearch.add(btnNewButton);
 
 		JButton btnModifica_1 = new JButton("Modifica");
@@ -392,7 +397,7 @@ public class DashBoardRIP extends JFrame {
 				modificaClient.setCnp(cnp);
 			}
 		});
-		btnModifica_1.setBounds(632, 37, 84, 23);
+		btnModifica_1.setBounds(705, 38, 84, 23);
 		panelClientSearch.add(btnModifica_1);
 
 		JButton btnSterge = new JButton("Sterge");
@@ -429,8 +434,18 @@ public class DashBoardRIP extends JFrame {
 				} 
 			}
 		});
-		btnSterge.setBounds(726, 37, 84, 23);
+		btnSterge.setBounds(799, 38, 84, 23);
 		panelClientSearch.add(btnSterge);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatus.setBounds(499, 14, 97, 20);
+		panelClientSearch.add(lblStatus);
+		
+		
+		lblClientStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClientStatus.setBounds(499, 41, 97, 20);
+		panelClientSearch.add(lblClientStatus);
 		mainPanel.add(addClientPanel);
 
 		lblBackimage = new JLabel("backImage");
