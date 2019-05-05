@@ -15,7 +15,7 @@ import com.ripbank.db.DBManager;
 
 @Path("createAccount")
 public class CreateAccount {
-	@Path("{cnp}&{accountType}&{amount}")
+	@Path("{cnp}&{accountType}&{sold}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response createAccount(

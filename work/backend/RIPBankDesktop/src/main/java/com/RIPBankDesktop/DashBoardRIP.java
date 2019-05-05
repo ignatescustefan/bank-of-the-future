@@ -183,7 +183,7 @@ public class DashBoardRIP extends JFrame {
 		btnCautareClient.setBounds(61, 84, 127, 23);
 		rightPanel.add(btnCautareClient);
 
-		JButton btnAgaugareClient = new JButton("Agaugare client");
+		JButton btnAgaugareClient = new JButton("Adaugare client");
 		btnAgaugareClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addClientPanel.setVisible(true);
@@ -233,7 +233,14 @@ public class DashBoardRIP extends JFrame {
 		mainPanel.add(userSearch);
 		userSearch.setLayout(null);
 		userSearch.setVisible(false);
-		accountPanel = new AccountPanel(cnp);
+		accountPanel = new AccountPanel();
+		accountPanel.btnAnuleaza.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				accountPanel.cnp=cnp;
+				accountPanel.setVisible(false);
+			}
+		});
 		accountPanel.setVisible(false);
 		accountPanel.setBounds(18, 285, 893, 134);
 		userSearch.add(accountPanel);
@@ -253,6 +260,7 @@ public class DashBoardRIP extends JFrame {
 				client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
 				WebTarget service = client.target(getBaseSearchURI());
 				cnp=textCnp.getText();
+				accountPanel.cnp=cnp;
 				ClientInfo clientInfo;
 				clientInfo=new ClientInfo();
 				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
