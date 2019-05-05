@@ -2,6 +2,14 @@ package com.RIPBankDesktop;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
+
+import DTO.TransactionDTO;
+import proiect.SendTransaction;
+import proiect.TipTranzactie;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -16,6 +24,7 @@ public class TransactionPanel extends JPanel {
 	private JTextField txtSuma;
 	public JButton btnAnulare;
 	public JButton btnEfectuare;
+	public String operator;
 
 	/**
 	 * Create the panel.
@@ -23,6 +32,7 @@ public class TransactionPanel extends JPanel {
 	public TransactionPanel() {
 		setLayout(null);
 		setBounds(0, 57, 893, 77);
+		operator="nuLL";
 		btnAnulare = new JButton("Anulare");
 		btnEfectuare = new JButton("Efectuare");
 		txtIbanSursa = new JTextField();
@@ -57,5 +67,35 @@ public class TransactionPanel extends JPanel {
 		JLabel lblIbanDestinatie = new JLabel("IBAN destinatie");
 		lblIbanDestinatie.setBounds(10, 45, 86, 17);
 		add(lblIbanDestinatie);
+	}
+	public void executeTransaction() {
+		TransactionDTO transaction=new TransactionDTO();
+		transaction.setOperatorTranzactie(operator);
+		transaction.setIbanSource(txtIbanSursa.getText());
+		transaction.setIbanDest(txtIbanDestina.getText());
+		transaction.setAmount(Double.parseDouble(txtSuma.getText()));
+		TipTranzactie tip_tranzactie = TipTranzactie.depunere;			
+		transaction.setTipTranzactie(tip_tranzactie);
+		SendTransaction myTransaction=new SendTransaction();
+		Response myResponse = myTransaction.getAnswer(transaction);
+		
+		System.out.println(myResponse);
+		
+		String informationAsString = myResponse.readEntity(String.class);					
+		JSONObject jsonObject = new JSONObject(informationAsString); 
+		
+		System.out.println(informationAsString);
+		
+		Boolean transactionResult = jsonObject.getBoolean("TransactionResult");
+		System.out.println(transactionResult);
+		
+		if(transactionResult==true)	{
+			System.out.println("tranzactie reusita");
+		}
+		else {
+			System.out.println("tranzactie esuata");
+		}
+		
+		
 	}
 }

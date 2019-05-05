@@ -36,6 +36,7 @@ public class AccountPanel extends JPanel{
 	public JButton btnAnuleaza;
 	private AddAccount addAccount;
 	public String cnp;
+	public String operator;
 	private TransactionPanel transactionPanel;
     public AccountPanel(){
         super();
@@ -51,6 +52,15 @@ public class AccountPanel extends JPanel{
         model.addColumn("Tip Cont"); 
         model.addColumn("Sold");
         transactionPanel=new TransactionPanel();
+        transactionPanel.btnEfectuare.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		transactionPanel.executeTransaction();
+        		transactionPanel.setVisible(false);
+        		panel.setVisible(true);
+        		accountImport(cnp);
+        	}
+        });
         transactionPanel.setBounds(0, 62, 893, 72);
         transactionPanel.btnAnulare.addMouseListener(new MouseAdapter() {
         	@Override
@@ -110,6 +120,7 @@ public class AccountPanel extends JPanel{
         btnTranzactie.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent arg0) {
+        		transactionPanel.operator=operator;
         		transactionPanel.setVisible(true);
         		addAccount.setVisible(false);
         		panel.setVisible(false);
