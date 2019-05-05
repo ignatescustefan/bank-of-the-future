@@ -261,6 +261,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseSearchURI());
 				cnp=textCnp.getText();
 				accountPanel.cnp=cnp;
+				accountPanel.operator=angajat.getNume()+angajat.getPrenume();
 				ClientInfo clientInfo;
 				clientInfo=new ClientInfo();
 				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
