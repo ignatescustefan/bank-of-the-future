@@ -13,4 +13,8 @@ public interface AccountDAO {
 	public String generateIBAN(String cnp);
 
 	public boolean createAccount(String cnp, String iban, TipCont tipCont, Double amount);
+	
+	public String getDefaultIbanForCNP(String cnp);
+	
+	public String getPINForDefaultAccount(String defaultIBAN);
 }

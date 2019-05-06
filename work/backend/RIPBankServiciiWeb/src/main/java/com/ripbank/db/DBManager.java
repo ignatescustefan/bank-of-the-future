@@ -130,11 +130,11 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 					+ "\"" + authCode + "\"," + "CURRENT_TIMESTAMP)");
 			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\"," + "\""
 					+ authCode + "\"," + "CURRENT_TIMESTAMP)");
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
-		return true;
+		return false;
 	}
 
 	public boolean updateUserInformation(String cnp, String nume, String prenume, String telefon) {
@@ -262,23 +262,29 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			st.execute(query.toString());
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				CompleteTransactionDetailsDTO transaction = new CompleteTransactionDetailsDTO();
-				transaction.setIdTranzactie(rs.getInt("id_Tranzactie"));
-				transaction.setTipTranzactie(TipTranzactie.valueOf(rs.getString("tip_Tranzactie")));
-				transaction.setIbanSource(rs.getString("IBAN_sursa"));
-				transaction.setIbanDest(rs.getString("IBAN_destinatie"));
-				transaction.setOperatorTranzactie(rs.getString("operator_tranzactie"));
-				transaction.setDataTranzactie(rs.getString("data_tranzactie"));
-				transaction.setOraTranzactie(rs.getString("ora_tranzactie"));
-				transaction.setAmount(rs.getDouble("suma_tranzactie"));
+				CompleteTransactionDetailsDTO transaction = createCompleteTransactionDetailsDTOFromResultSet(rs);
 				transactions.add(transaction);
 			}
-			System.out.println(transactions.toString());
+//			System.out.println(transactions.toString());
 			return transactions;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private CompleteTransactionDetailsDTO createCompleteTransactionDetailsDTOFromResultSet(ResultSet rs)
+			throws SQLException {
+		CompleteTransactionDetailsDTO transaction = new CompleteTransactionDetailsDTO();
+		transaction.setIdTranzactie(rs.getInt("id_Tranzactie"));
+		transaction.setTipTranzactie(TipTranzactie.valueOf(rs.getString("tip_Tranzactie")));
+		transaction.setIbanSource(rs.getString("IBAN_sursa"));
+		transaction.setIbanDest(rs.getString("IBAN_destinatie"));
+		transaction.setOperatorTranzactie(rs.getString("operator_tranzactie"));
+		transaction.setDataTranzactie(rs.getString("data_tranzactie"));
+		transaction.setOraTranzactie(rs.getString("ora_tranzactie"));
+		transaction.setAmount(rs.getDouble("suma_tranzactie"));
+		return transaction;
 	}
 
 	private List<String> getIBANByCNP(String cnp) {
@@ -358,5 +364,17 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public String getDefaultIbanForCNP(String cnp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPINForDefaultAccount(String defaultIBAN) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
