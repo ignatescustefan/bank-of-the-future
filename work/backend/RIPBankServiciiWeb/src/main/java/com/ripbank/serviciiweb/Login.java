@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
 import com.logging.Log4J;
+import com.ripbank.core.ClientStatus;
 import com.ripbank.core.Employee;
 import com.ripbank.core.User;
 import com.ripbank.core.DTO.CredentialsDTO;
@@ -14,7 +15,6 @@ import java.util.List;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 @Path("login")
@@ -23,7 +23,7 @@ public class Login {
 	private JSONObject checkUserEmailAndPass(CredentialsDTO user) {
 		List<User> usersList = DBManager.getInstance().findUserByEmailAndPassword(user.getEmail(), user.getPassword());
 		Log4J.getLogger().info("Attempt to login user with: " + user.toString());
-		if (null == usersList || 1 != usersList.size()) {
+		if (null == usersList || 1 != usersList.size() || usersList.get(0).getClientStatus() != ClientStatus.activ) {
 			Log4J.getLogger().info("Failed login for user: " + user.toString());
 			return new JSONObject().put("LoginOk", 0);
 		}
@@ -58,18 +58,5 @@ public class Login {
 	public Response getAuthorizedEmployee(CredentialsDTO user) {
 		JSONObject jsonObject = checkEmployeeEmailAndPass(user);
 		return Response.status(200).entity(jsonObject.toString()).build();
-	}
-
-	// TODO: need to move verifyTokenAuth to another API
-	@Path("/{cnp}")
-	@POST
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response verifyTokenAuth(@PathParam("cnp") String cnp) {
-		// TODO: get current time; if it's <1 min, return ok
-		/*
-		 * if it's fine return Response.status(200).build();
-		 */
-		return Response.status(401).build();
-
 	}
 }
