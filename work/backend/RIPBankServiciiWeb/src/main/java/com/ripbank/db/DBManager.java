@@ -246,7 +246,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		StringBuilder query = new StringBuilder();
 		query.append(
 				"SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
-				+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
+						+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
 		query.append("AND (");
 		for (String iban : IBANs) {
 			query.append("IBAN_sursa='" + iban + "'");
@@ -304,11 +304,10 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	public boolean createUser(User user) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			if (1==st.executeUpdate("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\"" + user.getPrenume()
-			+ "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", " + "\"" + user.getCnp()
-			+ "\", " + "\"" + user.getTelefon()
-			+"\", "+"\""+"activ"+"\""
-			+ ")")) {
+			if (1 == st.executeUpdate("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\""
+					+ user.getPrenume() + "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", "
+					+ "\"" + user.getCnp() + "\", " + "\"" + user.getTelefon() + "\", " + "\"" + "activ" + "\""
+					+ ")")) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -357,8 +356,8 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			// TODO: need to add support for account type
 			// TODO: randomize PIN & return it
-			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + cnp + "\", " 
-					+ "\""+tipCont+"\","+"\"" + "0000" + "\", " + amount+")");
+			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + cnp + "\", " + "\"" + tipCont + "\","
+					+ "\"" + "0000" + "\", " + amount + ")");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -367,14 +366,16 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	}
 
 	@Override
-	public String getDefaultIbanForCNP(String cnp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPINForDefaultAccount(String defaultIBAN) {
-		// TODO Auto-generated method stub
+	public String getPINForDefaultAccount(String cnp) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("SELECT PIN FROM cont where proprietar_cnp='" + cnp + "' AND tip_cont=\"depozit\"");
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				return rs.getString("PIN");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }
