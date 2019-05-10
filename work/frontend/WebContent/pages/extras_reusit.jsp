@@ -25,24 +25,30 @@
 </head>
 <body>
 
+ <header class="cd-main-header">
+	<a class="cd-logo"><img src="../img/logo2.png" alt="Logo"> </a>
+</header> <!-- .cd-main-header -->
+ 
  <br/><br/> <br/><br/>  <br/><br/>
 <div class="container">
-	    <div class="row">
-	        <div class="col-sm-10">
-	            <div class="card">
-	                <div class="card-content atention">
-		                <div class="card-title">
-	                        <h4>Nu pare rău! A apărut o eroare la server!</h4>
-		                    <hr>
-	                    </div>
-	                    <div class="message_box">
-							<button class="home_button" onclick="location.href='../login.jsp'">Înapoi la pagina de login</button>
-						</div> 	    			               
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div> 
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-content atention">
+                    <div class="card-title">
+                        <h4>Generarea extrasului de cont s-a realizat cu succes!</h4>
+                        <span class="small-text">PDF-ul descărcat poate fi găsit aici: <%=session.getAttribute("extrasPDF")%></span>	
+	                    <hr>
+                    </div>
+                    <div class="message_box">
+						<button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
+					</div> 	
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
  
 </body>
 </html>

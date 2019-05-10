@@ -36,7 +36,7 @@
 					  </div>
 					  <div class="form-group" id="submit_raport"> 
 					    <div class="col-sm-offset-4 col-sm-4">
-					      <button type="submit" class="btn btn-default">Descărcare PDF</button>
+					      <button type="submit" class="btn btn-default">Generare extras de cont</button>
 					    </div>
 					  </div>
 					</form>

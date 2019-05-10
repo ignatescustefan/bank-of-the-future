@@ -1,11 +1,15 @@
 package proiect;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
@@ -61,13 +65,27 @@ public class GeneratePDF extends HttpServlet {
 			
 			if (error == false) {
 				String byteArray = jsonObject.getString("EncodedByteArrayOfPDF");
-				System.out.println(byteArray);
-				new StringPDFDecoder("D:\\extras_de_cont.pdf",byteArray).RecreatePDF_File();
-				System.out.println("pdf nou creat!");
+				//System.out.println(byteArray);
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+				LocalDateTime now = LocalDateTime.now();
+				String result_file_name="rep_" + dtf.format(now) + ".pdf";
+				String result_file_path = System.getProperty("user.dir") + "\\" + result_file_name;
+				System.out.println(result_file_path);
+				new StringPDFDecoder(result_file_path,byteArray).RecreatePDF_File();
+				System.out.println("PDF nou creat!");
+				
+				HttpSession s=request.getSession(true);
+				s.setAttribute("extrasPDF",result_file_path);
+						
+				response.sendRedirect(request.getContextPath()+"/pages/extras_reusit.jsp");
+			}
+			else {
+				response.sendRedirect(request.getContextPath()+"/pages/extras_nereusit.jsp");
 			}
 			
 		} catch (Exception e) {
 			System.out.println("Eroare in servlet-ul de extras de cont!");
+			response.sendRedirect(request.getContextPath()+"/pages/extras_nereusit.jsp");
 		}
 	}
 

@@ -41,7 +41,7 @@ public class GeneratePDFReport
 		PDFReportPrinter PDF_Report_Printer=new PDFReportPrinter(result_file_path,
 				(ArrayList<CompleteTransactionDetailsDTO>) transactions,
 				transactionReportInformationDTO);
-		System.out.println("GENERAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+		System.out.println("GENERAREEE");
 		PDF_Report_Printer.generateReport();
 		FileInputStream fis=null;
 		ByteArrayOutputStream byteArrayOutputStream=null;
@@ -76,7 +76,7 @@ public class GeneratePDFReport
 	    byte[] bytes = byteArrayOutputStream.toByteArray();
 	    String base64String = Base64.encodeBase64String(bytes);
 	    
-	    new StringPDFDecoder("AnaAreMere114444.pdf",base64String).RecreatePDF_File();
+	    //new StringPDFDecoder("AnaAreMere114444.pdf",base64String).RecreatePDF_File();
 	    
 	    if(base64String!=null)
 	    {
