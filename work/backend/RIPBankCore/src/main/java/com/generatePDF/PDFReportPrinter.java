@@ -4,6 +4,8 @@ import com.ripbank.core.DTO.CompleteTransactionDetailsDTO;
 import com.ripbank.core.DTO.TransactionReportInformationDTO;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -41,6 +43,7 @@ public class PDFReportPrinter
 	PdfDocument pdfDoc;
 	Document doc;
 	ByteArrayOutputStream baos;
+	FileOutputStream fos;
 	ArrayList<CompleteTransactionDetailsDTO> list;
 
 	public PDFReportPrinter(String report_file_path, ArrayList<CompleteTransactionDetailsDTO> list,TransactionReportInformationDTO transactionReportInformationDTO)
@@ -74,7 +77,8 @@ public class PDFReportPrinter
 		}
 		try 
 		{
-			writer = new PdfWriter(report_file_path+".pdf");
+			fos=new FileOutputStream(report_file_path+".pdf");
+			writer = new PdfWriter(fos);
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -294,6 +298,14 @@ public class PDFReportPrinter
 			aut_mess.setTextAlignment(TextAlignment.CENTER);
 			doc.add(aut_mess);
 		} 
-		doc.close(); 
+		doc.close();
+		try {
+			fos.flush();
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

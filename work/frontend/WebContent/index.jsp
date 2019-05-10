@@ -68,7 +68,7 @@
 					
 					<ul>
 						<li><a href="#" onclick="load('pages/raport_tranzactii.jsp')">Raport tranzacții</a></li>
-						<li><a href="#">Extras de cont</a></li>
+						<li><a href="#" onclick="load('pages/extras_cont.jsp')">Extras de cont</a></li>
 					</ul>
 				</li>
 				

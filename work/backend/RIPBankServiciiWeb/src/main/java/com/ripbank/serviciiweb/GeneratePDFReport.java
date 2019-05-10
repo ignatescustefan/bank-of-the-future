@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class GeneratePDFReport
 {
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response generatePDFReportOfTransactions(TransactionReportInformationDTO transactionReportInformationDTO) 
 	{
 		List<CompleteTransactionDetailsDTO> transactions = DBManager.getInstance().getTransactions(transactionReportInformationDTO);
@@ -41,6 +41,7 @@ public class GeneratePDFReport
 		PDFReportPrinter PDF_Report_Printer=new PDFReportPrinter(result_file_path,
 				(ArrayList<CompleteTransactionDetailsDTO>) transactions,
 				transactionReportInformationDTO);
+		System.out.println("GENERAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 		PDF_Report_Printer.generateReport();
 		FileInputStream fis=null;
 		ByteArrayOutputStream byteArrayOutputStream=null;
@@ -56,6 +57,7 @@ public class GeneratePDFReport
 		        byteArrayOutputStream.write(buffer, 0, bytesRead);
 		    }
 		    fis.close();
+		    byteArrayOutputStream.flush();
 		} 
 		catch (IOException e) 
 		{
@@ -70,14 +72,16 @@ public class GeneratePDFReport
 			Log4J.getLogger().info("Error at converting "+result_file_path+".pdf to ByteArray.");
 			return Response.status(200).entity(jsonObject.toString()).build();
 	    }
+	    
 	    byte[] bytes = byteArrayOutputStream.toByteArray();
 	    String base64String = Base64.encodeBase64String(bytes);
 	    
-	    new StringPDFDecoder("AnaAreMere11.pdf",base64String).RecreatePDF_File();
+	    new StringPDFDecoder("AnaAreMere114444.pdf",base64String).RecreatePDF_File();
 	    
 	    if(base64String!=null)
 	    {
-	    	JSONObject jsonObject=new JSONObject().put("EncodedByteArrayOfPDF",base64String);
+	    	JSONObject jsonObject = new JSONObject().put("Error", false);
+	    	jsonObject.put("EncodedByteArrayOfPDF",base64String);
 	    	Log4J.getLogger().info("Sent the pdf report file named: "+result_file_path+".pdf");
 	    	return Response.status(200).entity(jsonObject.toString()).build();
 	    }
