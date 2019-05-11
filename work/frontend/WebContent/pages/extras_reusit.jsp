@@ -37,9 +37,10 @@
                 <div class="card-content atention">
                     <div class="card-title">
                         <h4>Generarea extrasului de cont s-a realizat cu succes!</h4>
-                        <span class="small-text">PDF-ul descărcat poate fi găsit aici: <%=session.getAttribute("extrasPDF")%></span>	
+                        <span class="small-text">PDF-ul descărcat poate fi găsit aici: <%=session.getAttribute("extrasPDF")%></span>
 	                    <hr>
                     </div>
+                    
                     <div class="message_box">
 						<button class="home_button" onclick="location.href='../index.jsp'">Înapoi la pagina principală</button>
 					</div> 	

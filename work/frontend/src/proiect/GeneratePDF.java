@@ -69,7 +69,7 @@ public class GeneratePDF extends HttpServlet {
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 				LocalDateTime now = LocalDateTime.now();
 				String result_file_name="rep_" + dtf.format(now) + ".pdf";
-				String result_file_path = System.getProperty("user.home") + "\\" + result_file_name;
+				String result_file_path = System.getProperty("user.dir") + "\\" + result_file_name;
 				System.out.println(result_file_path);
 				new StringPDFDecoder(result_file_path,byteArray).RecreatePDF_File();
 				System.out.println("PDF nou creat!");
