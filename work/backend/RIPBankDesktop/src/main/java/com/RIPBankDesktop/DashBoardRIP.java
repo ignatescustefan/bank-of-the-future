@@ -72,6 +72,8 @@ public class DashBoardRIP extends JFrame {
 	private AddClientPanel addClientPanel;
 	private AccountPanel accountPanel;
 	private JLabel lblClientStatus;
+	private JLabel lblStatus;
+	private JButton btnCauta;
 	/**
 	 * Launch the demo Board.
 	 */
@@ -248,7 +250,7 @@ public class DashBoardRIP extends JFrame {
 		textCnp.setBounds(331, 104, 264, 38);
 		userSearch.add(textCnp);
 		textCnp.setColumns(10);
-		final JButton btnCauta = new JButton("");
+		btnCauta = new JButton("");
 		btnCauta.setBounds(620, 104, 38, 38);
 		btnCauta.addMouseListener(new MouseAdapter() {
 			@Override
@@ -434,11 +436,9 @@ public class DashBoardRIP extends JFrame {
 
 					System.out.println(informationAsString);
 
-					boolean updateStatus = jsonObject.getBoolean("Deleted");
+					boolean updateStatus = jsonObject.getBoolean("Deleted:");
 					System.out.println("Status Deleted : " + updateStatus);
-					btnCauta.doClick();
-					panelClientSearch.setVisible(false);
-
+					lblClientStatus.setText("inactiv");
 				} else {
 					System.out.println("No Option");
 				} 
@@ -447,7 +447,7 @@ public class DashBoardRIP extends JFrame {
 		btnSterge.setBounds(799, 38, 84, 23);
 		panelClientSearch.add(btnSterge);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Status");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setBounds(499, 14, 97, 20);
 		panelClientSearch.add(lblStatus);
