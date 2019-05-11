@@ -63,7 +63,7 @@ public class AccountPanel extends JPanel{
         		accountImport(cnp);
         	}
         });
-        transactionPanel.setBounds(0, 57, 893, 77);
+        transactionPanel.setBounds(0, 64, 893, 70);
         transactionPanel.btnAnulare.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -72,27 +72,9 @@ public class AccountPanel extends JPanel{
         	}
         });
         transactionPanel.setVisible(false);
-        addAccount = new AddAccount();
-        addAccount.btnNewButton.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		addAccount.cnp=cnp;
-        		addAccount.executeAddAccount();
-        		accountImport(cnp);
-        		addAccount.setVisible(false);
-        		
-        	}
-        });
-        addAccount.btnAnuleaza.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		panel.setVisible(true);
-        		addAccount.setVisible(false);
-        	}
-        });
-        addAccount.setVisible(false);
         
         generatePDF= new GeneratePDF();
+        generatePDF.setBounds(0, 64, 893, 70);
         generatePDF.btnGenereazExtras.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -107,12 +89,31 @@ public class AccountPanel extends JPanel{
         		generatePDF.setVisible(false);
         	}
         });
-        generatePDF.btnAnuleaza.setLocation(816, 43);
         generatePDF.setVisible(false);
-        add(generatePDF);
+        addAccount = new AddAccount();
+        addAccount.setBounds(0, 64, 893, 70);
+        addAccount.btnNewButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		addAccount.cnp=cnp;
+        		addAccount.executeAddAccount();
+        		accountImport(cnp);
+        		addAccount.setVisible(false);
+        		panel.setVisible(true);
+        		
+        	}
+        });
+        addAccount.btnAnuleaza.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		panel.setVisible(true);
+        		addAccount.setVisible(false);
+        	}
+        });
+        addAccount.setVisible(false);
         
         panel = new JPanel();
-        panel.setBounds(0, 57, 893, 77);
+        panel.setBounds(0, 64, 893, 70);
         add(panel);
         panel.setLayout(null);
         
@@ -160,9 +161,10 @@ public class AccountPanel extends JPanel{
         		panel.setVisible(false);
         	}
         });
-        btnExtrasDeCont.setBounds(117, 45, 107, 23);
+        btnExtrasDeCont.setBounds(117, 45, 120, 23);
         panel.add(btnExtrasDeCont);
         add(addAccount);
+        add(generatePDF);
         add(transactionPanel);
 
         // Append a row 
@@ -170,7 +172,7 @@ public class AccountPanel extends JPanel{
         
         table.setSize(820, 60);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 5, 893, 54);
+        scrollPane.setBounds(0, 5, 893, 60);
         add(scrollPane);
        }
     

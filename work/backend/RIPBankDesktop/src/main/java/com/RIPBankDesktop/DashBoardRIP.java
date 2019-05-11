@@ -466,11 +466,9 @@ public class DashBoardRIP extends JFrame {
 	}
 
 	protected URI getBaseURI() {
-		// TODO Auto-generated method stub
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
 	}
 	protected URI getBaseSearchURI() {
-		// TODO Auto-generated method stub
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/clients").build();
 	}
 	public boolean getThisResizable() {

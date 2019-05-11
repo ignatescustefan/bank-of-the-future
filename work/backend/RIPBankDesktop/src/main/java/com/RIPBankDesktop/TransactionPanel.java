@@ -12,6 +12,8 @@ import proiect.TipTranzactie;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class TransactionPanel extends JPanel {
 
@@ -25,6 +27,7 @@ public class TransactionPanel extends JPanel {
 	public JButton btnAnulare;
 	public JButton btnEfectuare;
 	public String operator;
+	private JLabel lblSuma;
 
 	/**
 	 * Create the panel.
@@ -36,20 +39,17 @@ public class TransactionPanel extends JPanel {
 		btnAnulare = new JButton("Anulare");
 		btnEfectuare = new JButton("Efectuare");
 		txtIbanSursa = new JTextField();
-		txtIbanSursa.setText("IBAN sursa");
-		txtIbanSursa.setBounds(195, 11, 86, 20);
+		txtIbanSursa.setBounds(106, 11, 175, 20);
 		add(txtIbanSursa);
 		txtIbanSursa.setColumns(10);
 		
 		txtIbanDestina = new JTextField();
-		txtIbanDestina.setText("IBAN destinatie");
 		txtIbanDestina.setColumns(10);
-		txtIbanDestina.setBounds(195, 42, 86, 20);
+		txtIbanDestina.setBounds(106, 42, 175, 20);
 		add(txtIbanDestina);
 		
 		txtSuma = new JTextField();
-		txtSuma.setText("Suma");
-		txtSuma.setBounds(440, 11, 86, 20);
+		txtSuma.setBounds(375, 11, 86, 20);
 		add(txtSuma);
 		txtSuma.setColumns(10);
 		
@@ -61,12 +61,19 @@ public class TransactionPanel extends JPanel {
 		add(btnAnulare);
 		
 		JLabel lblIbanSursa = new JLabel("IBAN sursa");
+		lblIbanSursa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIbanSursa.setBounds(10, 14, 86, 17);
 		add(lblIbanSursa);
 		
 		JLabel lblIbanDestinatie = new JLabel("IBAN destinatie");
+		lblIbanDestinatie.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIbanDestinatie.setBounds(10, 45, 86, 17);
 		add(lblIbanDestinatie);
+		
+		lblSuma = new JLabel("Suma");
+		lblSuma.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSuma.setBounds(319, 13, 46, 17);
+		add(lblSuma);
 	}
 	public void executeTransaction() {
 		TransactionDTO transaction=new TransactionDTO();
@@ -90,9 +97,11 @@ public class TransactionPanel extends JPanel {
 		System.out.println(transactionResult);
 		
 		if(transactionResult==true)	{
+			JOptionPane.showMessageDialog(null, "Tranzactie reusita");
 			System.out.println("tranzactie reusita");
 		}
 		else {
+			JOptionPane.showMessageDialog(null, "Tranzactie esuata");
 			System.out.println("tranzactie esuata");
 		}
 		

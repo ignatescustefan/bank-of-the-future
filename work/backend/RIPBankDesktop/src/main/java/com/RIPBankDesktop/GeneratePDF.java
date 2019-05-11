@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class GeneratePDF extends JPanel {
 
@@ -36,7 +37,7 @@ public class GeneratePDF extends JPanel {
 	protected JButton btnGenereazExtras;
 	public JButton btnAnuleaza;
 	public GeneratePDF() {
-		setBounds(0, 57, 893, 77);
+		setBounds(0, 57, 893, 70);
 		setLayout(null);
 
 		dateSfarsit = new JDateChooser();
@@ -48,7 +49,7 @@ public class GeneratePDF extends JPanel {
 		add(dateInceput);
 
 		btnAnuleaza = new JButton("Anuleaza");
-		btnAnuleaza.setBounds(816, 39, 77, 23);
+		btnAnuleaza.setBounds(804, 45, 89, 23);
 		add(btnAnuleaza);
 
 		btnGenereazExtras = new JButton("Generează PDF");
@@ -58,15 +59,17 @@ public class GeneratePDF extends JPanel {
 				generatePDF(cnp);
 			}
 		});
-		btnGenereazExtras.setBounds(672, 39, 121, 23);
+		btnGenereazExtras.setBounds(212, 39, 138, 23);
 		add(btnGenereazExtras);
 		
 		JLabel lblDataInceput = new JLabel("Data inceput:");
-		lblDataInceput.setBounds(10, 11, 73, 20);
+		lblDataInceput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDataInceput.setBounds(0, 11, 83, 20);
 		add(lblDataInceput);
 		
 		JLabel lblDataSfarsit = new JLabel("Data sfarsit:");
-		lblDataSfarsit.setBounds(10, 42, 73, 20);
+		lblDataSfarsit.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDataSfarsit.setBounds(0, 42, 83, 20);
 		add(lblDataSfarsit);
 	}
 	public void generatePDF(String cnp) {
@@ -134,6 +137,7 @@ public class GeneratePDF extends JPanel {
 				String result_file_path = System.getProperty("user.home") + "\\" + result_file_name;
 				System.out.println(result_file_path);
 				new StringPDFDecoder(result_file_path,byteArray).RecreatePDF_File();
+				
 				JOptionPane.showMessageDialog(null, "PDF nou creat!");
 				System.out.println("PDF nou creat!");
 			}

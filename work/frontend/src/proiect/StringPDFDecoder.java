@@ -38,6 +38,7 @@ public class StringPDFDecoder
 		{
 			outputStream.write(bytes_from_decoded_string);
 			outputStream.flush();
+			outputStream.close();
 		} 
 		catch (IOException e) 
 		{
