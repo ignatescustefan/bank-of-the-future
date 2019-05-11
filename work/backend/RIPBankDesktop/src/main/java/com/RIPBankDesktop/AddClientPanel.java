@@ -217,6 +217,12 @@ public class AddClientPanel extends JPanel {
 		panel.add(btnInregistreaza);
 		
 		JButton btnAnuleaza = new JButton("Anuleaza");
+		btnAnuleaza.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				setVisible(false);
+			}
+		});
 		btnAnuleaza.setBounds(401, 295, 121, 23);
 		panel.add(btnAnuleaza);
 	}
