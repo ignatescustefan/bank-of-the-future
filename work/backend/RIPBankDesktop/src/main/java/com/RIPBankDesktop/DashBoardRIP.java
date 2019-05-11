@@ -261,7 +261,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseSearchURI());
 				cnp=textCnp.getText();
 				accountPanel.cnp=cnp;
-				accountPanel.operator=angajat.getNume()+angajat.getPrenume();
+				accountPanel.operator=angajat.getNume()+" "+angajat.getPrenume();
 				ClientInfo clientInfo;
 				clientInfo=new ClientInfo();
 				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
@@ -391,6 +391,7 @@ public class DashBoardRIP extends JFrame {
 		JButton btnNewButton = new JButton("Conturi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				modificaClient.setVisible(false);
 				accountPanel.setVisible(true);
 				accountPanel.accountImport(cnp);
 			}
@@ -421,7 +422,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseURI());
 
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Your Message", "Title on Box", dialogButton);
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa stergeti contul?", "Title on Box", dialogButton);
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
 					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
@@ -435,7 +436,7 @@ public class DashBoardRIP extends JFrame {
 
 					boolean updateStatus = jsonObject.getBoolean("Deleted");
 					System.out.println("Status Deleted : " + updateStatus);
-
+					btnCauta.doClick();
 					panelClientSearch.setVisible(false);
 
 				} else {

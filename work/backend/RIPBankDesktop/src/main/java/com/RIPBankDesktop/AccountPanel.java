@@ -38,6 +38,8 @@ public class AccountPanel extends JPanel{
 	public String cnp;
 	public String operator;
 	private TransactionPanel transactionPanel;
+	private JButton btnExtrasDeCont;
+	GeneratePDF generatePDF;
     public AccountPanel(){
         super();
         //this.cnp=cnp;
@@ -61,7 +63,7 @@ public class AccountPanel extends JPanel{
         		accountImport(cnp);
         	}
         });
-        transactionPanel.setBounds(0, 62, 893, 72);
+        transactionPanel.setBounds(0, 57, 893, 77);
         transactionPanel.btnAnulare.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -89,16 +91,25 @@ public class AccountPanel extends JPanel{
         	}
         });
         addAccount.setVisible(false);
-        add(addAccount);
-        add(transactionPanel);
-
-        // Append a row 
         
-        
-        table.setSize(820, 60);
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 5, 893, 54);
-        add(scrollPane);
+        generatePDF= new GeneratePDF();
+        generatePDF.btnGenereazExtras.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		panel.setVisible(true);
+        		generatePDF.setVisible(false);
+        	}
+        });
+        generatePDF.btnAnuleaza.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		panel.setVisible(true);
+        		generatePDF.setVisible(false);
+        	}
+        });
+        generatePDF.btnAnuleaza.setLocation(816, 43);
+        generatePDF.setVisible(false);
+        add(generatePDF);
         
         panel = new JPanel();
         panel.setBounds(0, 57, 893, 77);
@@ -139,6 +150,28 @@ public class AccountPanel extends JPanel{
         
         btnAnuleaza.setBounds(804, 45, 89, 23);
         panel.add(btnAnuleaza);
+        
+        btnExtrasDeCont = new JButton("Extras de cont");
+        btnExtrasDeCont.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		generatePDF.cnp=cnp;
+        		generatePDF.setVisible(true);
+        		panel.setVisible(false);
+        	}
+        });
+        btnExtrasDeCont.setBounds(117, 45, 107, 23);
+        panel.add(btnExtrasDeCont);
+        add(addAccount);
+        add(transactionPanel);
+
+        // Append a row 
+        
+        
+        table.setSize(820, 60);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0, 5, 893, 54);
+        add(scrollPane);
        }
     
     public void accountImport(String cnp) {
