@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -58,7 +59,7 @@ public class AddClientPanel extends JPanel {
 		add(lblnregistrareClient);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.PINK);
+		panel.setBackground(new Color(251, 141, 2));;
 		panel.setBounds(56, 77, 735, 329);
 		add(panel);
 		panel.setLayout(null);
@@ -107,42 +108,42 @@ public class AddClientPanel extends JPanel {
 		
 		txtNume = new JTextField();
 		txtNume.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtNume.setText("Nume");
+		txtNume.setText("");
 		txtNume.setBounds(401, 16, 198, 24);
 		panel.add(txtNume);
 		txtNume.setColumns(10);
 		
 		txtPrenume = new JTextField();
-		txtPrenume.setText("Prenume");
+		txtPrenume.setText("");
 		txtPrenume.setColumns(10);
 		txtPrenume.setBounds(401, 52, 198, 24);
 		panel.add(txtPrenume);
 		
 		txtEmail = new JTextField();
-		txtEmail.setText("Email");
+		txtEmail.setText("");
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(401, 90, 198, 24);
 		panel.add(txtEmail);
 		
 		txtCnp = new JTextField();
-		txtCnp.setText("Cnp\r\n");
+		txtCnp.setText("");
 		txtCnp.setColumns(10);
 		txtCnp.setBounds(401, 128, 198, 24);
 		panel.add(txtCnp);
 		
 		txtTelefon = new JTextField();
-		txtTelefon.setText("Telefon");
+		txtTelefon.setText("");
 		txtTelefon.setColumns(10);
 		txtTelefon.setBounds(401, 242, 198, 24);
 		panel.add(txtTelefon);
 		
 		pwdParola = new JPasswordField();
-		pwdParola.setText("Parola");
+		pwdParola.setText("");
 		pwdParola.setBounds(401, 166, 198, 20);
 		panel.add(pwdParola);
 		
 		pwdConfirmareparola = new JPasswordField();
-		pwdConfirmareparola.setText("Parola");
+		pwdConfirmareparola.setText("");
 		pwdConfirmareparola.setBounds(401, 204, 198, 20);
 		panel.add(pwdConfirmareparola);
 		
@@ -186,9 +187,18 @@ public class AddClientPanel extends JPanel {
 						
 						if(result==true) {
 							System.out.println("client created true");
+							JOptionPane.showMessageDialog(null, "Client creat cu succes");
+							txtNume.setText("");
+							txtPrenume.setText("");
+							txtTelefon.setText("");
+							txtEmail.setText("");
+							pwdConfirmareparola.setText("");
+							pwdParola.setText("");
+							setVisible(false);
 						}
 						else {
 							System.out.println("client created false ");
+							JOptionPane.showMessageDialog(null, "Eroare la creare client");
 						}
 					}
 					catch(Exception e) {
@@ -203,11 +213,17 @@ public class AddClientPanel extends JPanel {
 				
 			}
 		});
-		btnInregistreaza.setBounds(253, 295, 106, 23);
+		btnInregistreaza.setBounds(238, 295, 121, 23);
 		panel.add(btnInregistreaza);
 		
 		JButton btnAnuleaza = new JButton("Anuleaza");
-		btnAnuleaza.setBounds(401, 295, 106, 23);
+		btnAnuleaza.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				setVisible(false);
+			}
+		});
+		btnAnuleaza.setBounds(401, 295, 121, 23);
 		panel.add(btnAnuleaza);
 	}
 }

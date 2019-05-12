@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.net.URI;
+import javax.swing.SwingConstants;
 
 public class AddAccount extends JPanel {
 	/**
@@ -56,11 +57,13 @@ public class AddAccount extends JPanel {
 		add(btnAnuleaza);
 		
 		JLabel lblTipCont = new JLabel("Tip cont");
-		lblTipCont.setBounds(10, 11, 81, 20);
+		lblTipCont.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipCont.setBounds(0, 11, 91, 20);
 		add(lblTipCont);
 		
 		JLabel lblSuma = new JLabel("Suma");
-		lblSuma.setBounds(10, 42, 81, 24);
+		lblSuma.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSuma.setBounds(0, 42, 91, 24);
 		add(lblSuma);
 		
 	}

@@ -72,6 +72,8 @@ public class DashBoardRIP extends JFrame {
 	private AddClientPanel addClientPanel;
 	private AccountPanel accountPanel;
 	private JLabel lblClientStatus;
+	private JLabel lblStatus;
+	private JButton btnCauta;
 	/**
 	 * Launch the demo Board.
 	 */
@@ -248,7 +250,7 @@ public class DashBoardRIP extends JFrame {
 		textCnp.setBounds(331, 104, 264, 38);
 		userSearch.add(textCnp);
 		textCnp.setColumns(10);
-		final JButton btnCauta = new JButton("");
+		btnCauta = new JButton("");
 		btnCauta.setBounds(620, 104, 38, 38);
 		btnCauta.addMouseListener(new MouseAdapter() {
 			@Override
@@ -261,7 +263,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseSearchURI());
 				cnp=textCnp.getText();
 				accountPanel.cnp=cnp;
-				accountPanel.operator=angajat.getNume()+angajat.getPrenume();
+				accountPanel.operator=angajat.getNume()+" "+angajat.getPrenume();
 				ClientInfo clientInfo;
 				clientInfo=new ClientInfo();
 				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
@@ -391,6 +393,7 @@ public class DashBoardRIP extends JFrame {
 		JButton btnNewButton = new JButton("Conturi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				modificaClient.setVisible(false);
 				accountPanel.setVisible(true);
 				accountPanel.accountImport(cnp);
 			}
@@ -421,7 +424,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseURI());
 
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Your Message", "Title on Box", dialogButton);
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa stergeti contul?", "Title on Box", dialogButton);
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
 					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
@@ -433,11 +436,9 @@ public class DashBoardRIP extends JFrame {
 
 					System.out.println(informationAsString);
 
-					boolean updateStatus = jsonObject.getBoolean("Deleted");
+					boolean updateStatus = jsonObject.getBoolean("Deleted:");
 					System.out.println("Status Deleted : " + updateStatus);
-
-					panelClientSearch.setVisible(false);
-
+					lblClientStatus.setText("inactiv");
 				} else {
 					System.out.println("No Option");
 				} 
@@ -446,7 +447,7 @@ public class DashBoardRIP extends JFrame {
 		btnSterge.setBounds(799, 38, 84, 23);
 		panelClientSearch.add(btnSterge);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Status");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setBounds(499, 14, 97, 20);
 		panelClientSearch.add(lblStatus);
@@ -465,11 +466,9 @@ public class DashBoardRIP extends JFrame {
 	}
 
 	protected URI getBaseURI() {
-		// TODO Auto-generated method stub
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
 	}
 	protected URI getBaseSearchURI() {
-		// TODO Auto-generated method stub
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/clients").build();
 	}
 	public boolean getThisResizable() {

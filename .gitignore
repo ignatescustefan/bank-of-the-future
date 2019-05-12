@@ -1,3 +1,9 @@
+#arcilli
+Servers/
+Servers/*
+Servers\Tomcat v8.5 Server at localhost-config
+
+
 .metadata
 bin/
 tmp/
