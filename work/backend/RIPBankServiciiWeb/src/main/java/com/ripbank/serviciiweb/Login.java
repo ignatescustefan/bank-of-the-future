@@ -20,6 +20,13 @@ import javax.ws.rs.Produces;
 @Path("login")
 public class Login {
 
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAuthorizedUser(CredentialsDTO user) {
+		JSONObject jsonObject = checkUserEmailAndPass(user);
+		return Response.status(200).entity(jsonObject.toString()).build();
+	}
+
 	private JSONObject checkUserEmailAndPass(CredentialsDTO user) {
 		List<User> usersList = DBManager.getInstance().findUserByEmailAndPassword(user.getEmail(), user.getPassword());
 		Log4J.getLogger().info("Attempt to login user with: " + user.toString());
@@ -31,6 +38,14 @@ public class Login {
 		return new JSONObject().put("LoginOk", 1).put("CNP", usersList.get(0).getCnp())
 				.put("Email", usersList.get(0).getEmail()).put("Nume", usersList.get(0).getNume())
 				.put("Prenume", usersList.get(0).getPrenume()).put("Telefon", usersList.get(0).getTelefon());
+	}
+
+	@Path("employee")
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAuthorizedEmployee(CredentialsDTO user) {
+		JSONObject jsonObject = checkEmployeeEmailAndPass(user);
+		return Response.status(200).entity(jsonObject.toString()).build();
 	}
 
 	private JSONObject checkEmployeeEmailAndPass(CredentialsDTO employee) {
@@ -45,18 +60,13 @@ public class Login {
 				.put("Nume", employees.get(0).getNume()).put("Prenume", employees.get(0).getPrenume());
 	}
 
+	@Path("secondStepAuth")
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getAuthorizedUser(CredentialsDTO user) {
-		JSONObject jsonObject = checkUserEmailAndPass(user);
+	public Response verifyTokenAuth(String cnp) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("timeIntervalOk", DBManager.getInstance().verifyAuthCodeTiming(cnp));
 		return Response.status(200).entity(jsonObject.toString()).build();
-	}
 
-	@Path("/employee")
-	@POST
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getAuthorizedEmployee(CredentialsDTO user) {
-		JSONObject jsonObject = checkEmployeeEmailAndPass(user);
-		return Response.status(200).entity(jsonObject.toString()).build();
 	}
 }

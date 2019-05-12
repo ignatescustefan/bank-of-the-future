@@ -16,4 +16,8 @@ public interface UserDAO {
 	public boolean deleteClient(String cnp);
 
 	public boolean createUser(User user);
+	
+	public String getPINForUserCNP(String cnp);
+	
+	public boolean verifyAuthCodeTiming(String cnp);
 }
