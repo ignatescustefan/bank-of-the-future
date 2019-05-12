@@ -40,7 +40,7 @@ public class TokenCommunication {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response receiveAuthCodeFromToken(@PathParam("cnp") String cnp, @FormParam("authCode") String authCode) {
 		JSONObject jsonObject = new JSONObject().put("Received",
-				DBManager.getInstance().insertAuthCodeInDB(cnp, authCode));
+				DBManager.getInstance().insertAuthCodeIntoDB(cnp, authCode));
 		return Response.status(200).entity(jsonObject.toString()).build();
 	}
 }

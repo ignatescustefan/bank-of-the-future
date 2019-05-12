@@ -15,7 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.generatePDF.PDFReportPrinter;
-import com.decodeStringIntoPDF.StringPDFDecoder;
 import com.logging.Log4J;
 import com.ripbank.core.DTO.CompleteTransactionDetailsDTO;
 import com.ripbank.core.DTO.TransactionReportInformationDTO;
