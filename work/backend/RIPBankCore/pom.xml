@@ -89,9 +89,15 @@
 			<version>7.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-licensekey -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext-licensekey -->
-	
+
 	</dependencies>
 
 	<build>

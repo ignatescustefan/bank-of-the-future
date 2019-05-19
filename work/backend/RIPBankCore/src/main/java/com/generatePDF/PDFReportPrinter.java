@@ -215,7 +215,7 @@ public class PDFReportPrinter
 		Image image=null;
 		try 
 		{
-			data = ImageDataFactory.create("https://dm2302files.storage.live.com/y4mUIvz7kmbQFbgUJIJfl7imPXmbXoIW0OFbmzogTJdBcZJmUl9eRHy4vXJ9Sv6jc0rOpe3YixM5cGxc4PTAf7-C-iyaUKsv6mo3Xgr6EoDCW9ROUSMIBoFwYZz4sb_ozJ0UNRg2I7IKPucb1XOAcrTEwcUc3HGMwvOkHIQbT6jvTC8Sai5gtF47Ij-7bDi8o48a6q7ZQEl_4wwZ5dyokgGtQ/login.jpg?psid=1&width=1920&height=463");
+			data = ImageDataFactory.create("https://i.imgur.com/nOmVb2N.png");
 		} 
 		catch (MalformedURLException e) 
 		{

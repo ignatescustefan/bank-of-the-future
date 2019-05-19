@@ -33,7 +33,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	public List<User> findUserByCNP(String cnp) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			List<User> userList = new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE cnp=" + cnp);
+			st.execute("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and u.cnp=" + cnp);
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
 				User user = createUserByResultSet(rs);
@@ -67,7 +67,9 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	public List<User> findUserByEmailAndPassword(String email, String password) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			List<User> userList = new ArrayList<>();
-			st.execute("SELECT * FROM utilizator WHERE email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
+			System.out.println("SELECT u.* s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
+					+ "\"");
+			st.execute("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and email=" + "\"" + email + "\"" + " AND parola=" + "\"" + password
 					+ "\"");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
@@ -230,7 +232,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 	@Override
 	public boolean deleteClient(String cnp) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			st.execute("UPDATE utilizator SET client_status='inactiv' WHERE CNP=" + "\"" + cnp + "\"");
+			st.execute("UPDATE status_client SET client_status='inactiv' WHERE CNP=" + "\"" + cnp + "\"");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

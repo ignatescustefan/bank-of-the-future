@@ -15,7 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.generatePDF.PDFReportPrinter;
-import com.decodeStringIntoPDF.StringPDFDecoder;
 import com.logging.Log4J;
 import com.ripbank.core.DTO.CompleteTransactionDetailsDTO;
 import com.ripbank.core.DTO.TransactionReportInformationDTO;
@@ -87,10 +86,6 @@ public class GeneratePDFReport
 	    }
 	    JSONObject jsonObject = new JSONObject().put("Error", true);
 		Log4J.getLogger().info("Sent the pdf report file named: "+result_file_path+".pdf");
-		return Response.status(200).entity(jsonObject.toString()).build();
-	    
-	    
-	    
+		return Response.status(200).entity(jsonObject.toString()).build();   
 	}
-	
 }

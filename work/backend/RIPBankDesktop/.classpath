@@ -53,6 +53,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="/RIPBankFrontend"/>
+	<classpathentry exported="true" kind="src" path="/RIPBankFrontend"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
