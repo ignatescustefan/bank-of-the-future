@@ -358,31 +358,29 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return null;
 	}
 
+	private String generatePINAccount() {
+		Random rand = new Random();
+		StringBuilder iban = new StringBuilder();
+		for (int i = 0; i < 4; ++i) {
+			iban.append(rand.nextInt(10) + "");
+		}
+		return iban.toString();
+	}
+	
 	@Override
 	public boolean createAccount(String cnp, String iban, TipCont tipCont, Double amount) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			// TODO: need to add support for account type
-			// TODO: randomize PIN & return it
+
+			String pin=generatePINAccount();
+			//System.out.println("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + cnp + "\", " + "\"" + tipCont + "\","
+			//		+ "\"" + pin + "\", " + amount + ")");
 			st.execute("INSERT INTO cont VALUES(\"" + iban + "\", " + "\"" + cnp + "\", " + "\"" + tipCont + "\","
-					+ "\"" + "0000" + "\", " + amount + ")");
+					+ "\"" + pin + "\", " + amount + ")");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-
-	@Override
-	public String getPINForDefaultAccount(String cnp) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			st.execute("SELECT PIN FROM cont where proprietar_cnp='" + cnp + "' AND tip_cont=\"depozit\"");
-			ResultSet rs = st.getResultSet();
-			while (rs.next()) {
-				return rs.getString("PIN");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 }

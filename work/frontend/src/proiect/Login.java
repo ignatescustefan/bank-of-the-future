@@ -116,7 +116,7 @@ public class Login extends HttpServlet {
 				System.out.println(contor);
 				s.setAttribute("contor", contor);
 				
-				response.sendRedirect(request.getContextPath()+"/login/second_step.jsp");
+				response.sendRedirect(request.getContextPath()+"/index.jsp");
 			}
 			else {
 				

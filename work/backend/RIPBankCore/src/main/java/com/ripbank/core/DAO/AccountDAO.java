@@ -14,5 +14,4 @@ public interface AccountDAO {
 
 	public boolean createAccount(String cnp, String iban, TipCont tipCont, Double amount);
 	
-	public String getPINForDefaultAccount(String cnp);
 }
