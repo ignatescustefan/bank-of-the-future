@@ -248,7 +248,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		StringBuilder query = new StringBuilder();
 		query.append(
 				"SELECT * FROM tranzactie WHERE data_tranzactie>='" + transactionReportInformationDTO.getStartDate()
-						+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
+				+ "' AND data_tranzactie<='" + transactionReportInformationDTO.getFinalDate() + "'");
 		query.append("AND (");
 		for (String iban : IBANs) {
 			query.append("IBAN_sursa='" + iban + "'");
@@ -267,7 +267,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 				CompleteTransactionDetailsDTO transaction = createCompleteTransactionDetailsDTOFromResultSet(rs);
 				transactions.add(transaction);
 			}
-//			System.out.println(transactions.toString());
+			//			System.out.println(transactions.toString());
 			return transactions;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -306,11 +306,16 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	public boolean createUser(User user) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			if (1 == st.executeUpdate("INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\""
+			String query= "INSERT INTO utilizator VALUES (" + "\"" + user.getNume() + "\", " + "\""
 					+ user.getPrenume() + "\", " + "\"" + user.getEmail() + "\", " + "\"" + user.getParola() + "\", "
-					+ "\"" + user.getCnp() + "\", " + "\"" + user.getTelefon() + "\", " + "\"" + "activ" + "\""
-					+ ")")) {
-				return true;
+					+ "\"" + user.getCnp() + "\", " + "\"" + user.getTelefon() + "\")";
+			System.out.println(query);
+			if (1 == st.executeUpdate(query)) {
+				query="INSERT INTO status_client (cnp,client_status) VALUES (\""+user.getCnp()+"\", \"activ\")";
+				System.out.println(query);
+				if(1==st.executeUpdate(query)) {
+					return true;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
