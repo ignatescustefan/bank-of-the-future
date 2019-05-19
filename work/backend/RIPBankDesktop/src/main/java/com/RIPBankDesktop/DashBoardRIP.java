@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import com.ripbank.core.ClientInfo;
 import com.ripbank.core.Employee;
 
+import DTO.PersonDTO;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -244,6 +245,32 @@ public class DashBoardRIP extends JFrame {
 			}
 		});
 		accountPanel.setVisible(false);
+
+		modificaClient = new ModificaClient();
+		modificaClient.setLocation(18, 285);
+		modificaClient.btnSalveaza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa modificati datele?", "Mesaj", dialogButton);
+				if(dialogResult == 0) {
+					PersonDTO user=	modificaClient.executeModificaClient();
+					if(modificaClient.status==0) {
+						/*
+						 * labelClientName.setText(modificaClient.textNumeUpdate.getText());
+						 * labelClientPrenume.setText(modificaClient.textPrenumeUpdate.getText());
+						 * labelClientTelefon.setText(modificaClient.textTelefonUpdate.getText());
+						 */
+						labelClientName.setText(user.getNume());
+						labelClientPrenume.setText(user.getPrenume());
+						labelClientTelefon.setText(user.getTelefon());
+					}
+				}
+				//btnCauta.doClick();
+			}
+			
+		});
+		modificaClient.setVisible(false);
+		userSearch.add(modificaClient);
 		accountPanel.setBounds(18, 285, 893, 134);
 		userSearch.add(accountPanel);
 		textCnp = new JTextField();
@@ -331,18 +358,6 @@ public class DashBoardRIP extends JFrame {
 
 		panelClientSearch = new JPanel();
 		panelClientSearch.setVisible(false);
-
-		modificaClient = new ModificaClient();
-		modificaClient.setLocation(18, 285);
-		modificaClient.btnSalveaza.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				labelClientName.setText(modificaClient.textNumeUpdate.getText());
-				labelClientPrenume.setText(modificaClient.textPrenumeUpdate.getText());
-				labelClientTelefon.setText(modificaClient.textTelefonUpdate.getText());
-			}
-		});
-		modificaClient.setVisible(false);
-		userSearch.add(modificaClient);
 		panelClientSearch.setBounds(18, 181, 893, 69);
 		panelClientSearch.setBackground(Color.LIGHT_GRAY);
 		userSearch.add(panelClientSearch);
@@ -424,7 +439,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseURI());
 
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa stergeti contul?", "Title on Box", dialogButton);
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa salvati modificarile?", "Mesaj", dialogButton);
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
 					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
@@ -446,13 +461,13 @@ public class DashBoardRIP extends JFrame {
 		});
 		btnSterge.setBounds(799, 38, 84, 23);
 		panelClientSearch.add(btnSterge);
-		
+
 		lblStatus = new JLabel("Status");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setBounds(499, 14, 97, 20);
 		panelClientSearch.add(lblStatus);
-		
-		
+
+
 		lblClientStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClientStatus.setBounds(499, 41, 97, 20);
 		panelClientSearch.add(lblClientStatus);
