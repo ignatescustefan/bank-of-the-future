@@ -86,13 +86,13 @@ public class LoginPanel extends JFrame {
 			public void keyPressed(KeyEvent arg0) {
 				if(arg0.getKeyCode()==KeyEvent.VK_TAB) {
 					if (arg0.getModifiers() > 0) {
-                        txtUsername.transferFocusBackward();
-                    } else {
-                    	txtUsername.transferFocus();
-                    }
-                    arg0.consume();
-                }
-				
+						txtUsername.transferFocusBackward();
+					} else {
+						txtUsername.transferFocus();
+					}
+					arg0.consume();
+				}
+
 			}
 		});
 		desktopPane = new JDesktopPane();

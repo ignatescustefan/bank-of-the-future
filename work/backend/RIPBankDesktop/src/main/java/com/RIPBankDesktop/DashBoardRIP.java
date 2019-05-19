@@ -255,19 +255,13 @@ public class DashBoardRIP extends JFrame {
 				if(dialogResult == 0) {
 					PersonDTO user=	modificaClient.executeModificaClient();
 					if(modificaClient.status==0) {
-						/*
-						 * labelClientName.setText(modificaClient.textNumeUpdate.getText());
-						 * labelClientPrenume.setText(modificaClient.textPrenumeUpdate.getText());
-						 * labelClientTelefon.setText(modificaClient.textTelefonUpdate.getText());
-						 */
 						labelClientName.setText(user.getNume());
 						labelClientPrenume.setText(user.getPrenume());
 						labelClientTelefon.setText(user.getTelefon());
 					}
 				}
-				//btnCauta.doClick();
 			}
-			
+
 		});
 		modificaClient.setVisible(false);
 		userSearch.add(modificaClient);
@@ -288,55 +282,54 @@ public class DashBoardRIP extends JFrame {
 				Client client = ClientBuilder.newClient(config);
 				client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
 				WebTarget service = client.target(getBaseSearchURI());
-				cnp=textCnp.getText();
-				accountPanel.cnp=cnp;
-				accountPanel.operator=angajat.getNume()+" "+angajat.getPrenume();
-				ClientInfo clientInfo;
-				clientInfo=new ClientInfo();
-				Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
-				System.out.println("CNP : "+ cnp);
-				System.out.println("my response");
-				System.out.println(response);
+				if(textCnp.getText().isEmpty()==false) {
+					cnp=textCnp.getText();
+					accountPanel.cnp=cnp;
+					accountPanel.operator=angajat.getNume()+" "+angajat.getPrenume();
+					ClientInfo clientInfo;
+					clientInfo=new ClientInfo();
+					Response response = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+					System.out.println("CNP : "+ cnp);
+					System.out.println("my response");
+					System.out.println(response);
 
-				String myResponseAsString=response.readEntity(String.class);
+					String myResponseAsString=response.readEntity(String.class);
 
-				System.out.println(myResponseAsString);
+					System.out.println(myResponseAsString);
 
-				JSONObject jsonInfo=new JSONObject(myResponseAsString);
+					JSONObject jsonInfo=new JSONObject(myResponseAsString);
 
-				if(jsonInfo.isNull("Error")==false){
-					lblNoClient.setVisible(true);
-					lblNoClient.setText("Nu s-a gasit nici un client cu aceest cnp");
-					System.out.println("Not found");
-					panelClientSearch.setVisible(false);
+					if(jsonInfo.isNull("Error")==false){
+						lblNoClient.setVisible(true);
+						lblNoClient.setText("Nu s-a gasit nici un client cu aceest cnp");
+						System.out.println("Not found");
+						panelClientSearch.setVisible(false);
+					}
+					else {
+
+						System.out.println("Client found");
+						lblNoClient.setVisible(false);
+						lblNoClient.setText("");
+
+						String telefonString=jsonInfo.getString("telefon");
+						String prenumeString = jsonInfo.getString("prenume");
+						String numeString = jsonInfo.getString("nume");
+						String emailString = jsonInfo.getString("email");
+						String statusString =jsonInfo.getString("status");
+						clientInfo.setEmail(emailString);
+						clientInfo.setNume(numeString);
+						clientInfo.setPrenume(prenumeString);
+						clientInfo.setTelefon(telefonString);
+						System.out.println(clientInfo.toString());
+
+						panelClientSearch.setVisible(true);
+						labelClientEmail.setText(clientInfo.getEmail());
+						labelClientName.setText(clientInfo.getNume());
+						labelClientPrenume.setText(clientInfo.getPrenume());
+						labelClientTelefon.setText(clientInfo.getTelefon());
+						lblClientStatus.setText(statusString);
+					}
 				}
-				else {
-
-					System.out.println("Client found");
-					lblNoClient.setVisible(false);
-					lblNoClient.setText("");
-
-					String telefonString=jsonInfo.getString("telefon");
-					String prenumeString = jsonInfo.getString("prenume");
-					String numeString = jsonInfo.getString("nume");
-					String emailString = jsonInfo.getString("email");
-					String statusString =jsonInfo.getString("status");
-					clientInfo.setEmail(emailString);
-					clientInfo.setNume(numeString);
-					clientInfo.setPrenume(prenumeString);
-					clientInfo.setTelefon(telefonString);
-					System.out.println(clientInfo.toString());
-
-					panelClientSearch.setVisible(true);
-					labelClientEmail.setText(clientInfo.getEmail());
-					labelClientName.setText(clientInfo.getNume());
-					labelClientPrenume.setText(clientInfo.getPrenume());
-					labelClientTelefon.setText(clientInfo.getTelefon());
-					lblClientStatus.setText(statusString);
-				}
-
-
-
 			}
 		});
 		btnCauta.setIcon(new ImageIcon(DashBoardRIP.class.getResource("/img/client_search.png")));
