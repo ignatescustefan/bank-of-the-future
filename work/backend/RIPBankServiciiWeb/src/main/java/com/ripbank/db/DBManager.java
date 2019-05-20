@@ -125,19 +125,6 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return null;
 	}
 
-	public boolean insertAuthCodeInDB(String cnp, String authCode) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
-			System.out.println("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\","
-					+ "\"" + authCode + "\"," + "CURRENT_TIMESTAMP)");
-			st.execute("INSERT INTO token (token_cnp, token_key, time_stamp) VALUES(" + "\"" + cnp + "\"," + "\""
-					+ authCode + "\"," + "CURRENT_TIMESTAMP)");
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	public boolean updateUserInformation(String cnp, String nume, String prenume, String telefon) {
 		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
 			System.out.println("UPDATE `utilizator` SET `nume`=" + "\"" + nume + "\"" + ", `prenume`=" + "\"" + prenume

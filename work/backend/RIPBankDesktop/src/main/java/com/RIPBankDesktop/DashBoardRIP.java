@@ -432,7 +432,7 @@ public class DashBoardRIP extends JFrame {
 				WebTarget service = client.target(getBaseURI());
 
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa salvati modificarile?", "Mesaj", dialogButton);
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Doriti sa stergeti contul?", "Mesaj", dialogButton);
 				if(dialogResult == 0) {
 					System.out.println("Yes option");
 					Response myresponse = service.path(cnp).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);

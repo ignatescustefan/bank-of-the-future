@@ -18,7 +18,7 @@ public class DBConnection {
 	private DBConnection() {
 		Log4J.getLogger().info("Loading driver...");
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			Log4J.getLogger().info("Driver loaded!");
 		} catch (ClassNotFoundException e) {
 			throw new IllegalStateException(
