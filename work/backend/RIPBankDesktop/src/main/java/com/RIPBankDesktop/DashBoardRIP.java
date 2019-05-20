@@ -207,6 +207,18 @@ public class DashBoardRIP extends JFrame {
 		btnAcasa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAcasa.setBounds(61, 27, 127, 23);
 		rightPanel.add(btnAcasa);
+		
+		JButton btnStergeAngajat = new JButton("Sterge cont");
+		btnStergeAngajat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				deleteEmployee(angajat.getEmail());
+				btnLogout.doClick();
+			}
+		});
+		btnStergeAngajat.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnStergeAngajat.setBounds(61, 415, 127, 23);
+		rightPanel.add(btnStergeAngajat);
 
 		employeePanel.setBounds(1200, 0, 168, 140);
 		employeePanel.setBackground(new Color(251, 141, 2));
@@ -473,8 +485,39 @@ public class DashBoardRIP extends JFrame {
 
 	}
 
+	private void deleteEmployee(String email) {
+		ClientConfig config = new ClientConfig();
+		Client client = ClientBuilder.newClient(config);
+		client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+
+		WebTarget service = client.target(getBaseURIDeleteEmployee());
+
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Renuntati la acest cont?", "Mesaj", dialogButton);
+		if(dialogResult == 0) {
+			System.out.println("Yes option");
+			Response myresponse = service.path(email).request().accept(MediaType.APPLICATION_JSON).delete(Response.class);
+
+			String informationAsString = myresponse.readEntity(String.class);					
+			System.out.println(informationAsString);
+
+			JSONObject jsonObject = new JSONObject(informationAsString); 
+
+			System.out.println(informationAsString);
+
+			boolean updateStatus = jsonObject.getBoolean("Deleted:");
+			System.out.println("Status Deleted : " + updateStatus);
+			lblClientStatus.setText("inactiv");
+		} else {
+			System.out.println("No Option");
+		} 
+	}
+	
 	protected URI getBaseURI() {
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
+	}
+	protected URI getBaseURIDeleteEmployee() {
+		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/deleteEmployee").build();
 	}
 	protected URI getBaseSearchURI() {
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/clients").build();

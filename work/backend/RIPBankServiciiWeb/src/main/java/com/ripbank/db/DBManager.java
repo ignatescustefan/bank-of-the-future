@@ -225,7 +225,18 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		}
 		return false;
 	}
-
+	
+	@Override
+	public boolean deleteEmloyee(String email) {
+		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+			st.execute("DELETE FROM angajat WHERE email=" + "\"" + email + "\"");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	@Override
 	public List<CompleteTransactionDetailsDTO> getTransactions(
 			TransactionReportInformationDTO transactionReportInformationDTO) {
