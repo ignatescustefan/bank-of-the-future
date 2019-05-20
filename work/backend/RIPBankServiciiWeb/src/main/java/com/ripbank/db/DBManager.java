@@ -1,5 +1,6 @@
 package com.ripbank.db;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,10 +32,10 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<User> findUserByCNP(String cnp) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+		try (PreparedStatement st = DBConnection.getInstance().conn.prepareStatement("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and u.cnp=?")) {
 			List<User> userList = new ArrayList<>();
-			st.execute("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and u.cnp=" + cnp);
-			ResultSet rs = st.getResultSet();
+			st.setString(1, cnp);
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				User user = createUserByResultSet(rs);
 				userList.add(user);
@@ -65,13 +66,11 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<User> findUserByEmailAndPassword(String email, String password) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+		try (PreparedStatement stmt = DBConnection.getInstance().conn.prepareStatement("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp AND email=? AND parola=?")) {
 			List<User> userList = new ArrayList<>();
-			System.out.println("SELECT u.* s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
-					+ "\"");
-			st.execute("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and email=" + "\"" + email + "\"" + " AND parola=" + "\"" + password
-					+ "\"");
-			ResultSet rs = st.getResultSet();
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				User user = createUserByResultSet(rs);
 				userList.add(user);
@@ -154,11 +153,11 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<Employee> findEmployeeByEmailAndPass(String email, String password) {
-		try (Statement st = DBConnection.getInstance().conn.createStatement()) {
+		try (PreparedStatement stmt = DBConnection.getInstance().conn.prepareStatement("SELECT * FROM angajat WHERE email=? AND parola=?")) {
 			List<Employee> employees = new ArrayList<>();
-			st.execute("SELECT * FROM angajat WHERE email=" + "\"" + email + "\"" + "AND parola=" + "\"" + password
-					+ "\"");
-			ResultSet rs = st.getResultSet();
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Employee employee = new Employee(rs.getString("nume"), rs.getString("prenume"), rs.getString("email"),
 						null);
