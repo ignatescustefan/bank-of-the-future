@@ -207,13 +207,12 @@ public class DashBoardRIP extends JFrame {
 		btnAcasa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAcasa.setBounds(61, 27, 127, 23);
 		rightPanel.add(btnAcasa);
-		
+
 		JButton btnStergeAngajat = new JButton("Sterge cont");
 		btnStergeAngajat.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				deleteEmployee(angajat.getEmail());
-				btnLogout.doClick();
 			}
 		});
 		btnStergeAngajat.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -507,12 +506,14 @@ public class DashBoardRIP extends JFrame {
 
 			boolean updateStatus = jsonObject.getBoolean("Deleted:");
 			System.out.println("Status Deleted : " + updateStatus);
-			lblClientStatus.setText("inactiv");
+			if(updateStatus==true) {
+				btnLogout.doClick();
+			}
 		} else {
 			System.out.println("No Option");
 		} 
 	}
-	
+
 	protected URI getBaseURI() {
 		return UriBuilder.fromUri("http://localhost:8080/RIPBankServiciiWeb/api/delete").build();
 	}

@@ -147,3 +147,12 @@ ALTER TABLE `status_client`
 
 ALTER TABLE `tranzactie`
   ADD CONSTRAINT `tranzactie_ibfk_1` FOREIGN KEY (`IBAN_sursa`) REFERENCES `cont` (`IBAN`);
+
+
+--
+-- Adaugare user pentru baza de date
+--
+
+GRANT ALL PRIVILEGES ON *.* TO 'adminRIP'@'localhost' IDENTIFIED BY PASSWORD '*B28C29E37B404FAFF47D236713CDF833B9B94742' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON `ripbank`.* TO 'adminRIP'@'localhost';
