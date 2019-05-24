@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 import com.logging.Log4J;
 import com.ripbank.core.Account;
 import com.ripbank.core.ClientStatus;
@@ -30,6 +31,21 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		return instance;
 	}
 
+	@Override
+	public List<User> getAllUser() {
+		try(PreparedStatement stc = DBConnection.getInstance().conn.prepareStatement("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp")){
+			List<User> userList = new ArrayList<User>();
+			ResultSet rs = stc.executeQuery();
+			while(rs.next()) {
+				User user=createUserByResultSet(rs);
+				userList.add(user);
+			}
+			return userList;
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@Override
 	public List<User> findUserByCNP(String cnp) {
 		try (PreparedStatement st = DBConnection.getInstance().conn.prepareStatement("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp and u.cnp=?")) {
@@ -66,7 +82,8 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 
 	@Override
 	public List<User> findUserByEmailAndPassword(String email, String password) {
-		try (PreparedStatement stmt = DBConnection.getInstance().conn.prepareStatement("SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp AND email=? AND parola=?")) {
+		String query="SELECT u.*,s.client_status FROM utilizator u, status_client s WHERE s.cnp=u.cnp AND email=? AND parola=?";
+		try (PreparedStatement stmt = DBConnection.getInstance().conn.prepareStatement(query)) {
 			List<User> userList = new ArrayList<>();
 			stmt.setString(1, email);
 			stmt.setString(2, password);
@@ -379,5 +396,7 @@ public class DBManager implements UserDAO, AccountDAO, EmployeeDAO, TransactionD
 		}
 		return false;
 	}
+
+	
 	
 }

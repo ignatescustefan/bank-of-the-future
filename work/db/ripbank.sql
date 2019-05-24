@@ -127,14 +127,14 @@ ALTER TABLE `tranzactie`
 --
 
 ALTER TABLE `utilizator`
-  ADD CONSTRAINT `parola_ck` CHECK (LENGTH(`parola`) > 0);
+  ADD CONSTRAINT `parola_ck` CHECK (LENGTH(`parola`) >= 6);
 
 --
 -- Constrângeri pentru tabele `cont`
 --
 ALTER TABLE `cont`
   ADD CONSTRAINT `cont_ibfk_1` FOREIGN KEY (`proprietar_cnp`) REFERENCES `utilizator` (`cnp`)
-  ADD CONSTRAINT `cont_soldck` CHECK (`sold` > 0);
+  ADD CONSTRAINT `cont_soldck` CHECK (`sold` >= 0);
 --
 -- Constrângeri pentru tabele `status_client`
 --
