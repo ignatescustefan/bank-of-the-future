@@ -75,6 +75,7 @@ public class DashBoardRIP extends JFrame {
 	private JLabel lblClientStatus;
 	private JLabel lblStatus;
 	private JButton btnCauta;
+	private ShowAllUsers showAllUsers;
 	/**
 	 * Launch the demo Board.
 	 */
@@ -181,6 +182,7 @@ public class DashBoardRIP extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				userSearch.setVisible(true);
 				addClientPanel.setVisible(false);
+				showAllUsers.setVisible(false);
 			}
 		});
 		btnCautareClient.setBounds(61, 84, 127, 23);
@@ -191,6 +193,7 @@ public class DashBoardRIP extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				addClientPanel.setVisible(true);
 				userSearch.setVisible(false);
+				showAllUsers.setVisible(false);
 			}
 		});
 		btnAgaugareClient.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -202,6 +205,7 @@ public class DashBoardRIP extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				userSearch.setVisible(false);
 				addClientPanel.setVisible(false);
+				showAllUsers.setVisible(false);
 			}
 		});
 		btnAcasa.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -218,6 +222,20 @@ public class DashBoardRIP extends JFrame {
 		btnStergeAngajat.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnStergeAngajat.setBounds(61, 415, 127, 23);
 		rightPanel.add(btnStergeAngajat);
+		
+		JButton btnAfisareClienti = new JButton("Afisare clienti");
+		btnAfisareClienti.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				showAllUsers.setVisible(true);
+				userSearch.setVisible(false);
+				addClientPanel.setVisible(false);
+				showAllUsers.userImport();
+			}
+		});
+		btnAfisareClienti.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAfisareClienti.setBounds(61, 169, 127, 23);
+		rightPanel.add(btnAfisareClienti);
 
 		employeePanel.setBounds(1200, 0, 168, 140);
 		employeePanel.setBackground(new Color(251, 141, 2));
@@ -240,6 +258,10 @@ public class DashBoardRIP extends JFrame {
 		mainPanel.setLayout(null);
 		addClientPanel = new AddClientPanel();
 		addClientPanel.setVisible(false);
+		
+		showAllUsers = new ShowAllUsers();
+		showAllUsers.setVisible(false);
+		mainPanel.add(showAllUsers);
 
 		userSearch = new JPanel();
 		userSearch.setBounds(110, 71, 929, 430);
