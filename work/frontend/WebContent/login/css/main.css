@@ -246,7 +246,11 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 43px 88px 93px 190px;
+  padding: 43px 88px 43px 190px;
+}
+
+.second-step {
+  padding: 43px 88px;
 }
 
 
@@ -512,5 +516,4 @@ input.input100 {
     opacity: 1;
   }
 }
-
 

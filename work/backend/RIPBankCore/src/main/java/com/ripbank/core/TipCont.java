@@ -1,6 +1,6 @@
 package com.ripbank.core;
 
-enum TipCont {
+public enum TipCont {
 	depozit,
 	economii,
 	altele
